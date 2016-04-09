@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="VideoApp">
+    <head>
+        <meta charset="utf-8" />
+        <link href="styles/bootstrap.min.css" type="text/css" rel="stylesheet">
+        <script src="scripts/libraries/jquery-1.12.3.min.js"></script>
+        <script src="scripts/libraries/angular.min.js"></script>
+        <script src="scripts/libraries/angular-cookies.min.js"></script>
+        <script src="scripts/libraries/angular-route.min.js"></script>
+        <script src="scripts/libraries/bootstrap.min.js"></script>
+        <script src="scripts/videoApp/videoApp.js"></script>
+        <script src="scripts/videoApp/routes/routes.js"></script>
+        <script src="scripts/videoApp/controllers/users/users.js"></script>
+        <script src="scripts/videoApp/controllers/projects/projects.js"></script>
+        <script src="scripts/videoApp/controllers/issues/issues.js"></script>
+        <title>{{title}}</title>
+    </head>
+    <body>
+        <div id="wrapper" class="container jumbotron">
+            <section ng-view>
+            
+            </section>
+        </div>
+    </body>
+</html>

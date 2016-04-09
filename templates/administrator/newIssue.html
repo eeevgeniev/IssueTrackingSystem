@@ -1,0 +1,44 @@
+<section>
+    <form name="projectForm" class="jumbotron col-md-12">
+        <fieldset>
+            <h3>Create New Issue</h3>
+        </fieldset>
+        <div class="form-group">
+            <label for="Title">Title:</label>
+            <input type="text" class="form-control" name="Title" id="Title" placeholder="Issue Title" ng-model="issue.title" required="required">
+        </div>
+        <div class="form-group">
+            <label for="Assignee">Assignee:</label>
+            <select class="form-control" name="Assignee" id="Assignee" ng-model="issue.assignee" required="required">
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="Project">Project:</label>
+            <select class="form-control" name="Project" id="Project" ng-model="issue.project" required="required">
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="Issue Key">Issue Key:</label>
+            <input type="text" class="form-control" id="IssueKey" name="IssueKey" placeholder="Issue Key" ng-model="issue.issueKey" required="required">
+        </div>
+        <div class="form-group">
+            <label for="Priority">Priority:</label>
+            <select class="form-control" name="Priority" id="Priority" ng-model="issue.priority" required="required">
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="DueDate">Due Date:</label>
+            <input type="date" class="form-control" name="DueDate" id="DueDate" placeholder="dd/mm/yyyy" ng-model="issue.dueDate" required="required">
+        </div>
+        <div class="form-group">
+            <label for="Labels">Labels (comma separated):</label>
+            <input type="text" class="form-control" name="Labels" id="Labels" placeholder="Labels" ng-model="issue.labels">
+            <br>
+        </div>
+        <div class="form-group">
+            <label for="Description">Description:</label>
+            <textarea class="form-control" name="Description" id="Description" placeholder="Description" ng-model="issue.description"></textarea>
+        </div>
+        <button type="submit" class="btn btn-success">Add Issue</button>
+    </form>
+</section>
