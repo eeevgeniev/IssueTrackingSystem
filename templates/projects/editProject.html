@@ -1,0 +1,32 @@
+﻿<section class="col-md-12">
+    <form name="projectEditForm" class="jumbotron col-md-12">
+        <fieldset>
+            <h3>Edit Project</h3>
+        </fieldset>
+        <div class="form-group">
+            <label for="Name">Name:</label>
+            <input type="text" class="form-control" name="Name" id="Name" placeholder="Project name" ng-model="project.name" required="required">
+        </div>
+        <div class="form-group">
+            <label for="Leader">Leader:</label>
+            <select class="form-control" name="Leader" id="Leader" ng-model="project.leader" required="required"></select>
+        </div>
+        <div class="form-group">
+            <label for="ProjectKey">Project Key:</label>
+            <input type="text" class="form-control" name="ProjectKey" id="ProjectKey" placeholder="Project Key" ng-model="project.projectKey" disabled>
+        </div>
+        <div class="form-group">
+            <label for="Priorities">Priorities (comma separated):</label>
+            <input type="text" class="form-control" name="Priorities" id="Priorities" placeholder="Available Priorities For The Issues" ng-model="project.priorities" value="Low, Medium, Urgent">
+        </div>
+        <div class="form-group">
+            <label for="Labels">Labels (comma separated):</label>
+            <input type="text" class="form-control" id="Labels" name="Labels" placeholder="Labels" ng-model="project.labels" value="Soft">
+        </div>
+        <div class="form-group">
+            <label for="Description">Description:</label>
+            <textarea class="form-control" name="Description" id="Description" placeholder="Description" ng-model="project.description"></textarea>
+        </div>
+        <button type="submit" class="btn btn-success" ng-click="editProject()">Edit Project</button>
+    </form>
+</section>

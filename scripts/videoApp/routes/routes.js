@@ -7,14 +7,24 @@
         };
 
         $routeProvider.when('/project', {
-            templateUrl: '../templates/administrator/newProject.html',
+            templateUrl: '../templates/projects/newProject.html',
             controller: 'NewProjectController'
-        })
+        });
+
+        $routeProvider.when('/projects/:id/edit', {
+            templateUrl: '../templates/projects/editProject.html',
+            controller: 'EditProjectController'
+        });
 
         $routeProvider.when('/issue', {
-            templateUrl: '../templates/administrator/newIssue.html',
+            templateUrl: '../templates/issues/newIssue.html',
             controller: 'NewIssueController'
-        })
+        });
+
+        $routeProvider.when('/issues/:id/edit', {
+            templateUrl: '../templates/issues/editIssue.html',
+            controller: 'EditIssueController'
+        });
 
         $routeProvider.otherwise(defaultRoute);
     } ]);

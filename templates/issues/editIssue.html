@@ -1,7 +1,7 @@
-<section>
+﻿<section>
     <form name="projectForm" class="jumbotron col-md-12">
         <fieldset>
-            <h3>Create New Issue</h3>
+            <h3>Edit Issue</h3>
         </fieldset>
         <div class="form-group">
             <label for="Title">Title:</label>
@@ -9,13 +9,11 @@
         </div>
         <div class="form-group">
             <label for="Assignee">Assignee:</label>
-            <select class="form-control" name="Assignee" id="Assignee" ng-model="issue.assignee" required="required">
-            </select>
+            <select class="form-control" name="Assignee" id="Assignee" ng-model="issue.assignee" required="required"></select>
         </div>
         <div class="form-group">
             <label for="Project">Project:</label>
-            <select class="form-control" name="Project" id="Project" ng-model="issue.project" required="required">
-            </select>
+            <select class="form-control" name="Project" id="Project" ng-model="issue.project" required="required"></select>
         </div>
         <div class="form-group">
             <label for="Issue Key">Issue Key:</label>
@@ -23,8 +21,7 @@
         </div>
         <div class="form-group">
             <label for="Priority">Priority:</label>
-            <select class="form-control" name="Priority" id="Priority" ng-model="issue.priority" required="required">
-            </select>
+            <select class="form-control" name="Priority" id="Priority" ng-model="issue.priority" required="required"></select>
         </div>
         <div class="form-group">
             <label for="DueDate">Due Date:</label>
@@ -39,6 +36,6 @@
             <label for="Description">Description:</label>
             <textarea class="form-control" name="Description" id="Description" placeholder="Description" ng-model="issue.description"></textarea>
         </div>
-        <button type="submit" class="btn btn-success">Add Issue</button>
+        <button type="submit" class="btn btn-success" ng-click="editIssue()">Edit Issue</button>
     </form>
 </section>
