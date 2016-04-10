@@ -1,0 +1,39 @@
+﻿<section class="jumbotron col-md-12">
+    <header>
+        <h3>View Issue</h3>
+    </header>
+    <section>
+        <div class="form-group">
+            <label>Title:</label>
+            <p class="form-control" id="Title">{{issue.title}}</p>
+        </div>
+        <div class="form-group">
+            <label for="Assignee">Assignee:</label>
+            <p class="form-control" id="Assignee">{{issue.assignee}}</p>
+        </div>
+        <div class="form-group">
+            <label for="Project">Project:</label>
+            <p class="form-control" id="Project">{{issue.project}}</p>
+        </div>
+        <div class="form-group">
+            <label for="Issue Key">Issue Key:</label>
+            <p class="form-control" id="IssueKey" ng-model="issue.issueKey">{{issue.issueKey}}</p>
+        </div>
+        <div class="form-group">
+            <label for="Priority">Priority:</label>
+            <p class="form-control" id="Priority">{{issue.priority}}</p>
+        </div>
+        <div class="form-group">
+            <label for="DueDate">Due Date:</label>
+            <p class="form-control" id="DueDate">{{issue.dueDate | date:'dd/MM/yyy'}}</p>
+        </div>
+        <div class="form-group">
+            <label for="Labels">Labels:</label>
+            <p class="form-control" id="Labels">{{issue.labels}}</p>
+        </div>
+        <div class="form-group">
+            <label for="Description">Description:</label>
+            <p class="form-control" id="Description">{{issue.description}}</p>
+        </div>
+    </section>
+</section>

@@ -1,0 +1,23 @@
+﻿<section class="jumbotron">
+    <header>
+        <h3>Dashboard</h3>
+    </header>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <td>Issue</td>
+                <td>Project</td>
+                <td>Due Date</td>
+            </tr>
+        </thead>
+        <tbody ng-repeat="issue in issues">
+            <tr>
+                <td>{{issue.title}}</td>
+                <td>{{issue.issueKey}}</td>
+                <td>{{issue.date | date: 'dd/MM/yyyy'}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <button class="btn btn-lg btn-success">Add New Project</button>
+    <button class="btn btn-lg btn-success">Add New Issue</button>
+</section>

@@ -1,9 +1,10 @@
 (function () {
-    var userModule = angular.module('VideoApp.Controllers.User', []);
+    var userModule = angular.module('VideoApp.Controllers.Users.User', []);
 
     userModule.controller('UserController', ['$scope', function ($scope) {
 
-        $scope.heading = "Welcome guest. Login or register."
+        $scope.title = 'Start page';
+        $scope.heading = 'Welcome guest. Login or register.';
 
         $scope.login = function login() {
             console.log(JSON.stringify($scope.user));
