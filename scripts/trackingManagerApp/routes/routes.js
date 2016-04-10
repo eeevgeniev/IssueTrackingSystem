@@ -5,7 +5,8 @@
         'TrackingManagerApp.Controllers.Projects.NewProjects', 'TrackingManagerApp.Controllers.Projects.ViewProjects',
         'TrackingManagerApp.Controllers.Projects.EditProjects', 'TrackingManagerApp.Controllers.Issues.NewIssue',
         'TrackingManagerApp.Controllers.Issues.EditIssue', 'TrackingManagerApp.Controllers.Issues.ViewIssue',
-        'TrackingManagerApp.Controllers.Users.Dashboard'])
+        'TrackingManagerApp.Controllers.Users.Dashboard', 'TrackingManagerApp.Controllers.Users.Edit',
+        'TrackingManagerApp.Controllers.Users.Password', 'TrackingManagerApp.Controllers.Users.Logout'])
     .config(['$routeProvider', function ($routeProvider) {
         var defaultRoute = {
             templateUrl: '../templates/user/unknownuser.html',
@@ -47,6 +48,25 @@
             controller: 'DashboardController'
         });
 
+        $routeProvider.when('/profile', {
+            templateUrl: '../templates/user/edit.html',
+            controller: 'EditController'
+        });
+
+        $routeProvider.when('/profile/password', {
+            templateUrl: '../templates/user/password.html',
+            controller: 'PasswordController'
+        });
+
+        $routeProvider.when('/profile/password', {
+            templateUrl: '../templates/user/password.html',
+            controller: 'PasswordController'
+        });
+
+        $routeProvider.when('/logout', {
+            controller: 'LogoutController'
+        });
+
         $routeProvider.otherwise(defaultRoute);
-    } ]);
+    }]);
 })();
