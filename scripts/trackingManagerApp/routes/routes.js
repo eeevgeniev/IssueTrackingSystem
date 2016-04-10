@@ -1,12 +1,14 @@
 // to do change routes
 
 (function () {
-    angular.module('VideoApp.Routes', ['ngRoute', 'VideoApp.Controllers.Users.User', 'VideoApp.Controllers.Projects.NewProjects',
-        'VideoApp.Controllers.Projects.ViewProjects', 'VideoApp.Controllers.Projects.EditProjects', 'VideoApp.Controllers.Issues.NewIssue',
-        'VideoApp.Controllers.Issues.EditIssue', 'VideoApp.Controllers.Issues.ViewIssue', 'VideoApp.Controllers.Users.Dashboard'])
+    angular.module('TrackingManagerApp.Routes', ['ngRoute', 'TrackingManagerApp.Controllers.Users.User',
+        'TrackingManagerApp.Controllers.Projects.NewProjects', 'TrackingManagerApp.Controllers.Projects.ViewProjects',
+        'TrackingManagerApp.Controllers.Projects.EditProjects', 'TrackingManagerApp.Controllers.Issues.NewIssue',
+        'TrackingManagerApp.Controllers.Issues.EditIssue', 'TrackingManagerApp.Controllers.Issues.ViewIssue',
+        'TrackingManagerApp.Controllers.Users.Dashboard'])
     .config(['$routeProvider', function ($routeProvider) {
         var defaultRoute = {
-            templateUrl: '../templates/public/unknownuser.html',
+            templateUrl: '../templates/user/unknownuser.html',
             controller: 'UserController'
         };
 

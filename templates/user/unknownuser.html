@@ -42,12 +42,20 @@
         </div>
         <div class="form-group">
             <label for="Gender">Gender:</label>
-            <span>Other</span>
+            <span>Unpsecified</span>
             <input type="radio" name="Gender" id="Gender" value="0" ng-model="user.gender" />
             <span>Male</span>
             <input type="radio" name="Gender" id="Gender" value="1" ng-model="user.gender" />
             <span>Female</span>
             <input type="radio" name="Gender" id="Gender" value="2" ng-model="user.gender" />
+        </div>
+        <div class="form-group">
+            <label for="ProfilePicture">Profile Picture:</label>
+            <input type="file" name="ProfilePicture" id="ProfilePicture" ng-model="user.profilePicture" />
+        </div>
+        <div class="form-group">
+            <label for="CoverPicture">Cover Picture:</label>
+            <input type="file" name="CoverPicture" id="CoverPicture" ng-model="user.coverPicture" />
         </div>
         <input type="button" value="Register" class="btn btn-success" ng-click="register()" />
     </form>

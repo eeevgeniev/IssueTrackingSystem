@@ -1,5 +1,5 @@
 ﻿(function () {
-    var projectModule = angular.module('VideoApp.Controllers.Projects.ViewProjects', []);
+    var projectModule = angular.module('TrackingManagerApp.Controllers.Projects.ViewProjects', []);
 
     projectModule.controller('ViewProjectController', ['$scope', function ($scope) {
 

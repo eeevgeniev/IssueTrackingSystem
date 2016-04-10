@@ -1,5 +1,5 @@
 (function () {
-    var userModule = angular.module('VideoApp.Controllers.Users.User', []);
+    var userModule = angular.module('TrackingManagerApp.Controllers.Users.User', []);
 
     userModule.controller('UserController', ['$scope', function ($scope) {
 
