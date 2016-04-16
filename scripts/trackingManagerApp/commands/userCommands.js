@@ -1,24 +1,24 @@
 (function () {
-    var commandExecuter = angular.module('TrackingManagerApp.Commands.UserCommands', ['TrackingManagerApp.Https.Request',
+    var userCommands = angular.module('TrackingManagerApp.Commands.UserCommands', ['TrackingManagerApp.Https.Request',
     'TrackingManagerApp.Cookies.Cookie', 'TrackingManagerApp.Routes.Routes']);
 
-    commandExecuter.factory('Commands', ['$q', 'Requests', 'CookieManager', 'CookiesNames', 'Redirect',
+    userCommands.factory('UserCommands', ['$q', 'Requests', 'CookieManager', 'CookiesNames', 'Redirect',
     function ($q, Requests, CookieManager, CookiesNames, Redirect) {
-        var userCommands = {};
+        var commands = {};
 
-        userCommands.loginUser = function loginUser(user) {
+        commands.loginUser = function loginUser(user) {
             var promise = Requests.login(user);
 
             promise.then(function success(response) {
                 CookieManager.setCookie(CookiesNames.Bearer, response.data.access_token);
-                userCommands.getUser();
+                commands.getUser();
                 Redirect.changeLocation('/dashboard');
             }, function error(response) {
                 console.log(response.data['error_description']);
             })
         }
 
-        userCommands.regsiterUser = function registerUser(user) {
+        commands.regsiterUser = function registerUser(user) {
             var promise = Requests.register(user);
 
             promise.then(function success(response) {
@@ -26,7 +26,7 @@
                 newUser.email = user.email;
                 newUser.password = user.password;
 
-                userCommands.loginUser(newUser);
+                commands.loginUser(newUser);
             }, function error(response) {
                 for (var property in response.data.ModelState) {
                     if (property === 'model.Email' || property === 'model.Password' || property === '' || property === 'model.ConfirmPassword') {
@@ -39,8 +39,8 @@
             })
         }
 
-        userCommands.getUser = function getUser() {
-            var token = getLoginData();
+        commands.getUser = function getUser() {
+            var token = CookieManager.getCookie(CookiesNames.Bearer);
 
             var promise = Requests.getUser(token);
 
@@ -51,8 +51,8 @@
             });
         }
 
-        userCommands.changePassword = function changePassword(user) {
-            var token = getLoginData();
+        commands.changePassword = function changePassword(user) {
+            var token = CookieManager.getCookie(CookiesNames.Bearer);
 
             var promise = Requests.changePassword(user, token);
 
@@ -63,18 +63,27 @@
             });
         }
 
-        userCommands.logoutUser = function logoutUser() {
+        commands.logoutUser = function logoutUser() {
             CookieManager.remove(CookiesNames.Bearer);
             Redirect('');
         }
 
-        function getLoginData() {
+        commands.getUserIssues = function getUserIssues(pageSize, pageNumber, orderBy) {
             var token = CookieManager.getCookie(CookiesNames.Bearer);
-            token = 'Bearer ' + token;
 
-            return token;
+            var promise = Requests.getUserIssues(token, pageSize, pageNumber, orderBy)
+
+            return promise;
         }
 
-        return userCommands;
+        commands.getUsers = function getUsers() {
+            var token = CookieManager.getCookie(CookiesNames.Bearer);
+
+            var promise = Requests.getUsers(token);
+
+            return promise;
+        }
+
+        return commands;
     } ]);
 })();

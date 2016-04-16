@@ -10,8 +10,8 @@
                 <td>Due Date</td>
             </tr>
         </thead>
-        <tbody ng-repeat="issue in issues">
-            <tr>
+        <tbody>
+            <tr ng-repeat="issue in issues">
                 <td>{{issue.title}}</td>
                 <td>{{issue.issueKey}}</td>
                 <td>{{issue.date | date: 'dd/MM/yyyy'}}</td>

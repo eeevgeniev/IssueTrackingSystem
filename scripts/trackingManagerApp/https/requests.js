@@ -36,6 +36,42 @@
             return promise;
         }
 
+        requests.getUsers = function getUsers(token) {
+            var header = loginHeader(token);
+
+            var promise = httpRequest(Urls.DefaultUrl + Urls.GetUsers, header, 'GET', null);
+
+            return promise;
+        }
+
+        requests.getUserIssues = function getUserIssues(token, pageSize, pageNumber, orderBy) {
+            var header = loginHeader(token);
+
+            var promise = httpRequest(Urls.DefaultUrl + Urls.UserIssues +
+                '?pageSize=' + pageSize + '&pageNumber=' + pageNumber + '&orderBy=' + orderBy,
+                header, 'GET', null);
+
+            return promise;
+        }
+
+        requests.addNewIssue = function addNewIssue(token, issue) {
+            var header = loginHeader(token);
+            console.log(issue);
+            return;
+
+            var promise = httpRequest(Urls.DefaultUrl + Urls.NewIssue, header, 'POST', issue);
+
+            return promise;
+        }
+
+        requests.getProjects = function getProjects(token) {
+            var header = loginHeader(token);
+
+            var promise = httpRequest(Urls.DefaultUrl + Urls.GetProjects, header, 'GET', null);
+
+            return promise;
+        }
+
         function httpRequest(location, headersData, methodType, bodyData) {
             var deferred = $q.defer();
 
@@ -56,7 +92,7 @@
 
         function loginHeader(token){
             var header = Headers.UserHeader
-            header.Authorization = token;
+            header.Authorization = "Bearer " + token;
 
             return header;
         }

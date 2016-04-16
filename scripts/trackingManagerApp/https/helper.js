@@ -7,7 +7,11 @@
         Register: '/api/Account/Register',
         Login: '/api/Token',
         Me: '/users/Me',
-        ChangePassword: '/api/Account/ChangePassword'
+        ChangePassword: '/api/Account/ChangePassword',
+        UserIssues: '/Issues/me',
+        NewIssue: '/Issues',
+        GetUsers: '/Users',
+        GetProjects: '/Projects'
     });
 
     httpHelper.constant('Headers', {

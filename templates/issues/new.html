@@ -9,12 +9,14 @@
         </div>
         <div class="form-group">
             <label for="Assignee">Assignee:</label>
-            <select class="form-control" name="Assignee" id="Assignee" ng-model="issue.assignee" required="required">
+            <select class="form-control" name="Assignee" id="Assignee" ng-model="issue.assignee" required="required" >
+                <option ng-repeat="user in users" value="{{user.Id}}">{{user.Username}}</option>
             </select>
         </div>
         <div class="form-group">
             <label for="Project">Project:</label>
             <select class="form-control" name="Project" id="Project" ng-model="issue.project" required="required">
+                <option ng-repeat="project in projects" value="{{project.Id}}">{{project.Name}}</option>
             </select>
         </div>
         <div class="form-group">
@@ -28,7 +30,7 @@
         </div>
         <div class="form-group">
             <label for="DueDate">Due Date:</label>
-            <input type="date" class="form-control" name="DueDate" id="DueDate" placeholder="dd/mm/yyyy" ng-model="issue.dueDate" required="required">
+            <input type="text" class="form-control" name="DueDate" id="DueDate" placeholder="dd/mm/yyyy" ng-model="issue.dueDate" required="required">
         </div>
         <div class="form-group">
             <label for="Labels">Labels (comma separated):</label>

@@ -1,16 +1,16 @@
 (function () {
     var userModule = angular.module('TrackingManagerApp.Controllers.Users.User', ['TrackingManagerApp.Commands.UserCommands']);
 
-    userModule.controller('UserController', ['$scope', 'Commands', function ($scope, Commands) {
+    userModule.controller('UserController', ['$scope', 'UserCommands', function ($scope, UserCommands) {
 
         $scope.heading = 'Welcome guest. Login or register.';
 
         $scope.login = function login() {
-            Commands.loginUser($scope.user);
+            UserCommands.loginUser($scope.user);
         }
 
         $scope.register = function register() {
-            Commands.registerUser($scope.newUser);
+            UserCommands.registerUser($scope.newUser);
         };
     } ]);
 })();
