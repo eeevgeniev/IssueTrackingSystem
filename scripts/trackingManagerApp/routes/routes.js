@@ -44,8 +44,8 @@
             controller: 'ViewIssueController'
         });
 
-        $routeProvider.when('', {
-            templateUrl: '../templates/issues/dashboard.html',
+        $routeProvider.when('/dashboard', {
+            templateUrl: '../templates/user/dashboard.html',
             controller: 'DashboardController'
         });
 

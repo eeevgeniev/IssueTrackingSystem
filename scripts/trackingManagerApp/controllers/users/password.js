@@ -1,12 +1,12 @@
 ﻿(function () {
-    var userPassword = angular.module('TrackingManagerApp.Controllers.Users.Password', []);
+    var userPassword = angular.module('TrackingManagerApp.Controllers.Users.Password', ['TrackingManagerApp.Commands.UserCommands']);
 
-    userPassword.controller('PasswordController', ['$scope', function ($scope) {
+    userPassword.controller('PasswordController', ['$scope', 'Commands', function ($scope, Commands) {
 
-        $scope.heading = 'Edit Password.';
+        $scope.heading = 'Change Password.';
 
         $scope.change = function change() {
-
+            Commands.changePassword($scope.user);
         }
     }]);
 })();

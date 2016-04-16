@@ -3,13 +3,17 @@
 
     cookie.constant('CookiesNames', {
         Bearer: 'Bearer',
-        Username: 'Username'
+        User: 'User'
     })
 
     cookie.factory('CookieManager', ['$cookies', function ($cookies) {
         var cookieManager = {};
 
         cookieManager.getCookie = function getCookie(key) {
+            return $cookies.get(key);
+        }
+
+        cookieManager.getObjectCookie = function getObjectCookie(key) {
             return $cookies.getObject(key);
         }
 

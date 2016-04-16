@@ -5,7 +5,15 @@
     httpHelper.constant('Urls', {
         DefaultUrl: 'http://softuni-issue-tracker.azurewebsites.net',
         Register: '/api/Account/Register',
-        Login: '/api/Token'
+        Login: '/api/Token',
+        Me: '/users/Me',
+        ChangePassword: '/api/Account/ChangePassword'
+    });
+
+    httpHelper.constant('Headers', {
+        LoginHeader: { 'Content-type': 'application/json' },
+        RegisterHeader: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        UserHeader: { 'Content-type': 'application/json', 'Authorization': null }
     });
 
     httpHelper.factory('EncodeURIComponent', [function () {
@@ -14,6 +22,6 @@
                 return encodeURIComponent(data);
             }
         }
-    }])
+    }]);
 
 })();

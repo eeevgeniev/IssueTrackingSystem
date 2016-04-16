@@ -1,6 +1,6 @@
 (function () {
     var commandExecuter = angular.module('TrackingManagerApp.Commands.UserCommands', ['TrackingManagerApp.Https.Request',
-    'TrackingManagerApp.Cookies.Cookie', /*'TrackingManagerApp.Routes.Routes'*/]);
+    'TrackingManagerApp.Cookies.Cookie', 'TrackingManagerApp.Routes.Routes']);
 
     commandExecuter.factory('Commands', ['$q', 'Requests', 'CookieManager', 'CookiesNames', 'Redirect',
     function ($q, Requests, CookieManager, CookiesNames, Redirect) {
@@ -11,8 +11,8 @@
 
             promise.then(function success(response) {
                 CookieManager.setCookie(CookiesNames.Bearer, response.data.access_token);
-                CookieManager.setCookie(CookiesNames.Username, response.data.userName);
-                Redirect.changeLocation('');
+                userCommands.getUser();
+                Redirect.changeLocation('/dashboard');
             }, function error(response) {
                 console.log(response.data['error_description']);
             })
@@ -37,6 +37,42 @@
 
                 console.log('Error registration');
             })
+        }
+
+        userCommands.getUser = function getUser() {
+            var token = getLoginData();
+
+            var promise = Requests.getUser(token);
+
+            promise.then(function success(response) {
+                CookieManager.setObject(CookiesNames.User, response.data);
+            }, function error(response) {
+                console.log(response);
+            });
+        }
+
+        userCommands.changePassword = function changePassword(user) {
+            var token = getLoginData();
+
+            var promise = Requests.changePassword(user, token);
+
+            promise.then(function success(response) {
+                console.log(response);
+            }, function error(response) {
+                console.log(response);
+            });
+        }
+
+        userCommands.logoutUser = function logoutUser() {
+            CookieManager.remove(CookiesNames.Bearer);
+            Redirect('');
+        }
+
+        function getLoginData() {
+            var token = CookieManager.getCookie(CookiesNames.Bearer);
+            token = 'Bearer ' + token;
+
+            return token;
         }
 
         return userCommands;
