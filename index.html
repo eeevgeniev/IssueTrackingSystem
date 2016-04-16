@@ -3,13 +3,15 @@
     <head>
         <meta charset="utf-8" />
         <link href="styles/bootstrap.min.css" type="text/css" rel="stylesheet">
-        <script src="scripts/libraries/jquery-1.12.3.min.js"></script>
         <script src="scripts/libraries/angular.min.js"></script>
-        <script src="scripts/libraries/angular-cookies.min.js"></script>
+        <script src="scripts/libraries/angular-resource.min.js"></script>
         <script src="scripts/libraries/angular-route.min.js"></script>
+        <script src="scripts/libraries/angular-cookies.min.js"></script>
+        <script src="scripts/libraries/jquery-1.12.3.min.js"></script>
         <script src="scripts/libraries/bootstrap.min.js"></script>
         <script src="scripts/trackingManagerApp/trackingManagerApp.js"></script>
         <script src="scripts/trackingManagerApp/routes/routes.js"></script>
+        <script src="scripts/trackingManagerApp/cookies/cookie.js"></script>
         <script src="scripts/trackingManagerApp/controllers/users/user.js"></script>
         <script src="scripts/trackingManagerApp/controllers/users/edit.js"></script>
         <script src="scripts/trackingManagerApp/controllers/users/password.js"></script>
@@ -22,10 +24,11 @@
         <script src="scripts/trackingManagerApp/controllers/issues/edit.js"></script>
         <script src="scripts/trackingManagerApp/controllers/issues/view.js"></script>
         <script src="scripts/trackingManagerApp/https/requests.js"></script>
-        <script src="scripts/trackingManagerApp/cookies/cookie.js"></script>
-        <title>{{title}}</title>
+        <script src="scripts/trackingManagerApp/https/helper.js"></script>
+        <script src="scripts/trackingManagerApp/commands/userCommands.js"></script>
+        <title>Tracking Manager Application</title>
     </head>
-    <body>
+    <body class="jumbotron">
         <div id="wrapper" class="container jumbotron">
             <section ng-view>
             

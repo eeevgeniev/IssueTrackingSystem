@@ -1,17 +1,16 @@
 (function () {
-    var userModule = angular.module('TrackingManagerApp.Controllers.Users.User', []);
+    var userModule = angular.module('TrackingManagerApp.Controllers.Users.User', ['TrackingManagerApp.Commands.UserCommands']);
 
-    userModule.controller('UserController', ['$scope', function ($scope) {
+    userModule.controller('UserController', ['$scope', 'Commands', function ($scope, Commands) {
 
-        $scope.title = 'Start page';
         $scope.heading = 'Welcome guest. Login or register.';
 
         $scope.login = function login() {
-            console.log(JSON.stringify($scope.user));
+            Commands.loginUser($scope.user);
         }
 
         $scope.register = function register() {
-            console.log(JSON.stringify($scope.user));
+            Commands.registerUser($scope.newUser);
         };
-    }]);
+    } ]);
 })();

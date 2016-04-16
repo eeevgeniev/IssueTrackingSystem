@@ -1,28 +1,35 @@
 (function () {
-    var cookie = angular.module('TrackingManagerApp.Cookies.Cookie', ['ngCookie'])
+    var cookie = angular.module('TrackingManagerApp.Cookies.Cookie', ['ngCookies'])
 
-    cookie.factory('TrackingManagerApp.Cookies.CookieManager', ['$cookies', function ($cookies) {
-        function getCookie(key) {
+    cookie.constant('CookiesNames', {
+        Bearer: 'Bearer',
+        Username: 'Username'
+    })
+
+    cookie.factory('CookieManager', ['$cookies', function ($cookies) {
+        var cookieManager = {};
+
+        cookieManager.getCookie = function getCookie(key) {
             return $cookies.getObject(key);
         }
 
-        function setCookie(key, value) {
+        cookieManager.setCookie = function setCookie(key, value) {
             $cookies.put(key, value);
         }
 
-        function setObject(key, value) {
+        cookieManager.setObject = function setObject(key, value) {
             $cookies.putObject(key, value);
         }
 
-        function deleteCookie(key) {
+        cookieManager.deleteCookie = function deleteCookie(key) {
             $cookies.remove(key);
         }
 
-        return {
-            getCookie: getCookie(key),
-            setCookie: setCookie(key, value),
-            setObject: setObject(key, value),
-            deleteCookie: deleteCookie(key)
+        cookieManager.isCookieSet = function isCookieSet(key) {
+            var result = cookieManager.getCookie(key) === null ? false : true;
+            return result;
         }
-    }]);
+
+        return cookieManager;
+    } ]);
 })();

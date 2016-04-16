@@ -2,13 +2,13 @@
     <header>
         <h3>{{heading}}</h3>
     </header>
-    <form name="loginform" class="jumbotron col-md-6">
+    <form name="loginForm" class="jumbotron col-md-6">
         <fieldset>
             <h3>Login</h3>
         </fieldset>
         <div class="form-group">
-            <label for="Username">Username<span class="text-danger">*</span>:</label>
-            <input type="text" name="Username" id="Username" ng-model="user.username" class="form-control" required="required" />
+            <label for="Email">Email<span class="text-danger">*</span>:</label>
+            <input type="email" name="Email" id="Email" ng-model="user.email" class="form-control" required="required" />
         </div>
         <div class="form-group">
             <label for="Password">Password<span class="text-danger">*</span>:</label>
@@ -21,41 +21,16 @@
             <h3>Registration</h3>
         </fieldset>
         <div class="form-group">
-            <label for="Username">Username<span class="text-danger">*</span>:</label>
-            <input type="text" name="Username" id="Username" ng-model="user.username" class="form-control" required="required" />
+            <label for="NewEmail">Email<span class="text-danger">*</span>:</label>
+            <input type="email" name="NewEmail" id="NewEmail" ng-model="newUser.email" class="form-control" required="required" />
         </div>
         <div class="form-group">
-            <label for="Password">Password<span class="text-danger">*</span>:</label>
-            <input type="password" name="Password" id="Password" ng-model="user.password" class="form-control" required="required" min="6" max="100" />
+            <label for="NewPassword">Password<span class="text-danger">*</span>:</label>
+            <input type="password" name="NewPassword" id="NewPassword" ng-model="newUser.password" class="form-control" required="required" min="6" max="100" />
         </div>
         <div class="form-group">
-            <label for="ConfirmPassword">Confirm password<span class="text-danger">*</span>:</label>
-            <input type="password" name="ConfirmPassword" id="ConfirmPassword" ng-model="user.confirmPassword" class="form-control" required="required" min="6" max="100" />
-        </div>
-        <div class="form-group">
-            <label for="Name">Name<span class="text-danger">*</span>:</label>
-            <input type="text" name="Name" id="Name" ng-model="user.name" class="form-control" required="required" />
-        </div>
-        <div class="form-group">
-            <label for="Email">Email<span class="text-danger">*</span>:</label>
-            <input type="email" name="Email" id="Email" ng-model="user.email" class="form-control" required="required" />
-        </div>
-        <div class="form-group">
-            <label for="Gender">Gender:</label>
-            <span>Unpsecified</span>
-            <input type="radio" name="Gender" id="Gender" value="0" ng-model="user.gender" />
-            <span>Male</span>
-            <input type="radio" name="Gender" id="Gender" value="1" ng-model="user.gender" />
-            <span>Female</span>
-            <input type="radio" name="Gender" id="Gender" value="2" ng-model="user.gender" />
-        </div>
-        <div class="form-group">
-            <label for="ProfilePicture">Profile Picture:</label>
-            <input type="file" name="ProfilePicture" id="ProfilePicture" ng-model="user.profilePicture" />
-        </div>
-        <div class="form-group">
-            <label for="CoverPicture">Cover Picture:</label>
-            <input type="file" name="CoverPicture" id="CoverPicture" ng-model="user.coverPicture" />
+            <label for="NewConfirmPassword">Confirm password<span class="text-danger">*</span>:</label>
+            <input type="password" name="NewConfirmPassword" id="NewConfirmPassword" ng-model="newUser.confirmPassword" class="form-control" required="required" min="6" max="100" />
         </div>
         <input type="button" value="Register" class="btn btn-success" ng-click="register()" />
     </form>

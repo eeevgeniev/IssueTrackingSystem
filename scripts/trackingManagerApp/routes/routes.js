@@ -1,13 +1,14 @@
 // to do change routes
-
 (function () {
-    angular.module('TrackingManagerApp.Routes', ['ngRoute', 'TrackingManagerApp.Controllers.Users.User',
+    var routes = angular.module('TrackingManagerApp.Routes.Routes', ['ngRoute', 'TrackingManagerApp.Controllers.Users.User',
         'TrackingManagerApp.Controllers.Projects.NewProjects', 'TrackingManagerApp.Controllers.Projects.ViewProjects',
         'TrackingManagerApp.Controllers.Projects.EditProjects', 'TrackingManagerApp.Controllers.Issues.NewIssue',
         'TrackingManagerApp.Controllers.Issues.EditIssue', 'TrackingManagerApp.Controllers.Issues.ViewIssue',
         'TrackingManagerApp.Controllers.Users.Dashboard', 'TrackingManagerApp.Controllers.Users.Edit',
-        'TrackingManagerApp.Controllers.Users.Password', 'TrackingManagerApp.Controllers.Users.Logout'])
-    .config(['$routeProvider', function ($routeProvider) {
+        'TrackingManagerApp.Controllers.Users.Password', 'TrackingManagerApp.Controllers.Users.Logout',
+        'TrackingManagerApp.Cookies.Cookie']);
+
+    routes.config(['$routeProvider', function ($routeProvider) {
         var defaultRoute = {
             templateUrl: '../templates/user/unknownuser.html',
             controller: 'UserController'
@@ -68,5 +69,19 @@
         });
 
         $routeProvider.otherwise(defaultRoute);
-    }]);
+    } ]);
+
+    routes.factory('Redirect', ['$location', function ($location) {
+        var redirect = {};
+
+        redirect.changeLocation = function changeLocation(newPath) {
+            $location.path(newPath);
+        }
+
+        return redirect;
+    } ]);
+
+    function checkPath() {
+        return true;
+    }
 })();
