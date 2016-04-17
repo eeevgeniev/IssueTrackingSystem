@@ -81,7 +81,13 @@
         return redirect;
     } ]);
 
-    function checkPath() {
-        return true;
-    }
+    routes.factory('GetParameters', ['$routeParams', function ($routeParams) {
+        var parameter = {};
+
+        parameter.getValue = function getValue(name) {
+            return $routeParams[name];
+        }
+
+        return parameter;
+    }]);
 })();

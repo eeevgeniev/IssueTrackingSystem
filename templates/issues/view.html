@@ -5,35 +5,36 @@
     <section>
         <div class="form-group">
             <label>Title:</label>
-            <p class="form-control" id="Title">{{issue.title}}</p>
+            <div class="form-control">{{issue.Title}}</div>
         </div>
         <div class="form-group">
             <label for="Assignee">Assignee:</label>
-            <p class="form-control" id="Assignee">{{issue.assignee}}</p>
+            <div class="form-control" id="Assignee">{{issue.Assignee.Username}}</div>
         </div>
         <div class="form-group">
             <label for="Project">Project:</label>
-            <p class="form-control" id="Project">{{issue.project}}</p>
+            <div class="form-control" id="Project">{{issue.Project.Name}}</div>
         </div>
         <div class="form-group">
             <label for="Issue Key">Issue Key:</label>
-            <p class="form-control" id="IssueKey" ng-model="issue.issueKey">{{issue.issueKey}}</p>
+            <div class="form-control" id="IssueKey" ng-model="issue.issueKey">{{issue.IssueKey}}</div>
         </div>
         <div class="form-group">
             <label for="Priority">Priority:</label>
-            <p class="form-control" id="Priority">{{issue.priority}}</p>
+            <div class="form-control" id="Priority">{{issue.Priority}}</div>
         </div>
         <div class="form-group">
             <label for="DueDate">Due Date:</label>
-            <p class="form-control" id="DueDate">{{issue.dueDate | date:'dd/MM/yyy'}}</p>
+            <div class="form-control" id="DueDate">{{issue.DueDate | date:'dd/MM/yyyy'}}</div>
         </div>
         <div class="form-group">
             <label for="Labels">Labels:</label>
-            <p class="form-control" id="Labels">{{issue.labels}}</p>
+            <div class="form-control" id="Labels">{{issue.Labels}}</div>
         </div>
         <div class="form-group">
             <label for="Description">Description:</label>
-            <p class="form-control" id="Description">{{issue.description}}</p>
+            <div class="form-control" id="Description">{{issue.Description}}</div>
         </div>
     </section>
+    <a class="btn btn-success" href="#/issues/{{issue.Id}}/edit">Edit</a>
 </section>

@@ -9,14 +9,14 @@
         </div>
         <div class="form-group">
             <label for="Assignee">Assignee:</label>
-            <select class="form-control" name="Assignee" id="Assignee" ng-model="issue.assignee" required="required" >
-                <option ng-repeat="user in users" value="{{user.Id}}">{{user.Username}}</option>
+            <select class="form-control" name="Assignee" id="Assignee" ng-model="issue.assignee" 
+                    ng-options="user.Username for user in users track by user.Id " required="required">
             </select>
         </div>
         <div class="form-group">
             <label for="Project">Project:</label>
-            <select class="form-control" name="Project" id="Project" ng-model="issue.project" required="required">
-                <option ng-repeat="project in projects" value="{{project.Id}}">{{project.Name}}</option>
+            <select class="form-control" name="Project" id="Project" ng-model="issue.project" 
+                    ng-options="project.Name for project in projects track by project.Id" required="required" ng-change="changeProject()">
             </select>
         </div>
         <div class="form-group">
@@ -25,7 +25,8 @@
         </div>
         <div class="form-group">
             <label for="Priority">Priority:</label>
-            <select class="form-control" name="Priority" id="Priority" ng-model="issue.priority" required="required">
+            <select class="form-control" name="Priority" id="Priority" ng-model="issue.priority" 
+                    ng-options="priority.Name for priority in priorities track by priority.Id" required="required">
             </select>
         </div>
         <div class="form-group">

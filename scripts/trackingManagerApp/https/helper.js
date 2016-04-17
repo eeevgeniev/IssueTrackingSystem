@@ -8,10 +8,15 @@
         Login: '/api/Token',
         Me: '/users/Me',
         ChangePassword: '/api/Account/ChangePassword',
+        GetIssue: '/Issues/',
         UserIssues: '/Issues/me',
         NewIssue: '/Issues',
+        UpdateIssue: '/Issues/',
         GetUsers: '/Users',
-        GetProjects: '/Projects'
+        GetProject: '/Projects/',
+        GetProjects: '/Projects',
+        NewProject: '/Projects',
+        UpdateProject: '/Projects/'
     });
 
     httpHelper.constant('Headers', {

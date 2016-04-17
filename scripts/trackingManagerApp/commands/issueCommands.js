@@ -2,22 +2,49 @@
     var issueCommands = angular.module('TrackingManagerApp.Commands.IssuesCommands', ['TrackingManagerApp.Https.Request',
     'TrackingManagerApp.Cookies.Cookie', 'TrackingManagerApp.Routes.Routes']);
 
-    issueCommands.factory('IssueCommands', ['$q', 'Requests', 'Redirect',
-        function ($q, Requests, Redirect) {
-        var commands = {};
+    issueCommands.factory('IssueCommands', ['$q', 'Requests', 'Redirect', 'GetParameters', 'CookieManager', 'CookiesNames',
+        function ($q, Requests, Redirect, GetParameters, CookieManager, CookiesNames) {
+            var commands = {};
 
-        commands.createIssue = function createIssue(issue) {
-            var datesParams = issue.dueDate.split('/');
-            issue.dueDate = new Date(datesParams[2], datesParams[1] - 1, datesParams[0]);
-            console.log(issue);
-            return;
+            commands.getIssue = function getIssue() {
+                var token = CookieManager.getCookie(CookiesNames.Bearer);
 
-            var token = CookieManager.getCookie(CookiesNames.Bearer);
+                var id = GetParameters.getValue('id');
 
-            var promise = Requests.addNewIssue(token, issue);
-        }
+                if (id === null) {
+                    console.log('error');
+                    return;
+                }
 
-        return commands;
-    }]);
+                var promise = Requests.getIssue(token, id);
 
+                return promise;
+            }
+
+            commands.createIssue = function createIssue(issue) {
+                var token = CookieManager.getCookie(CookiesNames.Bearer);
+
+                var promise = Requests.addNewIssue(token, issue);
+
+                promise.then(function success(response) {
+
+                }, function error(response) {
+
+                });
+            };
+
+            commands.editIssue = function editIssue(id, issue) {
+                var token = CookieManager.getCookie(CookiesNames.Bearer);
+
+                var promise = Requests.addNewIssue(token, id, issue);
+
+                promise.then(function success(response) {
+
+                }, function error(response) {
+
+                });
+            };
+
+            return commands;
+        }]);
 })();
