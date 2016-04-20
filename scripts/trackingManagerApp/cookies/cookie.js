@@ -3,7 +3,7 @@
 
     cookie.constant('CookiesNames', {
         Bearer: 'Bearer',
-        User: 'User'
+        User: 'User',
     })
 
     cookie.factory('CookieManager', ['$cookies', function ($cookies) {

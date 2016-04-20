@@ -4,10 +4,9 @@
 
     issuesModule.controller('EditIssueController', ['$scope', '$q', 'IssueCommands', 'UserCommands', 'ProjectCommands',
         function ($scope, $q, IssueCommands, UserCommands, ProjectCommands) {
-            $scope.issue = {};
-
-            var userPromise = UserCommands.getUsers();
-            var projectPromise = ProjectCommands.getProjects();
+            $scope.issue = {},
+            userPromise = UserCommands.getUsers(),
+            projectPromise = ProjectCommands.getProjects();
 
             userPromise.then(function success(response) {
                 $scope.users = [];

@@ -12,7 +12,6 @@
             promise.then(function success(response) {
                 CookieManager.setCookie(CookiesNames.Bearer, response.data.access_token);
                 commands.getUser();
-                Redirect.changeLocation('/dashboard');
             }, function error(response) {
                 console.log(response.data['error_description']);
             })
@@ -40,21 +39,20 @@
         }
 
         commands.getUser = function getUser() {
-            var token = CookieManager.getCookie(CookiesNames.Bearer);
-
-            var promise = Requests.getUser(token);
+            var token = CookieManager.getCookie(CookiesNames.Bearer),
+                promise = Requests.getUser(token)
 
             promise.then(function success(response) {
                 CookieManager.setObject(CookiesNames.User, response.data);
+                Redirect.changeLocation('/dashboard');
             }, function error(response) {
                 console.log(response);
             });
         }
 
         commands.changePassword = function changePassword(user) {
-            var token = CookieManager.getCookie(CookiesNames.Bearer);
-
-            var promise = Requests.changePassword(user, token);
+            var token = CookieManager.getCookie(CookiesNames.Bearer),
+                promise = Requests.changePassword(user, token);
 
             promise.then(function success(response) {
                 console.log(response);
@@ -69,19 +67,27 @@
         }
 
         commands.getUserIssues = function getUserIssues(pageSize, pageNumber, orderBy) {
-            var token = CookieManager.getCookie(CookiesNames.Bearer);
-
-            var promise = Requests.getUserIssues(token, pageSize, pageNumber, orderBy)
+            var token = CookieManager.getCookie(CookiesNames.Bearer),
+                promise = Requests.getUserIssues(token, pageSize, pageNumber, orderBy)
 
             return promise;
         }
 
         commands.getUsers = function getUsers() {
-            var token = CookieManager.getCookie(CookiesNames.Bearer);
-
-            var promise = Requests.getUsers(token);
+            var token = CookieManager.getCookie(CookiesNames.Bearer),
+                promise = Requests.getUsers(token);
 
             return promise;
+        }
+
+        commands.isUserAdmin = function isUserAdmin() {
+            var user = CookieManager.getObjectCookie(CookiesNames.User);
+
+            if (typeof(user) === 'undefined') {
+                return false;   
+            }
+            
+            return user.isAdmin;
         }
 
         return commands;
