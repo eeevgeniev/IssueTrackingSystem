@@ -1,7 +1,7 @@
 ﻿(function () {
-    var filterModule = angular.module('TrackingManagerApp.Filters.Filter', []);
+    var filterModule = angular.module('trackingManagerApp.filters.getNamesFilter', []);
 
-    filterModule.filter('ShowName', [function () {
+    filterModule.filter('getName', [function () {
 
         return function (array) {
 

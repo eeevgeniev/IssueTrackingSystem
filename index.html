@@ -1,38 +1,42 @@
 ﻿<!DOCTYPE html>
-<html lang="en" ng-app="TrackingManagerApp">
+<html lang="en" ng-app="trackingManagerApp">
     <head>
         <meta charset="utf-8" />
         <link href="styles/bootstrap.min.css" type="text/css" rel="stylesheet">
+        <link href="styles/style.css" type="text/css" rel="stylesheet">
         <script src="scripts/libraries/angular.min.js"></script>
         <script src="scripts/libraries/angular-resource.min.js"></script>
         <script src="scripts/libraries/angular-route.min.js"></script>
         <script src="scripts/libraries/angular-cookies.min.js"></script>
         <script src="scripts/libraries/jquery-1.12.3.min.js"></script>
         <script src="scripts/libraries/bootstrap.min.js"></script>
+        <script src="scripts/libraries/jquery.noty.packaged.min.js"></script>
         <script src="scripts/trackingManagerApp/trackingManagerApp.js"></script>
-        <script src="scripts/trackingManagerApp/routes/routes.js"></script>
-        <script src="scripts/trackingManagerApp/cookies/cookie.js"></script>
-        <script src="scripts/trackingManagerApp/controllers/users/user.js"></script>
-        <script src="scripts/trackingManagerApp/controllers/users/edit.js"></script>
-        <script src="scripts/trackingManagerApp/controllers/users/password.js"></script>
-        <script src="scripts/trackingManagerApp/controllers/users/dashboard.js"></script>
-        <script src="scripts/trackingManagerApp/controllers/users/logout.js"></script>
-        <script src="scripts/trackingManagerApp/controllers/projects/new.js"></script>
-        <script src="scripts/trackingManagerApp/controllers/projects/edit.js"></script>
-        <script src="scripts/trackingManagerApp/controllers/projects/view.js"></script>
-        <script src="scripts/trackingManagerApp/controllers/issues/new.js"></script>
-        <script src="scripts/trackingManagerApp/controllers/issues/edit.js"></script>
-        <script src="scripts/trackingManagerApp/controllers/issues/view.js"></script>
-        <script src="scripts/trackingManagerApp/https/requests.js"></script>
-        <script src="scripts/trackingManagerApp/https/helper.js"></script>
-        <script src="scripts/trackingManagerApp/commands/userCommands.js"></script>
-        <script src="scripts/trackingManagerApp/commands/projectCommands.js"></script>
-        <script src="scripts/trackingManagerApp/commands/issueCommands.js"></script>
-        <script src="scripts/trackingManagerApp/filters/filter.js"></script>
+        <script src="scripts/trackingManagerApp/routes/routeConfig.js"></script>
+        <script src="scripts/trackingManagerApp/controllers/users/manageUserController.js"></script>
+        <script src="scripts/trackingManagerApp/controllers/users/editUserController.js"></script>
+        <script src="scripts/trackingManagerApp/controllers/users/changePasswordController.js"></script>
+        <script src="scripts/trackingManagerApp/controllers/users/dashboardController.js"></script>
+        <script src="scripts/trackingManagerApp/controllers/users/logoutUserController.js"></script>
+        <script src="scripts/trackingManagerApp/controllers/projects/newProjectController.js"></script>
+        <script src="scripts/trackingManagerApp/controllers/projects/editProjectController.js"></script>
+        <script src="scripts/trackingManagerApp/controllers/projects/viewProjectController.js"></script>
+        <script src="scripts/trackingManagerApp/controllers/issues/newIssueController.js"></script>
+        <script src="scripts/trackingManagerApp/controllers/issues/editIssueController.js"></script>
+        <script src="scripts/trackingManagerApp/controllers/issues/viewIssueController.js"></script>
+        <script src="scripts/trackingManagerApp/services/cookies/cookieService.js"></script>
+        <script src="scripts/trackingManagerApp/services/https/requestsService.js"></script>
+        <script src="scripts/trackingManagerApp/services/https/helperService.js"></script>
+        <script src="scripts/trackingManagerApp/services/commands/userServices.js"></script>
+        <script src="scripts/trackingManagerApp/services/commands/projectServices.js"></script>
+        <script src="scripts/trackingManagerApp/services/commands/issueServices.js"></script>
+        <script src="scripts/trackingManagerApp/services/commands/notifyServices.js"></script>
+        <script src="scripts/trackingManagerApp/filters/getNamesFilter.js"></script>
         <title>Tracking Manager Application</title>
     </head>
-    <body class="jumbotron">
-        <div id="wrapper" class="container jumbotron">
+    <body>
+        <div id="notifications"></div>
+        <div id="wrapper" class="centered">
             <section ng-view>
             
             </section>

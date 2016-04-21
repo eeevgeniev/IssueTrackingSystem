@@ -1,6 +1,6 @@
 ﻿(function () {
 
-    var httpHelper = angular.module('TrackingManagerApp.Https.Helper', []);
+    var httpHelper = angular.module('trackingManagerApp.services.https.helperService', []);
 
     httpHelper.constant('Urls', {
         DefaultUrl: 'http://softuni-issue-tracker.azurewebsites.net',
@@ -19,13 +19,13 @@
         UpdateProject: '/Projects/'
     });
 
-    httpHelper.constant('Headers', {
+    httpHelper.constant('headers', {
         LoginHeader: { 'Content-type': 'application/json' },
         RegisterHeader: { 'Content-Type': 'application/x-www-form-urlencoded' },
         UserHeader: { 'Content-type': 'application/json', 'Authorization': null }
     });
 
-    httpHelper.factory('EncodeURIComponent', [function () {
+    httpHelper.factory('uriComponentEncode', [function () {
         return {
             encode: function (data) {
                 return encodeURIComponent(data);

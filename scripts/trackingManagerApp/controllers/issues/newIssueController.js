@@ -1,12 +1,13 @@
-﻿(function () {
-    var issuesModule = angular.module('TrackingManagerApp.Controllers.Issues.EditIssue', ['TrackingManagerApp.Commands.IssuesCommands',
-        'TrackingManagerApp.Commands.UserCommands', 'TrackingManagerApp.Commands.ProjectCommands']);
+(function () {
+    var issuesModule = angular.module('trackingManagerApp.controllers.issues.newIssueController', 
+    ['trackingManagerApp.services.commands.issueServices', 'trackingManagerApp.services.commands.userServices', 
+    'trackingManagerApp.services.commands.projectServices']);
 
-    issuesModule.controller('EditIssueController', ['$scope', '$q', 'IssueCommands', 'UserCommands', 'ProjectCommands',
-        function ($scope, $q, IssueCommands, UserCommands, ProjectCommands) {
+    issuesModule.controller('NewIssueController', ['$scope', '$q', 'issueServices', 'userServices', 'projectServices',
+        function ($scope, $q, issueServices, userServices, projectServices) {
             $scope.issue = {},
-            userPromise = UserCommands.getUsers(),
-            projectPromise = ProjectCommands.getProjects();
+            userPromise = userServices.getUsers(),
+            projectPromise = projectServices.getProjects();
 
             userPromise.then(function success(response) {
                 $scope.users = [];
@@ -39,7 +40,7 @@
                 console.log(response);
             });
 
-            $scope.editIssue = function editIssue() {
+            $scope.createIssue = function createIssue() {
                 $scope.issue.assignee = $scope.issue.assignee.Id;
                 $scope.issue.project = $scope.issue.project.Id;
                 $scope.issue.priority = $scope.issue.priority.Id;
@@ -47,12 +48,12 @@
                 var datesParams = issue.dueDate.split('/');
                 issue.dueDate = new Date(datesParams[2], datesParams[1] - 1, datesParams[0]);
 
-                IssueCommands.editIssue($scope.issue);
+                issueServices.createIssue($scope.issue);
             };
 
             $scope.changeProject = function changeProject() {
                 $scope.priorities = $scope.issue.project.Priorities;
                 $scope.issue.priority = $scope.priorities[0];
             }
-    }]);
+        }]);
 })();

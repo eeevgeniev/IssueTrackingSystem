@@ -1,12 +1,12 @@
 (function () {
-    var cookie = angular.module('TrackingManagerApp.Cookies.Cookie', ['ngCookies'])
+    var cookie = angular.module('trackingManagerApp.services.commands.cookies.cookieService', ['ngCookies'])
 
-    cookie.constant('CookiesNames', {
+    cookie.constant('cookiesNames', {
         Bearer: 'Bearer',
-        User: 'User',
-    })
+        User: 'User'
+    });
 
-    cookie.factory('CookieManager', ['$cookies', function ($cookies) {
+    cookie.factory('cookieManager', ['$cookies', function ($cookies) {
         var cookieManager = {};
 
         cookieManager.getCookie = function getCookie(key) {

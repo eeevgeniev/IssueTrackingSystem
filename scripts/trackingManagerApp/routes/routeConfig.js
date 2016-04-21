@@ -1,17 +1,17 @@
 // to do change routes
 (function () {
-    var routes = angular.module('TrackingManagerApp.Routes.Routes', ['ngRoute', 'TrackingManagerApp.Controllers.Users.User',
-        'TrackingManagerApp.Controllers.Projects.NewProjects', 'TrackingManagerApp.Controllers.Projects.ViewProjects',
-        'TrackingManagerApp.Controllers.Projects.EditProjects', 'TrackingManagerApp.Controllers.Issues.NewIssue',
-        'TrackingManagerApp.Controllers.Issues.EditIssue', 'TrackingManagerApp.Controllers.Issues.ViewIssue',
-        'TrackingManagerApp.Controllers.Users.Dashboard', 'TrackingManagerApp.Controllers.Users.Edit',
-        'TrackingManagerApp.Controllers.Users.Password', 'TrackingManagerApp.Controllers.Users.Logout',
-        'TrackingManagerApp.Cookies.Cookie']);
+    var routes = angular.module('trackingManagerApp.routes.routeConfig', 
+    ['ngRoute', 'trackingManagerApp.controllers.users.manageUserController', 
+    'trackingManagerApp.controllers.projects.newProjectsController', 'trackingManagerApp.controllers.projects.viewProjectController', 
+    'trackingManagerApp.controllers.projects.editProjectController', 'trackingManagerApp.controllers.issues.newIssueController', 
+    'trackingManagerApp.controllers.issues.editIssueController', 'trackingManagerApp.controllers.issues.viewIssueController', 
+    'trackingManagerApp.controllers.users.dashboardController', 'trackingManagerApp.controllers.users.editUserController', 
+    'trackingManagerApp.controllers.users.changePasswordController', 'trackingManagerApp.controllers.users.logoutUserController']);
 
     routes.config(['$routeProvider', function ($routeProvider) {
         var defaultRoute = {
             templateUrl: '../templates/user/unknownuser.html',
-            controller: 'UserController'
+            controller: 'ManageUserController'
         };
 
         $routeProvider.when('/project', {
@@ -26,7 +26,7 @@
 
         $routeProvider.when('/projects/:id', {
             templateUrl: '../templates/projects/view.html',
-            controller: 'EditProjectController'
+            controller: 'ViewProjectController'
         });
 
         $routeProvider.when('/issue', {
@@ -71,7 +71,7 @@
         $routeProvider.otherwise(defaultRoute);
     } ]);
 
-    routes.factory('Redirect', ['$location', function ($location) {
+    routes.factory('redirect', ['$location', function ($location) {
         var redirect = {};
 
         redirect.changeLocation = function changeLocation(newPath) {
@@ -81,7 +81,7 @@
         return redirect;
     } ]);
 
-    routes.factory('GetParameters', ['$routeParams', function ($routeParams) {
+    routes.factory('getParameters', ['$routeParams', function ($routeParams) {
         var parameter = {};
 
         parameter.getValue = function getValue(name) {

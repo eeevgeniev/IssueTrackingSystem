@@ -1,11 +1,11 @@
 (function () {
-    var projectModule = angular.module('TrackingManagerApp.Controllers.Projects.NewProjects',
-        ['TrackingManagerApp.Commands.ProjectCommands', 'TrackingManagerApp.Commands.UserCommands']);
+    var projectModule = angular.module('trackingManagerApp.controllers.projects.newProjectsController',
+        ['trackingManagerApp.services.commands.projectServices', 'trackingManagerApp.services.commands.userServices']);
 
-    projectModule.controller('NewProjectController', ['$scope', '$q', 'ProjectCommands', 'UserCommands',
-        function ($scope, $q, ProjectCommands, UserCommands) {
+    projectModule.controller('NewProjectController', ['$scope', '$q', 'projectServices', 'userServices',
+        function ($scope, $q, projectServices, userServices) {
             $scope.project = {},
-            promise = UserCommands.getUsers();
+            promise = userServices.getUsers();
 
             promise.then(function success(response) {
                 $scope.users = [];
@@ -22,11 +22,11 @@
             })
 
             $scope.createProjectKey = function createProjectKey() {
-                $scope.project.ProjectKey = ProjectCommands.createProjectKey($scope.project.Name);
+                $scope.project.ProjectKey = projectServices.createProjectKey($scope.project.Name);
             }
 
             $scope.createProject = function createProject() {
-                ProjectCommands.createProject($scope.project);
+                projectServices.createProject($scope.project);
             }
         }]);
 })();

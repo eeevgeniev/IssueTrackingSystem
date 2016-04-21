@@ -5,42 +5,42 @@
         </fieldset>
         <div class="form-group">
             <label for="Title">Title:</label>
-            <input type="text" class="form-control" name="Title" id="Title" placeholder="Issue Title" ng-model="issue.title" required="required">
+            <input type="text" class="form-control" name="Title" id="Title" placeholder="Issue Title" ng-model="issue.Title" required="required">
         </div>
         <div class="form-group">
             <label for="Assignee">Assignee:</label>
-            <select class="form-control" name="Assignee" id="Assignee" ng-model="issue.assignee"
+            <select class="form-control" name="Assignee" id="Assignee" ng-model="issue.Assignee"
                     ng-options="user.Username for user in users track by user.Id" required="required">
             </select>
         </div>
         <div class="form-group">
             <label for="Project">Project:</label>
-            <select class="form-control" name="Project" id="Project" ng-model="issue.project"
+            <select class="form-control" name="Project" id="Project" ng-model="issue.Project"
                     ng-options="project.Name for project in projects track by project.Id" required="required" ng-change="changeProject()">
             </select>
         </div>
         <div class="form-group">
             <label for="Issue Key">Issue Key:</label>
-            <input type="text" class="form-control" id="IssueKey" name="IssueKey" placeholder="Issue Key" ng-model="issue.issueKey" required="required">
+            <input type="text" class="form-control" id="IssueKey" name="IssueKey" placeholder="Issue Key" ng-model="issue.IssueKey" required="required">
         </div>
         <div class="form-group">
             <label for="Priority">Priority:</label>
-            <select class="form-control" name="Priority" id="Priority" ng-model="issue.priority"
+            <select class="form-control" name="Priority" id="Priority" ng-model="issue.Priority"
                     ng-options="priority.Name for priority in priorities track by priority.Id" required="required">
             </select>
         </div>
         <div class="form-group">
             <label for="DueDate">Due Date:</label>
-            <input type="text" class="form-control" name="DueDate" id="DueDate" placeholder="dd/mm/yyyy" ng-model="issue.dueDate" required="required">
+            <input type="text" class="form-control" name="DueDate" id="DueDate" placeholder="dd/mm/yyyy" ng-model="issue.DueDate" required="required">
         </div>
         <div class="form-group">
             <label for="Labels">Labels (comma separated):</label>
-            <input type="text" class="form-control" name="Labels" id="Labels" placeholder="Labels" ng-model="issue.labels">
+            <input type="text" class="form-control" name="Labels" id="Labels" placeholder="Labels" ng-model="issue.Labels">
             <br>
         </div>
         <div class="form-group">
             <label for="Description">Description:</label>
-            <textarea class="form-control" name="Description" id="Description" placeholder="Description" ng-model="issue.description"></textarea>
+            <textarea class="form-control" name="Description" id="Description" placeholder="Description" ng-model="issue.Description"></textarea>
         </div>
         <button type="submit" class="btn btn-success" ng-click="editIssue()">Edit Issue</button>
     </form>

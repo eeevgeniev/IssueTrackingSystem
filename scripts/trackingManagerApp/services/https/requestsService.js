@@ -1,20 +1,21 @@
 ﻿(function () {
-    var httpRequest = angular.module('TrackingManagerApp.Https.Request', ['TrackingManagerApp.Https.Helper']);
+    var httpRequest = angular.module('trackingManagerApp.services.https.requestService', 
+    ['trackingManagerApp.services.https.helperService']);
 
-    httpRequest.factory('Requests', ['$http', '$q', 'Urls', 'EncodeURIComponent', 'Headers',
-        function ($http, $q, Urls, EncodeURIComponent, Headers) {
+    httpRequest.factory('requests', ['$http', '$q', 'Urls', 'uriComponentEncode', 'headers',
+        function ($http, $q, Urls, uriComponentEncode, headers) {
             var requests = {};
 
             requests.login = function login(user) {
-                var data = 'grant_type=password&username=' + EncodeURIComponent.encode(user.email) + '&password=' +
-                    EncodeURIComponent.encode(user.password),
-                    promise = httpRequest(Urls.DefaultUrl + Urls.Login, Headers.RegisterHeader, 'POST', data);
+                var data = 'grant_type=password&username=' + uriComponentEncode.encode(user.email) + '&password=' +
+                    uriComponentEncode.encode(user.password),
+                    promise = httpRequest(Urls.DefaultUrl + Urls.Login, headers.RegisterHeader, 'POST', data);
 
                 return promise;
             }
 
             requests.register = function register(user) {
-                var promise = httpRequest(Urls.DefaultUrl + Urls.Register, Headers.LoginHeader, 'POST', user);
+                var promise = httpRequest(Urls.DefaultUrl + Urls.Register, headers.LoginHeader, 'POST', user);
 
                 return promise;
             }
@@ -116,7 +117,7 @@
             }
 
             function loginHeader(token) {
-                var header = Headers.UserHeader;
+                var header = headers.UserHeader;
                 header.Authorization = "Bearer " + token;
 
                 return header;

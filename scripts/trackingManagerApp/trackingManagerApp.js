@@ -1,3 +1,3 @@
 (function () {
-    angular.module('TrackingManagerApp', ['TrackingManagerApp.Routes.Routes']);
+    angular.module('trackingManagerApp', ['trackingManagerApp.routes.routeConfig']);
 })();

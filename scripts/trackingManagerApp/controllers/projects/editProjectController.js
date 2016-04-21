@@ -1,13 +1,13 @@
 ﻿(function () {
-    var projectModule = angular.module('TrackingManagerApp.Controllers.Projects.EditProjects',
-        ['TrackingManagerApp.Commands.ProjectCommands', 'TrackingManagerApp.Commands.UserCommands',
-            'TrackingManagerApp.Filters.Filter']);
+    var projectModule = angular.module('trackingManagerApp.controllers.projects.editProjectController',
+        ['trackingManagerApp.services.commands.projectServices', 'trackingManagerApp.services.commands.userServices',
+            'trackingManagerApp.filters.getNamesFilter']);
 
-    projectModule.controller('EditProjectController', ['$scope', '$q', 'ProjectCommands', 'UserCommands',
-        function ($scope, $q, ProjectCommands, UserCommands) {
+    projectModule.controller('EditProjectController', ['$scope', '$q', 'projectServices', 'userServices',
+        function ($scope, $q, projectServices, userServices) {
             $scope.project = {},
-            projectPromise = ProjectCommands.getProject(),
-            userPromise = UserCommands.getUsers();
+            projectPromise = projectServices.getProject(),
+            userPromise = userServices.getUsers();
 
             projectPromise.then(function success(response) {
                 $scope.project = response.data;
@@ -28,13 +28,11 @@
             })
 
             $scope.createProjectKey = function createProjectKey() {
-                $scope.project.ProjectKey = ProjectCommands.createProjectKey($scope.project.Name);
+                $scope.project.ProjectKey = projectServices.createProjectKey($scope.project.Name);
             }
 
             $scope.editProject = function editProject() {
-                console.log($scope.project);
-                return;
-                ProjectCommands.editProject($scope.project);
+                projectServices.updateProject($scope.project);
             }
         }]);
 })();

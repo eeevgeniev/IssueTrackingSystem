@@ -20,12 +20,12 @@
         <div class="form-group">
             <label>Priorities (comma separated):</label>
             <input type="hidden" class="form-control" name="Priorities" id="Priorities" ng-model="project.Priorities">
-            <div class="form-control">{{project.Priorities | ShowName}}</div>
+            <div class="form-control">{{project.Priorities | getName}}</div>
         </div>
         <div class="form-group">
             <label for="Labels">Labels (comma separated):</label>
             <input type="hidden" class="form-control" id="Labels" name="Labels" placeholder="Labels" ng-model="project.Labels">
-            <div class="form-control">{{project.Labels | ShowName}}</div>
+            <div class="form-control">{{project.Labels | getName}}</div>
         </div>
         <div class="form-group">
             <label for="Description">Description:</label>

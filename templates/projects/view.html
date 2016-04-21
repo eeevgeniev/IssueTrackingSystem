@@ -5,48 +5,27 @@
         </header>
         <div class="form-group">
             <label>Name:</label>
-            <p class="form-control" id="Name">{{project.name}}</p>
+            <div class="form-control" id="Name">{{project.Name}}</div>
         </div>
         <div class="form-group">
             <label>Leader:</label>
-            <p class="form-control" id="Leader">{{project.leader}}</p>
+            <div class="form-control" id="Leader">{{project.Lead.Username}}</div>
         </div>
         <div class="form-group">
             <label>Project Key:</label>
-            <p class="form-control" id="ProjectKey">{{project.projectKey}}</p>
+            <div class="form-control" id="ProjectKey">{{project.ProjectKey}}</div>
         </div>
         <div class="form-group">
             <label>Priorities (comma separated):</label>
-            <p class="form-control" id="Priorities">{{project.priorities}}</p>
+            <div class="form-control" id="Priorities">{{project.Priorities}}</div>
         </div>
         <div class="form-group">
             <label>Labels (comma separated):</label>
-            <p class="form-control" id="Labels">{{project.labels}}</p>
+            <div class="form-control" id="Labels">{{project.Labels}}</div>
         </div>
         <div class="form-group">
             <label>Description:</label>
-            <p class="form-control" id="Description">{{project.description}}</p>
+            <div class="form-control" id="Description">{{project.Description}}</div>
         </div>
-    </section>
-    <section class="jumbotron">
-        <header>
-            <h3>Project' issues</h3>
-        </header>
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <td>Issue</td>
-                    <td>Project</td>
-                    <td>Due Date</td>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="issue in project.issues">
-                    <td>{{issue.title}}</td>
-                    <td>{{issue.issueKey}}</td>
-                    <td>{{issue.date | date: 'dd/MM/yyyy'}}</td>
-                </tr>
-            </tbody>
-        </table>
     </section>
 </section>
