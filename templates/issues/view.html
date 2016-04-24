@@ -16,20 +16,20 @@
             <div class="form-control" id="Project">{{issue.Project.Name}}</div>
         </div>
         <div class="form-group">
-            <label for="Issue Key">Issue Key:</label>
-            <div class="form-control" id="IssueKey" ng-model="issue.issueKey">{{issue.IssueKey}}</div>
+            <label for="IssueKey">Issue Key:</label>
+            <div class="form-control" id="IssueKey">{{issue.IssueKey}}</div>
         </div>
         <div class="form-group">
             <label for="Priority">Priority:</label>
-            <div class="form-control" id="Priority">{{issue.Priority}}</div>
+            <div class="form-control" id="Priority">{{issue.Priority.Name}}</div>
         </div>
         <div class="form-group">
             <label for="DueDate">Due Date:</label>
-            <div class="form-control" id="DueDate">{{issue.DueDate | date:'dd/MM/yyyy'}}</div>
+            <div class="form-control" id="DueDate">{{issue.DueDate | date:'hh:mm dd/MM/yyyy'}}</div>
         </div>
         <div class="form-group">
             <label for="Labels">Labels:</label>
-            <div class="form-control" id="Labels">{{issue.Labels}}</div>
+            <div class="form-control" id="Labels">{{issue.Labels | getName}}</div>
         </div>
         <div class="form-group">
             <label for="Description">Description:</label>

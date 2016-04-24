@@ -53,7 +53,7 @@
             });
         };
 
-        commands.createIssue = function createIssue(value) {
+        commands.newIssue = function newIssue(value) {
             var issue = {};
             issue.Title = value.Title;
             issue.Description = value.Description;
@@ -61,9 +61,12 @@
             issue.AssigneeId = value.Assignee.Id;
             issue.PriorityId = value.Priority.Id;
             issue.List = value.Labels;
+            issue.DueDate = new Date();
 
-            var datesParams = value.DueDate.split(/[\s\/:]/);
-            issue.DueDate = new Date(datesParams[4], datesParams[3] - 1, datesParams[2], datesParams[0], datesParams[1]);
+            if (typeof(value.DueDate) !== 'undefined') {
+                var datesParams = value.DueDate.split(/[\s\/:]/);
+                issue.DueDate = new Date(datesParams[4], datesParams[3] - 1, datesParams[2], datesParams[0], datesParams[1]);
+            }
 
             return issue;
         }

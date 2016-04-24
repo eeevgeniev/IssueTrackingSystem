@@ -20,10 +20,6 @@
             </select>
         </div>
         <div class="form-group">
-            <label for="IssueKey">Issue Key:</label>
-            <input type="text" class="form-control" id="IssueKey" name="IssueKey" placeholder="Issue Key" ng-model="issue.IssueKey" required="required">
-        </div>
-        <div class="form-group">
             <label for="Priority">Priority:</label>
             <select class="form-control" name="Priority" id="Priority" ng-model="issue.Priority"
                     ng-options="priority.Name for priority in priorities track by priority.Id" required="required">
@@ -31,7 +27,7 @@
         </div>
         <div class="form-group">
             <label for="DueDate">Due Date:</label>
-            <input type="text" class="form-control" name="DueDate" id="DueDate" placeholder="dd/mm/yyyy" ng-model="issue.DueDate" required="required">
+            <input type="text" class="form-control" name="DueDate" id="DueDate" placeholder="hh:mm dd/MM/yyyy" ng-model="issue.DueDate" required="required">
         </div>
         <div class="form-group">
             <label>Labels (comma separated):</label>

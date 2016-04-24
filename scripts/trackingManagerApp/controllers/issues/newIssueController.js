@@ -9,46 +9,27 @@
             userPromise = userServices.getUsers(),
             projectPromise = projectServices.getProjects();
 
-            userPromise.then(function success(response) {
-                $scope.users = [];
+            userPromise.then(function success(result) {
+                $scope.users = result;
 
-                response.data.forEach(function (currentUser) {
-                    $scope.users.push({ Id: currentUser.Id, Username: currentUser.Username });
-                })
-
-                response = null;
-
-                $scope.issue.assignee = $scope.users[0];
-            }, function error(response) {
-                console.log(response);
+                $scope.issue.Assignee = $scope.users[0];
             });
 
-            projectPromise.then(function success(response) {
-                $scope.projects = [];
+            projectPromise.then(function success(result) {
+                $scope.projects = result;
 
-                response.data.forEach(function (currentProject) {
-                    $scope.projects.push({ Id: currentProject.Id, Name: currentProject.Name, Priorities: currentProject.Priorities });
-                });
-
-                response = null;
-
-                $scope.issue.project = $scope.projects[0];
-
-                $scope.priorities = $scope.issue.project.Priorities;
-                $scope.issue.priority = $scope.priorities[0];
-            }, function error(response) {
-                console.log(response);
+                $scope.issue.Project = $scope.projects[0];
+                $scope.changeProject();
             });
 
             $scope.createIssue = function createIssue() {
-                issue = issueServices.createIssue($scope.issue);
-
-                issueServices.editIssue(issue);
+                issue = issueServices.newIssue($scope.issue);
+                issueServices.createIssue(issue);
             };
 
             $scope.changeProject = function changeProject() {
-                $scope.priorities = $scope.issue.project.Priorities;
-                $scope.issue.priority = $scope.priorities[0];
+                $scope.priorities = $scope.issue.Project.Priorities;
+                $scope.issue.Priority = $scope.priorities[0];
             }
         }]);
 })();

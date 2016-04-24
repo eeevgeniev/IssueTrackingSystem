@@ -22,7 +22,11 @@
                 userPromise.then(function success(result) {
                     $scope.users = result;
 
-                    $scope.issue.Assignee = issueAssignee === null ? $scope.users[0] : issueAssignee;
+                    issueAssignee = $scope.users.find(function (currentUser) {
+                        return issueAssignee.Id === currentUser.Id;
+                    });
+
+                    $scope.issue.Assignee = typeof (issueAssignee) === 'undefined' ? $scope.users[0] : issueAssignee;
                 });
 
                 projectPromise.then(function success(result) {
@@ -30,7 +34,7 @@
 
                     issueProject = $scope.projects.find(function (currentProject) {
                         return issueProject.Id === currentProject.Id;
-                    })
+                    });
 
                     $scope.issue.Project = typeof(issueProject) === 'undefined' ? $scope.projects[0] : issueProject;
                     $scope.changeProject();
@@ -38,8 +42,7 @@
             });
 
             $scope.editIssue = function editIssue() {
-                issue = issueServices.createIssue($scope.issue);
-
+                issue = issueServices.newIssue($scope.issue);
                 issueServices.editIssue(issue);
             };
 
