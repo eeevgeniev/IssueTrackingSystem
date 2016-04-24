@@ -5,27 +5,21 @@
     projectModule.controller('NewProjectController', ['$scope', '$q', 'projectServices', 'userServices',
         function ($scope, $q, projectServices, userServices) {
             $scope.project = {},
-            promise = userServices.getUsers();
+            userPromise = userServices.getUsers();
 
-            promise.then(function success(response) {
-                $scope.users = [];
-
-                response.data.forEach(function (currentUser) {
-                    $scope.users.push({ Id: currentUser.Id, Username: currentUser.Username });
-                })
-
-                response = null;
+            userPromise.then(function success(users) {
+                $scope.users = users;
 
                 $scope.project.Lead = $scope.users[0];
-            }, function error(response) {
-
-            })
+            });
 
             $scope.createProjectKey = function createProjectKey() {
                 $scope.project.ProjectKey = projectServices.createProjectKey($scope.project.Name);
             }
 
             $scope.createProject = function createProject() {
+                var project = projectServices.newProject($scope.project);
+
                 projectServices.createProject($scope.project);
             }
         }]);

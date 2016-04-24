@@ -16,10 +16,10 @@
                 promise = requests.getIssue(token, id);
 
             promise.then(function (response) {
-                var result = responseGetterServices.dataGetter(response.data, ['Assignee', 'Author', 'AvailableStatuses', 'Description', 'DueDate',
+                var issue = responseGetterServices.dataGetter(response.data, ['Assignee', 'Author', 'AvailableStatuses', 'Description', 'DueDate',
                     'Id', 'IssueKey', 'Labels', 'Priority', 'Project', 'Status', 'Title']);
                 response = null;
-                deffered.resolve(result);
+                deffered.resolve(issue);
             }, function (response) {
                 redirect.changeLocation('');
                 notifyService.generateErrorMessage(response);
@@ -60,7 +60,7 @@
             issue.ProjectId = value.Project.Id;
             issue.AssigneeId = value.Assignee.Id;
             issue.PriorityId = value.Priority.Id;
-            issue.List = value.Labels;
+            issue.Labels = value.Labels;
             issue.DueDate = new Date();
 
             if (typeof(value.DueDate) !== 'undefined') {
@@ -69,6 +69,25 @@
             }
 
             return issue;
+        }
+
+        commands.getAvailableLabels = function getAvailableLabels(addedLabels, labels) {
+
+            for (var i = 0; i < labels.length; i++) {
+                var isAdded = false;
+                for (var c = 0; c < addedLabels.length; c++) {
+                    if (labels[i].Id === addedLabels[c].Id) {
+                        isAdded = true;
+                        break;
+                    }
+                }
+
+                if (!isAdded) {
+                    addedLabels.push(labels[i]);
+                }
+            }
+
+            return addedLabels;
         }
 
         return commands;

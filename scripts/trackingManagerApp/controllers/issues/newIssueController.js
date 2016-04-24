@@ -7,16 +7,21 @@
         function ($scope, $q, issueServices, userServices, projectServices) {
             $scope.issue = {},
             userPromise = userServices.getUsers(),
-            projectPromise = projectServices.getProjects();
+            projectPromise = projectServices.getProjects(),
+            $scope.labels = [];
 
-            userPromise.then(function success(result) {
-                $scope.users = result;
+            userPromise.then(function success(users) {
+                $scope.users = users;
 
                 $scope.issue.Assignee = $scope.users[0];
             });
 
-            projectPromise.then(function success(result) {
-                $scope.projects = result;
+            projectPromise.then(function success(projects) {
+                $scope.projects = projects;
+
+                $scope.projects.forEach(function (currentProject) {
+                    $scope.labels = issueServices.getAvailableLabels($scope.labels, currentProject.Labels);
+                })
 
                 $scope.issue.Project = $scope.projects[0];
                 $scope.changeProject();

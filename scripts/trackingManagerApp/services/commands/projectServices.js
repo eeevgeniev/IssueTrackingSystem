@@ -16,7 +16,10 @@
             promise = requests.getProject(token, id);
 
             promise.then(function (response) {
-                deffered.resolve(response);
+                var project = responseGetterServices.dataGetter(response.data, ['Id', 'Labels', 'Lead', 'Name',
+                    'Priorities', 'ProjectKey', 'TransitionSchemeId', 'Description']);
+                response = null;
+                deffered.resolve(project);
             }, function (response) {
                 notifyService.generateErrorMessage(response);
                 redirect.changeLocation('');
@@ -31,7 +34,7 @@
             promise = requests.getProjects(token);
 
             promise.then(function (response) {
-                var result = responseGetterServices.getArray(response.data, ['Id', 'Name', 'Priorities']);
+                var result = responseGetterServices.getArray(response.data, ['Id', 'Name', 'Priorities', 'Labels']);
                 response = null;
 
                 deffered.resolve(result);
@@ -43,12 +46,13 @@
             return deffered.promise;
         }
 
-        commands.newProject = function newProject(project) {
+        commands.createProject = function createProject(project) {
             var token = cookieManager.getCookie(cookiesNames.Bearer),
             promise = requests.getProjects(token, project);
 
             promise.then(function success(response) {
                 notifyService.generateInfoMessage('Project created.');
+                // to do
             }, function error(response) {
                 notifyService.generateErrorMessage(response);
             });
@@ -79,6 +83,19 @@
             }
 
             return key;
+        }
+
+        commands.newProject = function newProject(value) {
+            var project = {};
+
+            project.Name = value.Name;
+            project.Description = value.Description;
+            project.ProjectKey = value.ProjectKey;
+            project.Labels = value.Labels;
+            project.Priorities = value.Priorities;
+            project.LeadId = value.Lead.Id;
+
+            return project;
         }
 
         return commands;

@@ -8,19 +8,20 @@
             $scope.issue = {},
             issuePromise = issueServices.getIssue(),
             issueAssignee = null,
-            issueProject = null;
+            issueProject = null,
+            $scope.labels = [];
 
-            issuePromise.then(function success(result) {
-                $scope.issue = result;
-                $scope.issue.DueDate = $filter('date')(result.DueDate, 'hh:mm dd/MM/yyyy');
-                issueAssignee = result.Assignee;
-                issueProject = result.Project;
+            issuePromise.then(function success(issue) {
+                $scope.issue = issue;
+                $scope.issue.DueDate = $filter('date')(issue.DueDate, 'hh:mm dd/MM/yyyy');
+                issueAssignee = issue.Assignee;
+                issueProject = issue.Project;
 
                 userPromise = userServices.getUsers();
                 projectPromise = projectServices.getProjects();
 
-                userPromise.then(function success(result) {
-                    $scope.users = result;
+                userPromise.then(function success(users) {
+                    $scope.users = users;
 
                     issueAssignee = $scope.users.find(function (currentUser) {
                         return issueAssignee.Id === currentUser.Id;
@@ -29,8 +30,12 @@
                     $scope.issue.Assignee = typeof (issueAssignee) === 'undefined' ? $scope.users[0] : issueAssignee;
                 });
 
-                projectPromise.then(function success(result) {
-                    $scope.projects = result;
+                projectPromise.then(function success(projects) {
+                    $scope.projects = projects;
+
+                    $scope.projects.forEach(function (currentProject) {
+                        $scope.labels = issueServices.getAvailableLabels($scope.labels, currentProject.Labels);
+                    })
 
                     issueProject = $scope.projects.find(function (currentProject) {
                         return issueProject.Id === currentProject.Id;

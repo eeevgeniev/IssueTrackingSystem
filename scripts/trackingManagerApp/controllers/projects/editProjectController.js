@@ -9,30 +9,25 @@
             projectPromise = projectServices.getProject(),
             userPromise = userServices.getUsers();
 
-            projectPromise.then(function success(response) {
-                $scope.project = response.data;
+            projectPromise.then(function success(project) {
+                console.log(project);
+                $scope.project = project;
             });
 
-            userPromise.then(function success(response) {
-                $scope.users = [];
-
-                response.data.forEach(function (currentUser) {
-                    $scope.users.push({ Id: currentUser.Id, Username: currentUser.Username });
-                })
-
-                response = null;
+            userPromise.then(function success(users) {
+                $scope.users = users;
 
                 $scope.project.Lead = $scope.users[0];
-            }, function error(response) {
-
-            })
+            });
 
             $scope.createProjectKey = function createProjectKey() {
                 $scope.project.ProjectKey = projectServices.createProjectKey($scope.project.Name);
             }
 
             $scope.editProject = function editProject() {
-                projectServices.updateProject($scope.project);
+                var project = projectServices.newProject($scope.project);
+
+                projectServices.updateProject(project);
             }
         }]);
 })();
