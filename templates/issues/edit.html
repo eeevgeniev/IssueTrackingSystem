@@ -20,7 +20,7 @@
             </select>
         </div>
         <div class="form-group">
-            <label for="Issue Key">Issue Key:</label>
+            <label for="IssueKey">Issue Key:</label>
             <input type="text" class="form-control" id="IssueKey" name="IssueKey" placeholder="Issue Key" ng-model="issue.IssueKey" required="required">
         </div>
         <div class="form-group">
@@ -34,9 +34,9 @@
             <input type="text" class="form-control" name="DueDate" id="DueDate" placeholder="dd/mm/yyyy" ng-model="issue.DueDate" required="required">
         </div>
         <div class="form-group">
-            <label for="Labels">Labels (comma separated):</label>
-            <input type="text" class="form-control" name="Labels" id="Labels" placeholder="Labels" ng-model="issue.Labels">
-            <br>
+            <label>Labels (comma separated):</label>
+            <input type="hidden" name="Labels" id="Labels" ng-model="issue.Labels" />
+            <div class="form-control">{{issue.Labels | getName}}</div>
         </div>
         <div class="form-group">
             <label for="Description">Description:</label>

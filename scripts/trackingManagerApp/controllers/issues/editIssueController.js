@@ -5,7 +5,6 @@
 
     issuesModule.controller('EditIssueController', ['$scope', '$q', '$filter', 'issueServices', 'userServices', 'projectServices',
         function ($scope, $q, $filter, issueServices, userServices, projectServices) {
-
             $scope.issue = {},
             userPromise = userServices.getUsers(),
             projectPromise = projectServices.getProjects(),
@@ -38,18 +37,11 @@
 
             issuePromise.then(function success(response) {
                 $scope.issue = response.data;
-                $scope.issue.DueDate = $filter('date')(response.data.DueDate, 'dd/MM/yyyy');
+                $scope.issue.DueDate = $filter('date')(response.data.DueDate, 'hh:mm dd/MM/yyyy');
             })
 
             $scope.editIssue = function editIssue() {
-                var issue = $scope.issue;
-
-                issue.Assignee = issue.Assignee.Id;
-                issue.Project = issue.Project.Id;
-                issue.Priority = issue.Priority.Id;
-
-                var datesParams = issue.DueDate.split('/');
-                issue.DueDate = new Date(datesParams[2], datesParams[1] - 1, datesParams[0]);
+                issue = issueServices.createIssue($scope.issue);
 
                 issueServices.editIssue(issue);
             };

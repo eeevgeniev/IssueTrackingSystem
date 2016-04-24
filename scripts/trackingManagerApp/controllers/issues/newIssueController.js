@@ -41,14 +41,9 @@
             });
 
             $scope.createIssue = function createIssue() {
-                $scope.issue.assignee = $scope.issue.assignee.Id;
-                $scope.issue.project = $scope.issue.project.Id;
-                $scope.issue.priority = $scope.issue.priority.Id;
+                issue = issueServices.createIssue($scope.issue);
 
-                var datesParams = issue.dueDate.split('/');
-                issue.dueDate = new Date(datesParams[2], datesParams[1] - 1, datesParams[0]);
-
-                issueServices.createIssue($scope.issue);
+                issueServices.editIssue(issue);
             };
 
             $scope.changeProject = function changeProject() {

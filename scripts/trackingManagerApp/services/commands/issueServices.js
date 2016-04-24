@@ -1,7 +1,8 @@
 ﻿(function () {
     var issueCommands = angular.module('trackingManagerApp.services.commands.issueServices',
     ['trackingManagerApp.services.https.requestService', 'trackingManagerApp.services.commands.cookies.cookieService',
-    'trackingManagerApp.routes.routeConfig', 'trackingManagerApp.services.commands.notifyServices']);
+    'trackingManagerApp.routes.routeConfig', 'trackingManagerApp.services.commands.notifyServices',
+    '']);
 
     issueCommands.factory('issueServices', ['$q', 'requests', 'redirect', 'getParameters', 'cookieManager',
     'cookiesNames', 'notifyService',
@@ -48,6 +49,21 @@
                 notifyService.generateErrorMessage(response);
             });
         };
+
+        commands.createIssue = function createIssue(value) {
+            var issue = {};
+            issue.Title = value.Title;
+            issue.Description = value.Description;
+            issue.ProjectId = value.Project.Id;
+            issue.AssigneeId = value.Assignee.Id;
+            issue.PriorityId = value.Priority.Id;
+            issue.List = value.Labels;
+
+            var datesParams = value.DueDate.split(/[\s\/:]/);
+            issue.DueDate = new Date(datesParams[4], datesParams[3] - 1, datesParams[2], datesParams[0], datesParams[1]);
+
+            return issue;
+        }
 
         return commands;
     } ]);
