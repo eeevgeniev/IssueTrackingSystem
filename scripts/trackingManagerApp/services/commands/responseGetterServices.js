@@ -4,16 +4,34 @@
     responseGetterModule.factory('responseGetterServices', [function () {
         var getter = {};
 
-        getter.dataGetter = function dataGetter(response, properties){
+        getter.dataGetter = function dataGetter(object, properties) {
             var result = {};
 
-            for (var currentProperty in properties) {
-                result[currentProperty] = response[currentProperty];
-            }
+            properties.forEach(function (currentProperty) {
+
+                result[currentProperty] = object[currentProperty];
+
+            });
+
+            return result;
+        }
+
+        getter.getArray = function getArray(values, properties) {
+            var result = [];
+
+            values.forEach(function (currentValue) {
+                var newValue = {};
+
+                properties.forEach(function (currentProperty) {
+                    newValue[currentProperty] = currentValue[currentProperty];
+                });
+
+                result.push(newValue);
+            });
 
             return result;
         }
 
         return getter;
     }]);
-})
+})();

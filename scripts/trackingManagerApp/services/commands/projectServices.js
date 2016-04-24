@@ -1,11 +1,12 @@
 ﻿(function () {
     var projectCommands = angular.module('trackingManagerApp.services.commands.projectServices',
     ['trackingManagerApp.services.https.requestService', 'trackingManagerApp.services.commands.cookies.cookieService',
-    'trackingManagerApp.routes.routeConfig', 'trackingManagerApp.services.commands.notifyServices']);
+    'trackingManagerApp.routes.routeConfig', 'trackingManagerApp.services.commands.notifyServices',
+    'trackingManagerApp.services.commands.responseGetterServices']);
 
     projectCommands.factory('projectServices', ['$q', 'requests', 'cookieManager', 'cookiesNames', 
-    'redirect', 'getParameters', 'notifyService', 
-    function ($q, requests, cookieManager, cookiesNames, redirect, getParameters, notifyService) {
+    'redirect', 'getParameters', 'notifyService', 'responseGetterServices', 
+    function ($q, requests, cookieManager, cookiesNames, redirect, getParameters, notifyService, responseGetterServices) {
         var commands = {};
 
         commands.getProject = function getProject() {
@@ -30,7 +31,10 @@
             promise = requests.getProjects(token);
 
             promise.then(function (response) {
-                deffered.resolve(response);
+                var result = responseGetterServices.getArray(response.data, ['Id', 'Name', 'Priorities']);
+                response = null;
+
+                deffered.resolve(result);
             }, function (response) {
                 notifyService.generateErrorMessage(response);
                 redirect.changeLocation('');

@@ -1,6 +1,6 @@
 (function () {
-    var issuesModule = angular.module('trackingManagerApp.controllers.issues.newIssueController', 
-    ['trackingManagerApp.services.commands.issueServices', 'trackingManagerApp.services.commands.userServices', 
+    var issuesModule = angular.module('trackingManagerApp.controllers.issues.newIssueController',
+    ['trackingManagerApp.services.commands.issueServices', 'trackingManagerApp.services.commands.userServices',
     'trackingManagerApp.services.commands.projectServices']);
 
     issuesModule.controller('NewIssueController', ['$scope', '$q', 'issueServices', 'userServices', 'projectServices',

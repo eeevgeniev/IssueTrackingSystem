@@ -2,11 +2,11 @@
     var issueCommands = angular.module('trackingManagerApp.services.commands.issueServices',
     ['trackingManagerApp.services.https.requestService', 'trackingManagerApp.services.commands.cookies.cookieService',
     'trackingManagerApp.routes.routeConfig', 'trackingManagerApp.services.commands.notifyServices',
-    '']);
+    'trackingManagerApp.services.commands.responseGetterServices']);
 
     issueCommands.factory('issueServices', ['$q', 'requests', 'redirect', 'getParameters', 'cookieManager',
-    'cookiesNames', 'notifyService',
-    function ($q, requests, redirect, getParameters, cookieManager, cookiesNames, notifyService) {
+    'cookiesNames', 'notifyService', 'responseGetterServices',
+    function ($q, requests, redirect, getParameters, cookieManager, cookiesNames, notifyService, responseGetterServices) {
         var commands = {};
 
         commands.getIssue = function getIssue() {
@@ -16,7 +16,10 @@
                 promise = requests.getIssue(token, id);
 
             promise.then(function (response) {
-                deffered.resolve(response);
+                var result = responseGetterServices.dataGetter(response.data, ['Assignee', 'Author', 'AvailableStatuses', 'Description', 'DueDate',
+                    'Id', 'IssueKey', 'Labels', 'Priority', 'Project', 'Status', 'Title']);
+                response = null;
+                deffered.resolve(result);
             }, function (response) {
                 redirect.changeLocation('');
                 notifyService.generateErrorMessage(response);
@@ -66,5 +69,5 @@
         }
 
         return commands;
-    } ]);
+    }]);
 })();

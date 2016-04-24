@@ -6,39 +6,36 @@
     issuesModule.controller('EditIssueController', ['$scope', '$q', '$filter', 'issueServices', 'userServices', 'projectServices',
         function ($scope, $q, $filter, issueServices, userServices, projectServices) {
             $scope.issue = {},
-            userPromise = userServices.getUsers(),
-            projectPromise = projectServices.getProjects(),
-            issuePromise = issueServices.getIssue();
+            issuePromise = issueServices.getIssue(),
+            issueAssignee = null,
+            issueProject = null;
 
-            userPromise.then(function success(response) {
-                $scope.users = [];
+            issuePromise.then(function success(result) {
+                $scope.issue = result;
+                $scope.issue.DueDate = $filter('date')(result.DueDate, 'hh:mm dd/MM/yyyy');
+                issueAssignee = result.Assignee;
+                issueProject = result.Project;
 
-                response.data.forEach(function (currentUser) {
-                    $scope.users.push({ Id: currentUser.Id, Username: currentUser.Username });
-                })
+                userPromise = userServices.getUsers();
+                projectPromise = projectServices.getProjects();
 
-                response = null;
-                $scope.issue.Assignee = $scope.users[0];
-            });
+                userPromise.then(function success(result) {
+                    $scope.users = result;
 
-            projectPromise.then(function success(response) {
-                $scope.projects = [];
-
-                response.data.forEach(function (currentProject) {
-                    $scope.projects.push({ Id: currentProject.Id, Name: currentProject.Name, Priorities: currentProject.Priorities });
+                    $scope.issue.Assignee = issueAssignee === null ? $scope.users[0] : issueAssignee;
                 });
 
-                response = null;
+                projectPromise.then(function success(result) {
+                    $scope.projects = result;
 
-                $scope.issue.Project = $scope.projects[0];
-                $scope.priorities = $scope.issue.Project.Priorities;
-                $scope.issue.Priority = $scope.priorities[0];
+                    issueProject = $scope.projects.find(function (currentProject) {
+                        return issueProject.Id === currentProject.Id;
+                    })
+
+                    $scope.issue.Project = typeof(issueProject) === 'undefined' ? $scope.projects[0] : issueProject;
+                    $scope.changeProject();
+                });
             });
-
-            issuePromise.then(function success(response) {
-                $scope.issue = response.data;
-                $scope.issue.DueDate = $filter('date')(response.data.DueDate, 'hh:mm dd/MM/yyyy');
-            })
 
             $scope.editIssue = function editIssue() {
                 issue = issueServices.createIssue($scope.issue);
@@ -48,7 +45,7 @@
 
             $scope.changeProject = function changeProject() {
                 $scope.priorities = $scope.issue.Project.Priorities;
-                $scope.issue.Priority = $scope.Priorities[0];
+                $scope.issue.Priority = $scope.priorities[0];
             }
         }]);
 })();

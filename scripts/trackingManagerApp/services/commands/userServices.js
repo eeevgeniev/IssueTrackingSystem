@@ -1,10 +1,12 @@
 (function () {
     var userCommands = angular.module('trackingManagerApp.services.commands.userServices',
     ['trackingManagerApp.services.https.requestService', 'trackingManagerApp.services.commands.cookies.cookieService',
-    'trackingManagerApp.routes.routeConfig', 'trackingManagerApp.services.commands.notifyServices']);
+    'trackingManagerApp.routes.routeConfig', 'trackingManagerApp.services.commands.notifyServices',
+    'trackingManagerApp.services.commands.responseGetterServices']);
 
-    userCommands.factory('userServices', ['$q', 'requests', 'cookieManager', 'cookiesNames', 'redirect', 'notifyService',
-    function ($q, requests, cookieManager, cookiesNames, redirect, notifyService) {
+    userCommands.factory('userServices', ['$q', 'requests', 'cookieManager', 'cookiesNames', 'redirect',
+        'notifyService', 'responseGetterServices',
+    function ($q, requests, cookieManager, cookiesNames, redirect, notifyService, responseGetterServices) {
         var commands = {};
 
         commands.getUser = function getUser() {
@@ -64,8 +66,8 @@
 
         commands.getUserIssues = function getUserIssues(pageSize, pageNumber, orderBy) {
             var token = cookieManager.getCookie(cookiesNames.Bearer),
-            deffered = $q.defer(),
-            promise = requests.getUserIssues(token, pageSize, pageNumber, orderBy)
+                deffered = $q.defer(),
+                promise = requests.getUserIssues(token, pageSize, pageNumber, orderBy)
 
             promise.then(function success(response) {
                 deffered.resolve(promise);
@@ -79,11 +81,13 @@
 
         commands.getUsers = function getUsers() {
             var token = cookieManager.getCookie(cookiesNames.Bearer),
-            deffered = $q.defer(),
-            promise = requests.getUsers(token);
+                deffered = $q.defer(),
+                promise = requests.getUsers(token);
 
             promise.then(function success(response) {
-                deffered.resolve(promise);
+                var result = responseGetterServices.getArray(response.data, ['Id', 'Username']);
+                response = null;
+                deffered.resolve(result);
             }, function error(response) {
                 notifyService.generateErrorMessage(response);
                 redirect.changeLocation('');
@@ -103,5 +107,5 @@
         }
 
         return commands;
-    } ]);
+    }]);
 })();
