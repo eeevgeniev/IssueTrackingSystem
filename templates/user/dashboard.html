@@ -1,25 +1,29 @@
 ﻿<section class="jumbotron">
-    <header>
-        <h3>Dashboard</h3>
-    </header>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Issue</th>
-                <th>Project</th>
-                <th>Due Date</th>
-                <th>View Issue</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr ng-repeat="issue in issues">
-                <td>{{issue.Title}}</td>
-                <td>{{issue.IssueKey}}</td>
-                <td>{{issue.DueDate | date: 'dd/MM/yyyy'}}</td>
-                <td><a href="#/issues/{{issue.Id}}">View</a></td>
-            </tr>
-        </tbody>
-    </table>
-    <button class="btn btn-lg btn-success">Add New Project</button>
-    <button class="btn btn-lg btn-success">Add New Issue</button>
+    <div id="new-project" class="hidden" ng-controller="NewProjectController" ng-include="'templates/projects/new.html'"></div>
+    <div id="new-issue" class="hidden" ng-controller="NewIssueController" ng-include="'templates/issues/new.html'"></div>
+    <div>
+        <header>
+            <h3>Dashboard</h3>
+        </header>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Issue</th>
+                    <th>Project</th>
+                    <th>Due Date</th>
+                    <th>View Issue</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="issue in issues">
+                    <td>{{issue.Title}}</td>
+                    <td>{{issue.IssueKey}}</td>
+                    <td>{{issue.DueDate | date: 'dd/MM/yyyy'}}</td>
+                    <td><a href="#/issues/{{issue.Id}}">View</a></td>
+                </tr>
+            </tbody>
+        </table>
+        <button class="btn btn-lg btn-success" ng-click="newProject()">Add New Project</button>
+        <button class="btn btn-lg btn-success" ng-click="newIssue()">Add New Issue</button>
+    </div>
 </section>
