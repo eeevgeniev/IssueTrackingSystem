@@ -61,7 +61,7 @@
         });
     }]);
 
-    routes.factory('redirect', ['$location', function ($location) {
+    routes.factory('redirect', ['$location', '$route', function ($location, $route) {
         var redirect = {};
 
         redirect.changeLocation = function changeLocation(newPath) {

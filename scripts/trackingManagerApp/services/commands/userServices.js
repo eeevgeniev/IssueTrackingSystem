@@ -16,7 +16,7 @@
             promise.then(function success(response) {
                 cookieManager.setObject(cookiesNames.User, response.data);
                 notifyService.generateInfoMessage('Successfull login.');
-                redirect.changeLocation('/dashboard');
+                redirect.reloadPage();
             }, function error(response) {
                 notifyService.generateErrorMessage(response);
             });
@@ -67,7 +67,7 @@
         commands.getUserIssues = function getUserIssues(pageSize, pageNumber, orderBy) {
             var token = cookieManager.getCookie(cookiesNames.Bearer),
                 deffered = $q.defer(),
-                promise = requests.getUserIssues(token, pageSize, pageNumber, orderBy)
+                promise = requests.getUserIssues(token, pageSize, pageNumber, orderBy);
 
             promise.then(function success(response) {
                 deffered.resolve(promise);

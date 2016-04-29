@@ -4,10 +4,10 @@
 
     dashboardModule.controller('DashboardController', ['$scope', '$q', 'userServices', function ($scope, $q, userServices) {
 
-        var promise = userServices.getUserIssues(0, 100, 'title');
+        var promise = userServices.getUserIssues(10, 1, 'Title');
 
         promise.then(function success(response) {
-            $scope.issues = response.data.issues;
+            $scope.issues = response.data.Issues;
         }, function error(response) {
             console.log(response);
         });

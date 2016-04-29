@@ -5,16 +5,18 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                <td>Issue</td>
-                <td>Project</td>
-                <td>Due Date</td>
+                <th>Issue</th>
+                <th>Project</th>
+                <th>Due Date</th>
+                <th>View Issue</th>
             </tr>
         </thead>
         <tbody>
             <tr ng-repeat="issue in issues">
-                <td>{{issue.title}}</td>
-                <td>{{issue.issueKey}}</td>
-                <td>{{issue.date | date: 'dd/MM/yyyy'}}</td>
+                <td>{{issue.Title}}</td>
+                <td>{{issue.IssueKey}}</td>
+                <td>{{issue.DueDate | date: 'dd/MM/yyyy'}}</td>
+                <td><a href="#/issues/{{issue.Id}}">View</a></td>
             </tr>
         </tbody>
     </table>
