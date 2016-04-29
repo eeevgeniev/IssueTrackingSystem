@@ -19,7 +19,6 @@
 
             $scope.createProject = function createProject() {
                 var project = projectServices.newProject($scope.project);
-
                 projectServices.createProject($scope.project);
             }
         }]);

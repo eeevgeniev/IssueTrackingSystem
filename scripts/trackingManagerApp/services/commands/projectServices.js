@@ -48,7 +48,7 @@
 
         commands.createProject = function createProject(project) {
             var token = cookieManager.getCookie(cookiesNames.Bearer),
-            promise = requests.getProjects(token, project);
+            promise = requests.newProject(token, project);
 
             promise.then(function success(response) {
                 notifyService.generateInfoMessage('Project created.');

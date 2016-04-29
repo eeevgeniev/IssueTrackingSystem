@@ -106,6 +106,16 @@
             return user.isAdmin;
         }
 
+        commands.isUserRegistered = function isUserRegistered() {
+            var user = cookieManager.getObjectCookie(cookiesNames.User);
+
+            if (typeof (user) === 'undefined') {
+                return false;
+            }
+
+            return true;
+        }
+
         return commands;
     }]);
 })();
