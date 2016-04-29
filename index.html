@@ -26,6 +26,7 @@
         <script src="scripts/trackingManagerApp/controllers/issues/newIssueController.js"></script>
         <script src="scripts/trackingManagerApp/controllers/issues/editIssueController.js"></script>
         <script src="scripts/trackingManagerApp/controllers/issues/viewIssueController.js"></script>
+        <script src="scripts/trackingManagerApp/controllers/menu/menuController.js"></script>
         <script src="scripts/trackingManagerApp/services/cookies/cookieService.js"></script>
         <script src="scripts/trackingManagerApp/services/https/requestsService.js"></script>
         <script src="scripts/trackingManagerApp/services/https/helperService.js"></script>
@@ -41,10 +42,9 @@
     </head>
     <body>
         <div id="notifications"></div>
-        <div id="wrapper" class="centered">
-            <section ng-view>
-            
-            </section>
+        <div id="wrapper" class="centered top-distance">
+            <div ng-controller="MenuController" ng-include="'templates/menu/menu.html'"></div>
+            <section class="jumbotron" ng-view></section>
         </div>
     </body>
 </html>

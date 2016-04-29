@@ -10,7 +10,6 @@
             userPromise = userServices.getUsers();
 
             projectPromise.then(function success(project) {
-                console.log(project);
                 $scope.project = project;
             });
 

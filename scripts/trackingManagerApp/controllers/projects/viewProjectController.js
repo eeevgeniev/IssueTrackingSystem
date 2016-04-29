@@ -5,13 +5,17 @@
     projectModule.controller('ViewProjectController', ['$scope', '$filter', 'projectServices',
     function ($scope, $filter, projectServices) {
 
-        var promise = projectServices.getProject();
+        var promiseProject = projectServices.getProject();
+        var promiseProjectIssues = projectServices.getProjectIssues();
 
-        promise.then(function success(response) {
-            $scope.project = response.data;
-            $scope.project.Priorities = $filter('getName')(response.data.Priorities);
-            $scope.project.Labels = $filter('getName')(response.data.Labels);
+        promiseProject.then(function success(project) {
+            $scope.project = project;
+            $scope.project.Priorities = $filter('getName')(project.Priorities);
+            $scope.project.Labels = $filter('getName')(project.Labels);
         });
 
-    } ]);
+        promiseProjectIssues.then(function success(issues) {
+            $scope.issues = issues;
+        });
+    }]);
 })();

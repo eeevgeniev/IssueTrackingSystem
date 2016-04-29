@@ -25,8 +25,8 @@
         });
 
         $routeProvider.when('/projects/:id/add-issue', {
-            templateUrl: 'to do',
-            controller: 'to do'
+            templateUrl: '../templates/issues/new.html',
+            controller: 'NewIssueController'
         });
 
         $routeProvider.when('/issues/:id', {
@@ -41,11 +41,12 @@
 
         $routeProvider.when('/profile/password', {
             templateUrl: '../templates/user/password.html',
-            controller: 'PasswordController'
+            controller: 'ChangePasswordController'
         });
 
         $routeProvider.when('/logout', {
-            controller: 'LogoutController'
+            templateUrl: '../templates/user/edit.html',
+            controller: 'LogoutUserController',
         });
 
         $routeProvider.otherwise(defaultRoute);

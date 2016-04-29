@@ -1,5 +1,5 @@
 ﻿<section class="col-md-12">
-    <form name="projectEditForm" class="jumbotron col-md-12">
+    <form name="projectEditForm" class="col-md-12">
         <fieldset>
             <h3>Edit Project</h3>
         </fieldset>
@@ -32,5 +32,6 @@
             <textarea class="form-control" name="Description" id="Description" placeholder="Description" ng-model="project.Description"></textarea>
         </div>
         <button type="submit" class="btn btn-success" ng-click="editProject()">Edit Project</button>
+        <a class="btn btn-success" href="#/projects/{{project.Id}}">Back to Project</a>
     </form>
 </section>

@@ -1,4 +1,4 @@
-﻿<section class="jumbotron">
+﻿<section>
     <div id="new-project" class="hidden" ng-controller="NewProjectController" ng-include="'templates/projects/new.html'"></div>
     <div id="new-issue" class="hidden" ng-controller="NewIssueController" ng-include="'templates/issues/new.html'"></div>
     <div>
@@ -8,22 +8,20 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>Issue</th>
-                    <th>Project</th>
+                    <th>Issue Title</th>
+                    <th>Project Name</th>
                     <th>Due Date</th>
-                    <th>View Issue</th>
                 </tr>
             </thead>
             <tbody>
                 <tr ng-repeat="issue in issues">
-                    <td>{{issue.Title}}</td>
-                    <td>{{issue.IssueKey}}</td>
-                    <td>{{issue.DueDate | date: 'dd/MM/yyyy'}}</td>
-                    <td><a href="#/issues/{{issue.Id}}">View</a></td>
+                    <td><a href="#/issues/{{issue.Id}}">{{issue.Title}}</a></td>
+                    <td><a href="#/projects/{{issue.Project.Id}}">{{issue.Project.Name}}</a></td>
+                    <td>{{issue.DueDate | date: 'hh:mm dd/MM/yyyy'}}</td>
                 </tr>
             </tbody>
         </table>
-        <button class="btn btn-lg btn-success" ng-click="newProject()">Add New Project</button>
-        <button class="btn btn-lg btn-success" ng-click="newIssue()">Add New Issue</button>
+        <button class="btn btn-success" ng-click="newProject()">Add New Project</button>
+        <button class="btn btn-success" ng-click="newIssue()">Add New Issue</button>
     </div>
 </section>

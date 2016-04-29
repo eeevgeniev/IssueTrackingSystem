@@ -5,20 +5,20 @@
     dashboardModule.controller('DashboardController', ['$scope', '$q', 'userServices', 'modalServices',
         function ($scope, $q, userServices, modalServices) {
 
-            var promise = userServices.getUserIssues(10, 1, 'Title');
+            var promise = userServices.getUserIssues(10, 1, 'DueDate desc');
 
-            promise.then(function success(response) {
-                $scope.issues = response.data.Issues;
+            promise.then(function success(result) {
+                $scope.issues = result.Issues;
             }, function error(response) {
                 console.log(response);
             });
 
             $scope.newProject = function newProject() {
-                modalServices.createModal('#new-project', 700, 800);
+                modalServices.createModal('#new-project', 800, 800);
             }
 
             $scope.newIssue = function newIssue() {
-                modalServices.createModal('#new-issue', 700, 800);
+                modalServices.createModal('#new-issue', 800, 800);
             }
 
             $scope.$on('$destroy', function () {

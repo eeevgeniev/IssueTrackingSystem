@@ -4,16 +4,16 @@
     'trackingManagerApp.routes.routeConfig', 'trackingManagerApp.services.commands.notifyServices',
     'trackingManagerApp.services.commands.responseGetterServices']);
 
-    projectCommands.factory('projectServices', ['$q', 'requests', 'cookieManager', 'cookiesNames', 
-    'redirect', 'getParameters', 'notifyService', 'responseGetterServices', 
+    projectCommands.factory('projectServices', ['$q', 'requests', 'cookieManager', 'cookiesNames',
+    'redirect', 'getParameters', 'notifyService', 'responseGetterServices',
     function ($q, requests, cookieManager, cookiesNames, redirect, getParameters, notifyService, responseGetterServices) {
         var commands = {};
 
         commands.getProject = function getProject() {
             var token = cookieManager.getCookie(cookiesNames.Bearer),
-            id = getParameters.getValue('id'),
-            deffered = $q.defer(),
-            promise = requests.getProject(token, id);
+                id = getParameters.getValue('id'),
+                deffered = $q.defer(),
+                promise = requests.getProject(token, id);
 
             promise.then(function (response) {
                 var project = responseGetterServices.dataGetter(response.data, ['Id', 'Labels', 'Lead', 'Name',
@@ -23,7 +23,7 @@
             }, function (response) {
                 notifyService.generateErrorMessage(response);
                 redirect.changeLocation('');
-            })
+            });
 
             return deffered.promise;
         }
@@ -85,6 +85,24 @@
             return key;
         }
 
+        commands.getProjectIssues = function getProjectIssues() {
+            var token = cookieManager.getCookie(cookiesNames.Bearer),
+                id = getParameters.getValue('id'),
+                deffered = $q.defer(),
+                promise = requests.getProjectIssues(token, id);
+
+            promise.then(function (response) {
+                var issues = responseGetterServices.getArray(response.data, ['Id', 'Title', 'DueDate']);
+                response = null;
+                deffered.resolve(issues);
+            }, function (response) {
+                notifyService.generateErrorMessage(response);
+                redirect.changeLocation('');
+            });
+
+            return deffered.promise;
+        }
+
         commands.newProject = function newProject(value) {
             var project = {};
 
@@ -99,5 +117,5 @@
         }
 
         return commands;
-    } ]);
+    }]);
 })();

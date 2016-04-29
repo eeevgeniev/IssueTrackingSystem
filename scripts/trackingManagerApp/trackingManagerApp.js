@@ -1,3 +1,3 @@
 (function () {
-    angular.module('trackingManagerApp', ['trackingManagerApp.routes.routeConfig']);
+    angular.module('trackingManagerApp', ['trackingManagerApp.routes.routeConfig', 'trackingManagerApp.controllers.issues.menuController']);
 })();

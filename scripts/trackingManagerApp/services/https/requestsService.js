@@ -99,6 +99,13 @@
                 return promise;
             }
 
+            requests.getProjectIssues = function getProjectIssues(token, id) {
+                var header = loginHeader(token),
+                    promise = httpRequest(Urls.DefaultUrl + Urls.GetProject + id + Urls.GetIssue, header, 'GET', null);
+
+                return promise;
+            }
+
             requests.getLabels = function getLabels(token, labelName) {
                 var header = loginHeader(token),
                     query = labelName === null ? null : uriComponentEncode.encode('?filter={Label.Name ===' + labelName + '}'),
