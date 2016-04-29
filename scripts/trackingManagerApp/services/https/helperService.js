@@ -16,7 +16,8 @@
         GetProject: '/Projects/',
         GetProjects: '/Projects',
         NewProject: '/Projects',
-        UpdateProject: '/Projects/'
+        UpdateProject: '/Projects/',
+        GetLabels: '/labels/'
     });
 
     httpHelper.constant('headers', {
