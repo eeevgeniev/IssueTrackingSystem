@@ -1,0 +1,45 @@
+﻿<form name="issueForm" class="col-md-12">
+    <fieldset>
+        <h3>{{title}}</h3>
+    </fieldset>
+    <div class="form-group">
+        <label for="Title">Title:</label>
+        <input type="text" class="form-control" name="Title" id="Title" placeholder="Issue Title" ng-model="issue.Title" required="required">
+        <span class="error" ng-if="!issueForm.Title.$pristine && !issueForm.Title.$valid">Issue title is required.</span>
+    </div>
+    <div class="form-group">
+        <label for="Assignee">Assignee:</label>
+        <select class="form-control" name="Assignee" id="Assignee" ng-model="issue.Assignee"
+                ng-options="user.Username for user in users track by user.Id " required="required"></select>
+        <span class="error" ng-if="!issueForm.Assignee.$pristine && !issueForm.Assignee.$valid">Select Issue assignee.</span>
+    </div>
+    <div class="form-group">
+        <label for="Project">Project:</label>
+        <select class="form-control" name="Project" id="Project" ng-model="issue.Project"
+                ng-options="project.Name for project in projects track by project.Id" required="required" ng-change="changeProject()"></select>
+        <span class="error" ng-if="!issueForm.Project.$pristine && !issueForm.Project.$valid">Select Issue project.</span>
+    </div>
+    <div class="form-group">
+        <label for="Priority">Priority:</label>
+        <select class="form-control" name="Priority" id="Priority" ng-model="issue.Priority"
+                ng-options="priority.Name for priority in priorities track by priority.Id" required="required"></select>
+        <span class="error" ng-if="!issueForm.Priority.$pristine && !issueForm.Priority.$valid">Select Issue priority.</span>
+    </div>
+    <div class="form-group">
+        <label for="DueDate">Due Date:</label>
+        <input type="text" class="form-control" name="DueDate" id="DueDate" placeholder="hh:mm dd/MM/yyyy" ng-model="issue.DueDate" required="required">
+        <span class="error" ng-if="!issueForm.DueDate.$pristine && !issueForm.DueDate.$valid">Issue due date is required.</span>
+    </div>
+    <div class="form-group">
+        <label>Labels (comma separated):</label>
+        <input type="hidden" name="Labels" id="Labels" placeholder="Labels" ng-model="issue.Labels">
+        <div class="form-control">{{issue.Labels | getName}}</div>
+        <span class="error" ng-if="!issueForm.Labels.$pristine && !issueForm.Labels.$valid">Issue labels are required.</span>
+    </div>
+    <div class="form-group">
+        <label for="Description">Description:</label>
+        <textarea class="form-control" name="Description" id="Description" placeholder="Description" ng-model="issue.Description" required="required"></textarea>
+        <span class="error" ng-if="!issueForm.Description.$pristine && !issueForm.Description.$valid">Issue description is required.</span>
+    </div>
+    <button type="submit" ng-disabled="!issueForm.$valid" class="btn btn-success" ng-click="addUpdateIssue()">Add Issue</button>
+</form>

@@ -14,7 +14,7 @@
             });
 
             $scope.newProject = function newProject() {
-                modalServices.createModal('#new-project', 800, 800);
+                modalServices.createModal('#new-project', 700, 800);
             }
 
             $scope.newIssue = function newIssue() {

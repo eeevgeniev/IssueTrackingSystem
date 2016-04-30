@@ -5,6 +5,7 @@
     projectModule.controller('NewProjectController', ['$scope', '$q', 'projectServices', 'userServices',
         function ($scope, $q, projectServices, userServices) {
             $scope.project = {},
+            $scope.title = 'New Project',
             userPromise = userServices.getUsers();
 
             userPromise.then(function success(users) {
@@ -17,9 +18,11 @@
                 $scope.project.ProjectKey = projectServices.createProjectKey($scope.project.Name);
             }
 
-            $scope.createProject = function createProject() {
+            $scope.addUpdateProject = function addUpdateProject() {
                 var project = projectServices.newProject($scope.project);
-                projectServices.createProject($scope.project);
+                projectServices.createProject(project);
+                $('.ui-dialog').remove();
+                $('#new-project').addClass('hidden');
             }
         }]);
 })();

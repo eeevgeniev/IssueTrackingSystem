@@ -6,6 +6,7 @@
     issuesModule.controller('NewIssueController', ['$scope', '$q', 'issueServices', 'userServices', 'projectServices',
         function ($scope, $q, issueServices, userServices, projectServices) {
             $scope.issue = {},
+            $scope.title = 'New Issue',
             userPromise = userServices.getUsers(),
             projectPromise = projectServices.getProjects(),
             $scope.labels = [];
@@ -27,9 +28,11 @@
                 $scope.changeProject();
             });
 
-            $scope.createIssue = function createIssue() {
+            $scope.addUpdateIssue = function addUpdateIssue() {
                 issue = issueServices.newIssue($scope.issue);
                 issueServices.createIssue(issue);
+                $('.ui-dialog').remove();
+                $('#new-issue').addClass('hidden');
             };
 
             $scope.changeProject = function changeProject() {

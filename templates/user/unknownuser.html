@@ -8,13 +8,17 @@
         </fieldset>
         <div class="form-group">
             <label for="Email">Email<span class="text-danger">*</span>:</label>
-            <input type="email" name="Email" id="Email" ng-model="user.email" class="form-control" required="required" />
+            <input type="email" name="Email" id="Email" ng-model="user.email" class="form-control" required="required"/>
+            <span class="error" ng-if="!loginForm.Email.$pristine && !loginForm.Email.$valid">Email is not valid.</span>
         </div>
         <div class="form-group">
             <label for="Password">Password<span class="text-danger">*</span>:</label>
-            <input type="password" name="Password" id="Password" ng-model="user.password" class="form-control" required="required" min="6" max="100" />
+            <input type="password" name="Password" id="Password" ng-model="user.password" class="form-control" required="required" 
+                   ng-minlength="6" ng-maxlength="100" />
+            <span class="error" ng-if="!loginForm.Password.$pristine && loginForm.Password.$error.minlength < 6">Password length is less than 6.</span>
+            <span class="error" ng-if="!loginForm.Password.$pristine && loginForm.Password.$error.maxlength > 100">Password is length is bigger than 100.</span>
         </div>
-        <input type="button" value="Login" class="btn btn-success" ng-click="login()" />
+        <input type="button" value="Login" class="btn btn-success" ng-disabled="!loginForm.$valid" ng-click="login()" />
     </form>
     <form name="registerForm" class="col-md-6">
         <fieldset>
@@ -23,15 +27,21 @@
         <div class="form-group">
             <label for="NewEmail">Email<span class="text-danger">*</span>:</label>
             <input type="email" name="NewEmail" id="NewEmail" ng-model="newUser.email" class="form-control" required="required" />
+            <span class="error" ng-if="!registerForm.NewEmail.$pristine && !registerForm.NewEmail.$valid">Email is not valid.</span>
         </div>
         <div class="form-group">
             <label for="NewPassword">Password<span class="text-danger">*</span>:</label>
-            <input type="password" name="NewPassword" id="NewPassword" ng-model="newUser.password" class="form-control" required="required" min="6" max="100" />
+            <input type="password" name="NewPassword" id="NewPassword" ng-model="newUser.password" class="form-control" 
+                   required="required" ng-minlength="6" ng-maxlength="100" />
+            <span class="error" ng-if="!registerForm.NewPassword.$pristine && registerForm.NewPassword.$error.minlength < 6">Password length is less than 6.</span>
+            <span class="error" ng-if="!registerForm.NewPassword.$pristine && registerForm.NewPassword.$error.maxlength > 100">Password is length is bigger than 100.</span>
         </div>
         <div class="form-group">
             <label for="NewConfirmPassword">Confirm password<span class="text-danger">*</span>:</label>
-            <input type="password" name="NewConfirmPassword" id="NewConfirmPassword" ng-model="newUser.confirmPassword" class="form-control" required="required" min="6" max="100" />
+            <input type="password" name="NewConfirmPassword" id="NewConfirmPassword" ng-model="newUser.confirmPassword" class="form-control" 
+                   required="required" ng-maxlength="100" />
+            <span class="error" ng-if="!registerForm.NewConfirmPassword.$pristine && newUser.confirmPassword != newUser.password">Confirm password does not match password.</span>
         </div>
-        <input type="button" value="Register" class="btn btn-success" ng-click="register()" />
+        <input type="button" value="Register" class="btn btn-success" ng-disabled="!registerForm.$valid" ng-click="register()" />
     </form>
 </section>

@@ -15,27 +15,27 @@
         }
 
         $routeProvider.when('/projects/:id', {
-            templateUrl: '../templates/projects/view.html',
+            templateUrl: '../templates/projects/viewProject.html',
             controller: 'ViewProjectController'
         });
 
         $routeProvider.when('/projects/:id/edit', {
-            templateUrl: '../templates/projects/edit.html',
+            templateUrl: '../templates/projects/updateProject.html',
             controller: 'EditProjectController'
         });
 
         $routeProvider.when('/projects/:id/add-issue', {
-            templateUrl: '../templates/issues/new.html',
+            templateUrl: '../templates/issues/addIssue.html',
             controller: 'NewIssueController'
         });
 
         $routeProvider.when('/issues/:id', {
-            templateUrl: '../templates/issues/view.html',
+            templateUrl: '../templates/issues/viewIssue.html',
             controller: 'ViewIssueController'
         });
 
         $routeProvider.when('/issues/:id/edit', {
-            templateUrl: '../templates/issues/edit.html',
+            templateUrl: '../templates/issues/updateIssue.html',
             controller: 'EditIssueController'
         });
 

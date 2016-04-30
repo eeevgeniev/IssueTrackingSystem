@@ -15,3 +15,8 @@ body {
 .top-distance {
     margin-top: 20px;
 }
+
+.error {
+    color: #f00;
+    font-size: 0.9em;
+}

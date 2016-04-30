@@ -6,6 +6,7 @@
     issuesModule.controller('EditIssueController', ['$scope', '$q', '$filter', 'issueServices', 'userServices', 'projectServices',
         function ($scope, $q, $filter, issueServices, userServices, projectServices) {
             $scope.issue = {},
+            $scope.title = 'Edit Issue',
             issuePromise = issueServices.getIssue(),
             issueAssignee = null,
             issueProject = null,
@@ -46,7 +47,7 @@
                 });
             });
 
-            $scope.editIssue = function editIssue() {
+            $scope.addUpdateIssue = function addUpdateIssue() {
                 issue = issueServices.newIssue($scope.issue);
                 issueServices.editIssue(issue);
             };

@@ -104,13 +104,25 @@
         }
 
         commands.newProject = function newProject(value) {
-            var project = {};
+            var project = {},
+                prioritiesAsString = typeof (value.Priorities) === 'undefined' ? [] : value.Priorities,
+                priorities = [];
+
+            if (!Array.isArray(prioritiesAsString)) {
+                prioritiesAsString = prioritiesAsString.split(',');
+
+                prioritiesAsString.forEach(function (current) {
+                    priorities.push({
+                        Name: current.trim()
+                    });
+                });
+            }
 
             project.Name = value.Name;
             project.Description = value.Description;
             project.ProjectKey = value.ProjectKey;
-            project.Labels = value.Labels;
-            project.Priorities = value.Priorities;
+            project.Labels = typeof (value.Labels) === 'undefined' ? [] : value.Labels;
+            project.Priorities = priorities;
             project.LeadId = value.Lead.Id;
 
             return project;

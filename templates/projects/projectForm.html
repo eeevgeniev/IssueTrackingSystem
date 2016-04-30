@@ -1,0 +1,38 @@
+﻿<form name="projectForm" class="col-md-12">
+    <fieldset>
+        <h3>{{title}}</h3>
+    </fieldset>
+    <div class="form-group">
+        <label for="Name">Name:</label>
+        <input type="text" class="form-control" name="Name" id="Name" placeholder="Project name"
+               ng-change="createProjectKey()" ng-model="project.Name" required="required">
+        <span class="error" ng-if="!projectForm.Name.$pristine && !projectForm.Name.$valid">Project name is required.</span>
+    </div>
+    <div class="form-group">
+        <label for="Leader">Leader:</label>
+        <select class="form-control" name="Leader" id="Leader"
+                ng-options="user.Username for user in users track by user.Id" ng-model="project.Lead" required="required"></select>
+        <span class="error" ng-if="!projectForm.Leader.$pristine && !projectForm.Leader.$valid">Project leader is required.</span>
+    </div>
+    <div class="form-group">
+        <label for="ProjectKey">Project Key:</label>
+        <input type="text" class="form-control" name="ProjectKey" id="ProjectKey" placeholder="Project Key" ng-model="project.ProjectKey" required="required" disabled>
+        <span class="error" ng-if="!projectForm.ProjectKey.$pristine && !projectForm.ProjectKey.$valid">Project name is required.</span>
+    </div>
+    <div class="form-group">
+        <label for="Priorities">Priorities (comma separated):</label>
+        <input type="text" class="form-control" name="Priorities" id="Priorities"
+               placeholder="Available Priorities For The Issues" ng-model="project.Priorities" value="Low, Medium, Urgent" required="required">
+        <span class="error" ng-if="!projectForm.Priorities.$pristine && !projectForm.Priorities.$valid">Enter some project priorities.</span>
+    </div>
+    <div class="form-group">
+        <label for="Labels">Labels (comma separated):</label>
+        <input type="text" class="form-control" id="Labels" name="Labels" placeholder="Labels" ng-model="project.Labels" value="Soft">
+    </div>
+    <div class="form-group">
+        <label for="Description">Description:</label>
+        <textarea class="form-control" name="Description" id="Description" placeholder="Description" ng-model="project.Description" required="required"></textarea>
+        <span class="error" ng-if="!projectForm.Description.$pristine && !projectForm.Description.$valid">Project description is required.</span>
+    </div>
+    <button type="submit" class="btn btn-success" ng-disabled="!projectForm.$valid" ng-click="addUpdateProject()">Add Project</button>
+</form>
