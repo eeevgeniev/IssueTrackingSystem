@@ -48,6 +48,20 @@
                 return promise;
             }
 
+            requests.getFilteredIssue = function getFilteredIssue(token, id) {
+                var header = loginHeader(token),
+                    promise = httpRequest(Urls.DefaultUrl + Urls.GetFilteredIssue + id, header, 'GET', null);
+
+                return promise;
+            }
+
+            requests.changeIssueStatus = function changeIssueStatus(token, issueId, statusId) {
+                var header = loginHeader(token),
+                   promise = httpRequest(Urls.DefaultUrl + Urls.GetIssue + issueId + Urls.ChangeIssueStatus + statusId, header, 'PUT', null);
+
+                return promise;
+            }
+
             requests.getUserIssues = function getUserIssues(token, pageSize, pageNumber, orderBy) {
                 var header = loginHeader(token),
                     promise = httpRequest(Urls.DefaultUrl + Urls.UserIssues +

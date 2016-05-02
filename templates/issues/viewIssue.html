@@ -2,39 +2,51 @@
     <header>
         <h3>View Issue</h3>
     </header>
-    <section>
+    <section class="col-md-8">
         <div class="form-group">
             <label>Title:</label>
             <div class="form-control">{{issue.Title}}</div>
         </div>
         <div class="form-group">
-            <label for="Assignee">Assignee:</label>
+            <label>Assignee:</label>
             <div class="form-control" id="Assignee">{{issue.Assignee.Username}}</div>
         </div>
         <div class="form-group">
-            <label for="Project">Project:</label>
+            <label>Project:</label>
             <div class="form-control" id="Project">{{issue.Project.Name}}</div>
         </div>
         <div class="form-group">
-            <label for="IssueKey">Issue Key:</label>
+            <label>Issue Key:</label>
             <div class="form-control" id="IssueKey">{{issue.IssueKey}}</div>
         </div>
         <div class="form-group">
-            <label for="Priority">Priority:</label>
+            <label>Priority:</label>
             <div class="form-control" id="Priority">{{issue.Priority.Name}}</div>
         </div>
         <div class="form-group">
-            <label for="DueDate">Due Date:</label>
+            <label>Due Date:</label>
             <div class="form-control" id="DueDate">{{issue.DueDate | date:'hh:mm dd/MM/yyyy'}}</div>
         </div>
         <div class="form-group">
-            <label for="Labels">Labels:</label>
+            <label>Labels:</label>
             <div class="form-control" id="Labels">{{issue.Labels | getName}}</div>
         </div>
         <div class="form-group">
-            <label for="Description">Description:</label>
+            <label>Description:</label>
             <div class="form-control" id="Description">{{issue.Description}}</div>
         </div>
+        <a class="btn btn-success" href="#/issues/{{issue.Id}}/edit">Edit</a>
     </section>
-    <a class="btn btn-success" href="#/issues/{{issue.Id}}/edit">Edit</a>
+    <section class="col-md-4">
+        <div class="form-group">
+            <label>Current Status:</label>
+            <div class="form-control">{{issue.Status.Name}}</div>
+            <label>Change to status:</label>
+            <ul>
+                <li ng-repeat="status in issue.AvailableStatuses">
+                    <button class="btn btn-success" status-id="{{status.Id}}" ng-click="changeStatus($event)">{{status.Name}}</button>
+                </li>
+            </ul>
+        </div>
+    </section>
 </section>

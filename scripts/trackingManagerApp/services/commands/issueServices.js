@@ -17,15 +17,48 @@
 
             promise.then(function (response) {
                 var issue = responseGetterServices.dataGetter(response.data, ['Assignee', 'Author', 'AvailableStatuses', 'Description', 'DueDate',
-                    'Id', 'IssueKey', 'Labels', 'Priority', 'Project', 'Status', 'Title']);
+                    'Id', 'IssueKey', 'Labels', 'Priority', 'Project', 'Title']);
                 response = null;
                 deffered.resolve(issue);
             }, function (response) {
                 redirect.changeLocation('');
                 notifyService.generateErrorMessage(response);
-            })
+            });
 
             return deffered.promise;
+        }
+
+        commands.getFilteredIssue = function getFilteredIssue() {
+            var token = cookieManager.getCookie(cookiesNames.Bearer),
+                id = getParameters.getValue('id'),
+                deffered = $q.defer(),
+                promise = requests.getFilteredIssue(token, id);
+
+            promise.then(function (response) {
+                var issue = responseGetterServices.dataGetter(response.data.Issues[0], ['Assignee', 'Author', 'AvailableStatuses', 'Description', 'DueDate',
+                    'Id', 'IssueKey', 'Labels', 'Priority', 'Project', 'Status', 'Title', 'AvailableStatuses']);
+                response = null;
+                deffered.resolve(issue);
+            }, function (response) {
+                redirect.changeLocation('');
+                notifyService.generateErrorMessage(response);
+            });
+
+            return deffered.promise;
+        }
+
+        commands.changeIssueStatus = function changeIssueStatus(statusId) {
+            var token = cookieManager.getCookie(cookiesNames.Bearer),
+                issueId = getParameters.getValue('id'),
+                promise = requests.changeIssueStatus(token, issueId, statusId);
+
+            promise.then(function (response) {
+                notifyService.generateInfoMessage('Issue status succefully updated!');
+                redirect.reloadPage();
+            }, function (response) {
+                redirect.changeLocation('');
+                notifyService.generateErrorMessage(response);
+            });
         }
 
         commands.createIssue = function createIssue(issue) {

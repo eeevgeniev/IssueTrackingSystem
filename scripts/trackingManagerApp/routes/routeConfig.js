@@ -57,7 +57,7 @@
             if (!userServices.isUserRegistered()) {
                 next.templateUrl = '../templates/user/unknownuser.html';
                 next.controller = 'ManageUserController';
-                $location.path('/');
+                $location.path('');
             }
         });
     }]);

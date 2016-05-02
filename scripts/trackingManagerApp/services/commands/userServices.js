@@ -20,17 +20,22 @@
                     redirect.reloadPage();
                 }, function error(response) {
                     notifyService.generateErrorMessage(response);
+                    redirect.changeLocation('');
                 });
             }
 
             commands.loginUser = function loginUser(user) {
-                var promise = requests.login(user);
+                var promise = requests.login(user),
+                    accessToken = 'access_token';
 
                 promise.then(function success(response) {
-                    cookieManager.setCookie(cookiesNames.Bearer, response.data.access_token);
+                    var tokenObject = responseGetterServices.dataGetter(response.data, [accessToken]);
+                    response = null;
+                    cookieManager.setCookie(cookiesNames.Bearer, tokenObject[accessToken]);
                     commands.getUser();
                 }, function error(response) {
                     notifyService.generateErrorMessage(response);
+                    redirect.changeLocation('');
                 })
             }
 
@@ -46,6 +51,7 @@
                     notifyService.generateInfoMessage('Successfull registration. You will be redirect.');
                 }, function error(response) {
                     notifyService.generateErrorMessage(response);
+                    redirect.changeLocation('');
                 })
             }
 
@@ -60,11 +66,6 @@
                 });
             }
 
-            commands.logoutUser = function logoutUser() {
-                cookieManager.remove(cookiesNames.Bearer);
-                redirect('');
-            }
-
             commands.getUserIssues = function getUserIssues(pageSize, pageNumber, orderBy) {
                 var token = cookieManager.getCookie(cookiesNames.Bearer),
                     deffered = $q.defer(),
@@ -72,7 +73,7 @@
 
                 promise.then(function success(response) {
                     var result = responseGetterServices.dataGetter(response.data, ['Issues', 'TotalCount', 'TotalPages']);
-                    result.Issues = responseGetterServices.getArray(result.Issues, ['Title', 'DueDate', 'Project', 'Id']);
+                    result.Issues = responseGetterServices.getArray(result.Issues, ['Title', 'DueDate', 'Project', 'Id', 'Priority']);
                     response = null;
                     deffered.resolve(result);
                 }, function error(response) {
@@ -100,6 +101,11 @@
                 return deffered.promise;
             }
 
+            commands.logoutUser = function logoutUser() {
+                cookieManager.remove(cookiesNames.Bearer);
+                redirect('');
+            }
+
             commands.isUserAdmin = function isUserAdmin() {
                 var user = cookieManager.getObjectCookie(cookiesNames.User);
 
@@ -112,20 +118,32 @@
 
             commands.isUserRegistered = function isUserRegistered() {
                 var user = cookieManager.getObjectCookie(cookiesNames.User);
+                var token = cookieManager.getCookie(cookiesNames.Bearer);
 
-                if (typeof (user) === 'undefined') {
+                if (typeof (user) === 'undefined' || typeof (token) === 'undefined') {
                     return false;
                 }
 
                 return true;
             }
 
-            commands.logoutUser = function logoutUser() {
+            commands.invalidCookies = function invalidCookies() {
+                commands.destroyUserCookies();
+                $rootScope.$broadcast('userLoggedLogout');
+                notifyService.generateErrorMessage('Invalid user data.');
+                redirect.changeLocation('');
+            }
+
+            commands.destroyUserCookies = function destroyUserCookies() {
                 cookieManager.deleteCookie(cookiesNames.Bearer);
                 cookieManager.deleteCookie(cookiesNames.User);
                 $rootScope.$broadcast('userLoggedLogout');
+            }
+
+            commands.logoutUser = function logoutUser() {
+                commands.destroyUserCookies();
                 notifyService.generateInfoMessage('Successfull logout.');
-                redirect.reloadPage();
+                redirect.changeLocation('');
             }
 
             return commands;
