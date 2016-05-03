@@ -5,13 +5,15 @@
     projectModule.controller('ViewProjectController', ['$scope', '$filter', 'projectServices',
     function ($scope, $filter, projectServices) {
 
-        var promiseProject = projectServices.getProject();
-        var promiseProjectIssues = projectServices.getProjectIssues();
+        $scope.title == 'View Project',
+        promiseProject = projectServices.getProject(),
+        promiseProjectIssues = projectServices.getProjectIssues();
 
         promiseProject.then(function success(project) {
             $scope.project = project;
             $scope.project.Priorities = $filter('getName')(project.Priorities);
             $scope.project.Labels = $filter('getName')(project.Labels);
+            $scope.isLeader = projectServices.isProjectLeader(project.Lead.Id);
         });
 
         promiseProjectIssues.then(function success(issues) {

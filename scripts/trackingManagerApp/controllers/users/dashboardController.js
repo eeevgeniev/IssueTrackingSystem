@@ -7,8 +7,8 @@
 
             //10
             //1
-
-            var promise = userServices.getUserIssues(10, 1, 'DueDate desc');
+            $scope.isUserAdmin = userServices.isUserAdmin(),
+            promise = userServices.getUserIssues(10, 1, 'DueDate desc');
 
             promise.then(function success(result) {
                 $scope.issues = result.Issues;

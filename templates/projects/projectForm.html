@@ -1,7 +1,4 @@
-﻿<form name="projectForm" class="col-md-12">
-    <fieldset>
-        <h3>{{title}}</h3>
-    </fieldset>
+﻿<form name="projectForm">
     <div class="form-group">
         <label for="Name">Name:</label>
         <input type="text" class="form-control" name="Name" id="Name" placeholder="Project name"
@@ -34,5 +31,5 @@
         <textarea class="form-control" name="Description" id="Description" placeholder="Description" ng-model="project.Description" required="required"></textarea>
         <span class="error" ng-if="!projectForm.Description.$pristine && !projectForm.Description.$valid">Project description is required.</span>
     </div>
-    <button type="submit" class="btn btn-success" ng-disabled="!projectForm.$valid" ng-click="addUpdateProject()">Add Project</button>
+    <button type="submit" class="btn btn-success" ng-disabled="!projectForm.$valid" ng-click="addUpdateProject()">Send</button>
 </form>

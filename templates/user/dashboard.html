@@ -23,7 +23,9 @@
                 </tr>
             </tbody>
         </table>
-        <button class="btn btn-success" ng-click="newProject()">Add New Project</button>
-        <button class="btn btn-success" ng-click="newIssue()">Add New Issue</button>
+        <div ng-if="isUserAdmin">
+            <button class="btn btn-success" ng-click="newProject()">Add New Project</button>
+            <button class="btn btn-success" ng-click="newIssue()">Add New Issue</button>
+        </div>
     </div>
 </section>

@@ -1,4 +1,23 @@
 ﻿<section>
     <a class="btn btn-default" href="#/issues/{{issue.Id}}">Back to Issue</a>
-    <section ng-include="'templates/issues/issueForm.html'"></section>
+    <header>
+        <h3>{{title}}</h3>
+    </header>
+    <section>
+        <section class="col-md-8" ng-include="'templates/issues/issueForm.html'"></section>
+        <section class="col-md-4">
+            <div class="form-group">
+                <label>Current Status:</label>
+                <div class="form-control">{{issue.Status.Name}}</div>
+                <div ng-if="isAssignee || isProjectLead">
+                    <label>Change to status:</label>
+                    <ul>
+                        <li ng-repeat="status in issue.AvailableStatuses">
+                            <button class="btn btn-success" status-id="{{status.Id}}" ng-click="changeStatus($event)">{{status.Name}}</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </section>
 </section>

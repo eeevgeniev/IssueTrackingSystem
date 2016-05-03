@@ -10,8 +10,14 @@
         var commands = {};
 
         commands.getProject = function getProject() {
+            var id = getParameters.getValue('id'),
+                promise = commands.getProjectById(id)
+
+            return promise;
+        }
+
+        commands.getProjectById = function getProjectById(id) {
             var token = cookieManager.getCookie(cookiesNames.Bearer),
-                id = getParameters.getValue('id'),
                 deffered = $q.defer(),
                 promise = requests.getProject(token, id);
 
@@ -126,6 +132,22 @@
             project.LeadId = value.Lead.Id;
 
             return project;
+        }
+
+        commands.redirectToProject = function redirectToProject() {
+            var projectId = getParameters.getValue('id');
+            redirect.changeLocation('/projects/' + projectId);
+            notifyService.generateInfoMessage('Only project leader can edit this project.');
+        }
+
+        commands.isProjectLeader = function isProjectLeader(leaderId) {
+            var user = cookieManager.getObjectCookie(cookiesNames.User);
+
+            if (typeof (user) === 'undefined') {
+                return false;
+            }
+
+            return user.Id === leaderId;
         }
 
         return commands;

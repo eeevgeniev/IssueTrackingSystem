@@ -12,6 +12,12 @@
 
             projectPromise.then(function success(project) {
                 $scope.project = project;
+
+                if (!projectServices.isProjectLeader(project.Lead.Id)) {
+                    projectServices.redirectToProject();
+                    return;
+                }
+
                 $scope.project.Priorities = $filter('getName')(project.Priorities);
                 $scope.project.Labels = $filter('getName')(project.Labels);
             });

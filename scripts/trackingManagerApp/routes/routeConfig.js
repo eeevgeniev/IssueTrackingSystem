@@ -6,7 +6,7 @@
     'trackingManagerApp.controllers.issues.editIssueController', 'trackingManagerApp.controllers.issues.viewIssueController',
     'trackingManagerApp.controllers.users.dashboardController', 'trackingManagerApp.controllers.users.editUserController',
     'trackingManagerApp.controllers.users.changePasswordController', 'trackingManagerApp.controllers.users.logoutUserController',
-    'trackingManagerApp.services.commands.userServices']);
+    'trackingManagerApp.services.commands.userServices', 'trackingManagerApp.services.commands.modalServices']);
 
     routes.config(['$routeProvider', function ($routeProvider) {
         var defaultRoute = {
@@ -25,8 +25,8 @@
         });
 
         $routeProvider.when('/projects/:id/add-issue', {
-            templateUrl: '../templates/issues/addIssue.html',
-            controller: 'NewIssueController'
+            templateUrl: '../templates/projects/projectAddNewIssue.html',
+            controller: 'ProjectAddIssueController'
         });
 
         $routeProvider.when('/issues/:id', {

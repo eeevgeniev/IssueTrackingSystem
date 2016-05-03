@@ -1,13 +1,13 @@
 ﻿(function () {
     var issuesModule = angular.module('trackingManagerApp.controllers.issues.editIssueController',
     ['trackingManagerApp.services.commands.issueServices', 'trackingManagerApp.services.commands.userServices',
-    'trackingManagerApp.services.commands.projectServices']);
+    'trackingManagerApp.services.commands.projectServices', 'trackingManagerApp.filters.getNamesFilter']);
 
     issuesModule.controller('EditIssueController', ['$scope', '$q', '$filter', 'issueServices', 'userServices', 'projectServices',
         function ($scope, $q, $filter, issueServices, userServices, projectServices) {
             $scope.issue = {},
             $scope.title = 'Edit Issue',
-            issuePromise = issueServices.getIssue(),
+            issuePromise = issueServices.getFilteredIssue(),
             issueAssignee = null,
             issueProject = null,
             $scope.labels = [];
@@ -15,13 +15,15 @@
             issuePromise.then(function success(issue) {
                 $scope.issue = issue;
                 $scope.issue.DueDate = $filter('date')(issue.DueDate, 'hh:mm dd/MM/yyyy');
+                $scope.issue.Labels = $filter('getName')(issue.Labels);
                 issueAssignee = issue.Assignee;
                 issueProject = issue.Project;
 
-                userPromise = userServices.getUsers();
-                projectPromise = projectServices.getProjects();
+                usersPromise = userServices.getUsers();
+                projectsPromise = projectServices.getProjects()
+                projectPromise = projectServices.getProjectById(issueProject.Id);
 
-                userPromise.then(function success(users) {
+                usersPromise.then(function success(users) {
                     $scope.users = users;
 
                     issueAssignee = $scope.users.find(function (currentUser) {
@@ -31,7 +33,7 @@
                     $scope.issue.Assignee = typeof (issueAssignee) === 'undefined' ? $scope.users[0] : issueAssignee;
                 });
 
-                projectPromise.then(function success(projects) {
+                projectsPromise.then(function success(projects) {
                     $scope.projects = projects;
 
                     $scope.projects.forEach(function (currentProject) {
@@ -45,11 +47,31 @@
                     $scope.issue.Project = typeof(issueProject) === 'undefined' ? $scope.projects[0] : issueProject;
                     $scope.changeProject();
                 });
+
+                projectPromise.then(function success(project) {
+                    $scope.isProjectLead = projectServices.isProjectLeader(project.Lead.Id);
+                    $scope.isAssignee = issueServices.isUserIssueAssignee($scope.issue.Assignee.Id);
+
+                    if (!$scope.isProjectLead && !$scope.isAssignee) {
+                        issueServices.redirectToIssue();
+                        return;
+                    }
+
+                    $scope.isButtonActive = $scope.isProjectLead;
+                });
             });
 
             $scope.addUpdateIssue = function addUpdateIssue() {
                 issue = issueServices.newIssue($scope.issue);
-                issueServices.editIssue(issue);
+                var updatedIssue = {};
+
+                for (var property in issue) {
+                    if (property !== 'ProjectId') {
+                        updatedIssue[property] = issue[property];
+                    }
+                }
+
+                issueServices.editIssue(updatedIssue);
             };
 
             $scope.changeProject = function changeProject() {

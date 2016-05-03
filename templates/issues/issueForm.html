@@ -1,7 +1,4 @@
-﻿<form name="issueForm" class="col-md-12">
-    <fieldset>
-        <h3>{{title}}</h3>
-    </fieldset>
+﻿<form name="issueForm">
     <div class="form-group">
         <label for="Title">Title:</label>
         <input type="text" class="form-control" name="Title" id="Title" placeholder="Issue Title" ng-model="issue.Title" required="required">
@@ -31,9 +28,8 @@
         <span class="error" ng-if="!issueForm.DueDate.$pristine && !issueForm.DueDate.$valid">Issue due date is required.</span>
     </div>
     <div class="form-group">
-        <label>Labels (comma separated):</label>
-        <input type="hidden" name="Labels" id="Labels" placeholder="Labels" ng-model="issue.Labels">
-        <div class="form-control">{{issue.Labels | getName}}</div>
+        <label for="Labels">Labels (comma separated):</label>
+        <input name="Labels" id="Labels" placeholder="Labels" class="form-control" ng-model="issue.Labels" required="required" />
         <span class="error" ng-if="!issueForm.Labels.$pristine && !issueForm.Labels.$valid">Issue labels are required.</span>
     </div>
     <div class="form-group">
@@ -41,5 +37,5 @@
         <textarea class="form-control" name="Description" id="Description" placeholder="Description" ng-model="issue.Description" required="required"></textarea>
         <span class="error" ng-if="!issueForm.Description.$pristine && !issueForm.Description.$valid">Issue description is required.</span>
     </div>
-    <button type="submit" ng-disabled="!issueForm.$valid" class="btn btn-success" ng-click="addUpdateIssue()">Add Issue</button>
+    <button type="submit" ng-if="isButtonActive" ng-disabled="!issueForm.$valid" class="btn btn-success" ng-click="addUpdateIssue()">Send</button>
 </form>

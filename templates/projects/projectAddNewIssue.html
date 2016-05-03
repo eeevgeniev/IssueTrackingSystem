@@ -1,7 +1,12 @@
 ﻿<section>
+    <header>
+        <h3>{{title}}</h3>
+    </header>
+    <div id="new-issue" class="hidden" ng-controller="NewIssueController" ng-include="'templates/issues/addIssue.html'"></div>
+    <a class="btn btn-default" href="#/projects/{{project.Id}}">Back to the Project</a>
     <section id="project-data">
         <header>
-            <h3>{{title}}</h3>
+            <h3>Project</h3>
         </header>
         <div class="form-group">
             <label>Name:</label>
@@ -27,30 +32,5 @@
             <label>Description:</label>
             <div class="form-control" id="Description">{{project.Description}}</div>
         </div>
-        <!--new code-->
-        <div ng-if="isProjectLeader()">
-            <a class="btn btn-success" href="#/projects/{{project.Id}}/edit">Edit</a>
-            <a class="btn btn-success" href="#/projects/{{project.Id}}/add-issue">Add New Issue</a>
-        </div>
-        <!--end new code-->
     </section>
-    <div>
-        <header>
-            <h3>Project Issues</h3>
-        </header>
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Issue</th>
-                    <th>Due Date</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="issue in issues">
-                    <td><a href="#/issues/{{issue.Id}}">{{issue.Title}}</a></td>
-                    <td>{{issue.DueDate | date: 'hh:mm dd/MM/yyyy'}}</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
 </section>

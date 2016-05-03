@@ -75,9 +75,10 @@
             });
         };
 
-        commands.editIssue = function editIssue(id, issue) {
+        commands.editIssue = function editIssue(issue) {
             var token = cookieManager.getCookie(cookiesNames.Bearer),
-                promise = requests.addNewIssue(token, id, issue);
+                issueId = getParameters.getValue('id'),
+                promise = requests.updateIssue(token, issueId, issue);
 
             promise.then(function success(response) {
                 notifyService.generateInfoMessage('Issue updated.');
@@ -102,6 +103,22 @@
             }
 
             return issue;
+        }
+
+        commands.redirectToIssue = function redirectToIssue() {
+            var issueId = getParameters.getValue('id');
+            redirect.changeLocation('/issues/' + issueId);
+            notifyService.generateInfoMessage('You don\'t have permission to edit issue.');
+        }
+
+        commands.isUserIssueAssignee = function isUserIssueAssignee(issueAssigneeId) {
+            var user = cookieManager.getObjectCookie(cookiesNames.User);
+
+            if (typeof (user) === 'undefined') {
+                return false;
+            }
+
+            return user.Id === issueAssigneeId;
         }
 
         commands.getAvailableLabels = function getAvailableLabels(addedLabels, labels) {

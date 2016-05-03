@@ -7,13 +7,13 @@
         function ($scope, $q, issueServices, userServices, projectServices) {
             $scope.issue = {},
             $scope.title = 'New Issue',
+            $scope.isButtonActive = true;
             userPromise = userServices.getUsers(),
             projectPromise = projectServices.getProjects(),
             $scope.labels = [];
 
             userPromise.then(function success(users) {
                 $scope.users = users;
-
                 $scope.issue.Assignee = $scope.users[0];
             });
 

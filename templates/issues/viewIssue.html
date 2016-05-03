@@ -1,6 +1,6 @@
 ﻿<section>
     <header>
-        <h3>View Issue</h3>
+        <h3>{{title}}</h3>
     </header>
     <section class="col-md-8">
         <div class="form-group">
@@ -35,18 +35,20 @@
             <label>Description:</label>
             <div class="form-control" id="Description">{{issue.Description}}</div>
         </div>
-        <a class="btn btn-success" href="#/issues/{{issue.Id}}/edit">Edit</a>
+        <a ng-if="isUserProjectLeader" class="btn btn-success" href="#/issues/{{issue.Id}}/edit">Edit</a>
     </section>
     <section class="col-md-4">
         <div class="form-group">
             <label>Current Status:</label>
             <div class="form-control">{{issue.Status.Name}}</div>
-            <label>Change to status:</label>
-            <ul>
-                <li ng-repeat="status in issue.AvailableStatuses">
-                    <button class="btn btn-success" status-id="{{status.Id}}" ng-click="changeStatus($event)">{{status.Name}}</button>
-                </li>
-            </ul>
+            <div ng-if="isUserAssignee">
+                <label>Change to status:</label>
+                <ul>
+                    <li ng-repeat="status in issue.AvailableStatuses">
+                        <button class="btn btn-success" status-id="{{status.Id}}" ng-click="changeStatus($event)">{{status.Name}}</button>
+                    </li>
+                </ul>
+            </div>
         </div>
     </section>
 </section>

@@ -73,7 +73,7 @@
 
             requests.updateIssue = function updateIssue(token, id, issue) {
                 var header = loginHeader(token),
-                    promise = httpRequest(Urls.DefaultUrl + Urls.UpdateIssue + id, header, 'PUT', issue);
+                    promise = httpRequest(Urls.DefaultUrl + Urls.UpdateProject + id, header, 'PUT', project);
 
                 return promise;
             }
