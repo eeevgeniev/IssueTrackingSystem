@@ -2,11 +2,12 @@
     var issueCommands = angular.module('trackingManagerApp.services.commands.issueServices',
     ['trackingManagerApp.services.https.requestService', 'trackingManagerApp.services.commands.cookies.cookieService',
     'trackingManagerApp.routes.routeConfig', 'trackingManagerApp.services.commands.notifyServices',
-    'trackingManagerApp.services.commands.responseGetterServices']);
+    'trackingManagerApp.services.commands.responseGetterServices', 'trackingManagerApp.services.commands.labelServices']);
 
     issueCommands.factory('issueServices', ['$q', 'requests', 'redirect', 'getParameters', 'cookieManager',
-    'cookiesNames', 'notifyService', 'responseGetterServices',
-    function ($q, requests, redirect, getParameters, cookieManager, cookiesNames, notifyService, responseGetterServices) {
+    'cookiesNames', 'notifyService', 'responseGetterServices', 'labelServices',
+    function ($q, requests, redirect, getParameters, cookieManager, cookiesNames, notifyService,
+    responseGetterServices, labelServices) {
         var commands = {};
 
         commands.getIssue = function getIssue() {
@@ -97,10 +98,12 @@
             issue.Labels = value.Labels;
             issue.DueDate = new Date();
 
-            if (typeof(value.DueDate) !== 'undefined') {
+            if (typeof (value.DueDate) !== 'undefined') {
                 var datesParams = value.DueDate.split(/[\s\/:]/);
-                issue.DueDate = new Date(datesParams[4], datesParams[3] - 1, datesParams[2], datesParams[0], datesParams[1]);
+                issue.DueDate = new Date(datesParams[2], datesParams[1] - 1, datesParams[0], datesParams[3], datesParams[4]);
             }
+
+            issue.Labels = labelServices.labelsFromString(issue.Labels);
 
             return issue;
         }

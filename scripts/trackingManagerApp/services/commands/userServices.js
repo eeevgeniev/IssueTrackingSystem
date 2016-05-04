@@ -5,8 +5,9 @@
     'trackingManagerApp.services.commands.responseGetterServices']);
 
     userCommands.factory('userServices', ['$q', '$rootScope', 'requests', 'cookieManager', 'cookiesNames', 'redirect',
-        'notifyService', 'responseGetterServices',
-        function ($q, $rootScope, requests, cookieManager, cookiesNames, redirect, notifyService, responseGetterServices) {
+        'notifyService', 'responseGetterServices', 'getParameters',
+        function ($q, $rootScope, requests, cookieManager, cookiesNames, redirect,
+        notifyService, responseGetterServices, getParameters) {
             var commands = {};
 
             commands.getUser = function getUser() {
@@ -104,6 +105,12 @@
             commands.logoutUser = function logoutUser() {
                 cookieManager.remove(cookiesNames.Bearer);
                 redirect('');
+            }
+
+            commands.getDashboardPage = function getDashboardPage(parameter) {
+                var page = typeof (getParameters.getValue(parameter)) === 'undefined' ? 1 : getParameters.getValue(parameter);
+
+                return page;
             }
 
             commands.isUserAdmin = function isUserAdmin() {

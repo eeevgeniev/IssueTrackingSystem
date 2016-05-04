@@ -2,11 +2,12 @@
     var projectCommands = angular.module('trackingManagerApp.services.commands.projectServices',
     ['trackingManagerApp.services.https.requestService', 'trackingManagerApp.services.commands.cookies.cookieService',
     'trackingManagerApp.routes.routeConfig', 'trackingManagerApp.services.commands.notifyServices',
-    'trackingManagerApp.services.commands.responseGetterServices']);
+    'trackingManagerApp.services.commands.responseGetterServices', 'trackingManagerApp.services.commands.labelServices']);
 
     projectCommands.factory('projectServices', ['$q', 'requests', 'cookieManager', 'cookiesNames',
-    'redirect', 'getParameters', 'notifyService', 'responseGetterServices',
-    function ($q, requests, cookieManager, cookiesNames, redirect, getParameters, notifyService, responseGetterServices) {
+    'redirect', 'getParameters', 'notifyService', 'responseGetterServices', 'labelServices',
+    function ($q, requests, cookieManager, cookiesNames, redirect, getParameters,
+    notifyService, responseGetterServices, labelServices) {
         var commands = {};
 
         commands.getProject = function getProject() {
@@ -67,7 +68,7 @@
         commands.updateProject = function updateProjects(project) {
             var token = cookieManager.getCookie(cookiesNames.Bearer),
             id = getParameters.getValue('id'),
-            promise = requests.getProjects(token, id, project);
+            promise = requests.editProject(token, id, project);
 
             promise.then(function success(response) {
                 notifyService.generateInfoMessage('Project updated.');
@@ -127,9 +128,11 @@
             project.Name = value.Name;
             project.Description = value.Description;
             project.ProjectKey = value.ProjectKey;
-            project.Labels = typeof (value.Labels) === 'undefined' ? [] : value.Labels;
+            project.Labels = value.Labels;
             project.Priorities = priorities;
             project.LeadId = value.Lead.Id;
+
+            project.Labels = labelServices.labelsFromString(project.Labels);
 
             return project;
         }
@@ -148,6 +151,12 @@
             }
 
             return user.Id === leaderId;
+        }
+
+        commands.getProjectIssuesPerPage = function getProjectIssuesPerPage(name) {
+            var result = typeof (getParameters.getValue(name)) === 'undefined' ? 1 : getParameters.getValue(name);
+
+            return result;
         }
 
         return commands;

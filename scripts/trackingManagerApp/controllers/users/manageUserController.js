@@ -13,5 +13,5 @@
         $scope.register = function register() {
             userServices.registerUser($scope.newUser);
         }
-    } ]);
+    }]);
 })();

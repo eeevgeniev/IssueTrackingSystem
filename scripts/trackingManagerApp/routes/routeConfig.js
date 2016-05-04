@@ -6,7 +6,7 @@
     'trackingManagerApp.controllers.issues.editIssueController', 'trackingManagerApp.controllers.issues.viewIssueController',
     'trackingManagerApp.controllers.users.dashboardController', 'trackingManagerApp.controllers.users.editUserController',
     'trackingManagerApp.controllers.users.changePasswordController', 'trackingManagerApp.controllers.users.logoutUserController',
-    'trackingManagerApp.services.commands.userServices', 'trackingManagerApp.services.commands.modalServices']);
+    'trackingManagerApp.services.commands.userServices', 'trackingManagerApp.controllers.projects.projectAddIssueController']);
 
     routes.config(['$routeProvider', function ($routeProvider) {
         var defaultRoute = {
@@ -14,7 +14,14 @@
             controller: 'DashboardController'
         }
 
+        $routeProvider.when('/dashboard/:page/', defaultRoute);
+
         $routeProvider.when('/projects/:id', {
+            templateUrl: '../templates/projects/viewProject.html',
+            controller: 'ViewProjectController'
+        });
+
+        $routeProvider.when('/projects/:id/issues/:issues', {
             templateUrl: '../templates/projects/viewProject.html',
             controller: 'ViewProjectController'
         });
@@ -46,7 +53,7 @@
 
         $routeProvider.when('/logout', {
             templateUrl: '../templates/user/edit.html',
-            controller: 'LogoutUserController',
+            controller: 'LogoutUserController'
         });
 
         $routeProvider.otherwise(defaultRoute);

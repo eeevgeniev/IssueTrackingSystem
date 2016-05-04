@@ -29,9 +29,9 @@
             });
 
             $scope.addUpdateIssue = function addUpdateIssue() {
-                issue = issueServices.newIssue($scope.issue);
-                issueServices.createIssue(issue);
-                $('.ui-dialog').remove();
+                issue = issueServices.newIssue($scope.issue),
+                issueServices.createIssue(issue),
+                $('.ui-dialog').remove(),
                 $('#new-issue').addClass('hidden');
             };
 

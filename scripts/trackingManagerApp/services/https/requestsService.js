@@ -73,7 +73,7 @@
 
             requests.updateIssue = function updateIssue(token, id, issue) {
                 var header = loginHeader(token),
-                    promise = httpRequest(Urls.DefaultUrl + Urls.UpdateProject + id, header, 'PUT', project);
+                    promise = httpRequest(Urls.DefaultUrl + Urls.UpdateIssue + id, header, 'PUT', issue);
 
                 return promise;
             }
@@ -122,7 +122,7 @@
 
             requests.getLabels = function getLabels(token, labelName) {
                 var header = loginHeader(token),
-                    query = labelName === null ? null : uriComponentEncode.encode('?filter={Label.Name ===' + labelName + '}'),
+                    query = labelName === null ? null : uriComponentEncode.encode('?filter={Label.Name=' + labelName + '}'),
                     promise = httpRequest(Urls.DefaultUrl + Urls.GetLabels + query, header, 'GET', null);
 
                 return promise;

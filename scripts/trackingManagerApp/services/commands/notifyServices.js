@@ -41,7 +41,7 @@
                 }
             }
 
-            if (typeof(response.data.error_description !== 'undefined')) {
+            if (typeof (response.data.error_description !== 'undefined')) {
                 message += openDiv + response.data.error_description + closeDiv;
             }
 
@@ -53,6 +53,6 @@
         }
 
         return notifies;
-    } ]);
+    }]);
 
 })();

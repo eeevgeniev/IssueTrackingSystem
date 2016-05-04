@@ -14,7 +14,7 @@
 
             issuePromise.then(function success(issue) {
                 $scope.issue = issue;
-                $scope.issue.DueDate = $filter('date')(issue.DueDate, 'hh:mm dd/MM/yyyy');
+                $scope.issue.DueDate = $filter('date')(issue.DueDate, 'dd/MM/yyyy hh:mm');
                 $scope.issue.Labels = $filter('getName')(issue.Labels);
                 issueAssignee = issue.Assignee;
                 issueProject = issue.Project;
@@ -44,7 +44,7 @@
                         return issueProject.Id === currentProject.Id;
                     });
 
-                    $scope.issue.Project = typeof(issueProject) === 'undefined' ? $scope.projects[0] : issueProject;
+                    $scope.issue.Project = typeof (issueProject) === 'undefined' ? $scope.projects[0] : issueProject;
                     $scope.changeProject();
                 });
 
@@ -63,6 +63,7 @@
 
             $scope.addUpdateIssue = function addUpdateIssue() {
                 issue = issueServices.newIssue($scope.issue);
+
                 var updatedIssue = {};
 
                 for (var property in issue) {

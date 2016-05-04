@@ -27,12 +27,10 @@
             <label>Description:</label>
             <div class="form-control" id="Description">{{project.Description}}</div>
         </div>
-        <!--new code-->
-        <div ng-if="isProjectLeader()">
+        <div ng-if="isProjectLeader">
             <a class="btn btn-success" href="#/projects/{{project.Id}}/edit">Edit</a>
             <a class="btn btn-success" href="#/projects/{{project.Id}}/add-issue">Add New Issue</a>
         </div>
-        <!--end new code-->
     </section>
     <div>
         <header>
@@ -52,5 +50,12 @@
                 </tr>
             </tbody>
         </table>
+        <div class="bottom-margin">
+            <a class="btn btn-info right-margin" ng-if="hasFirst" href="#/projects/{{project.Id}}/issues/{{toFirst}}">&lt;&lt;</a>
+            <a class="btn btn-info right-margin" ng-if="hasPrevious" href="#/projects/{{project.Id}}/issues/{{previous}}">{{previous}}</a>
+            <a class="btn btn-success right-margin" ng-if="hasCurrent" href="#/projects/{{project.Id}}/issues/{{current}}">{{current}}</a>
+            <a class="btn btn-info right-margin" ng-if="hasNext" href="#/projects/{{project.Id}}/issues/{{next}}">{{next}}</a>
+            <a class="btn btn-info right-margin" ng-if="hasLast" href="#/projects/{{project.Id}}/issues/{{toLast}}">&gt;&gt;</a>
+        </div>
     </div>
 </section>

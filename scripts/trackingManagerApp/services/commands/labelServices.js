@@ -4,7 +4,7 @@
     'trackingManagerApp.routes.routeConfig', 'trackingManagerApp.services.commands.notifyServices',
     'trackingManagerApp.services.commands.responseGetterServices']);
 
-    labelModule.factory('issueServices', ['$q', 'requests', 'redirect', 'cookieManager',
+    labelModule.factory('labelServices', ['$q', 'requests', 'redirect', 'cookieManager',
     'cookiesNames', 'notifyService', 'responseGetterServices',
      function ($q, requests, redirect, cookieManager, cookiesNames, notifyService, responseGetterServices) {
          var commands = {};
@@ -26,6 +26,18 @@
              })
 
              return deffered.promise;
+         }
+
+         commands.labelsFromString = function labelsFromString(labelsAsString) {
+             var labels = [];
+
+             var splittedLabels = labelsAsString.split(',');
+
+             splittedLabels.forEach(function (currentLabel) {
+                 labels.push({ Name: currentLabel.trim() });
+             });
+
+             return labels;
          }
 
          return commands;
