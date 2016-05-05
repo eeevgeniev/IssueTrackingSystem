@@ -9,7 +9,7 @@
         Me: '/users/Me',
         ChangePassword: '/api/Account/ChangePassword',
         GetIssue: '/Issues/',
-        GetFilteredIssue: '/issues?pageSize=1&pageNumber=1&filter=Id=',
+        GetFilteredIssue: '/issues?pageSize=1&pageNumber=1&filter=Id==',
         UserIssues: '/Issues/me',
         NewIssue: '/Issues',
         UpdateIssue: '/Issues/',
@@ -19,7 +19,7 @@
         GetProjects: '/Projects',
         NewProject: '/Projects',
         UpdateProject: '/Projects/',
-        GetLabels: '/labels/'
+        GetLabels: '/labels'
     });
 
     httpHelper.constant('headers', {

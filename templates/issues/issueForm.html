@@ -24,9 +24,15 @@
         <input type="text" class="form-control" name="DueDate" id="DueDate" ng-model="issue.DueDate" required="required" readonly="readonly">
         <span class="error" ng-if="!issueForm.DueDate.$pristine && !issueForm.DueDate.$valid">Issue due date is required.</span>
     </div>
-    <div class="form-group">
+    <div class="form-group relative-position">
         <label for="Labels">Labels (comma separated):</label>
-        <input name="Labels" id="Labels" placeholder="Labels" class="form-control" ng-model="issue.Labels" required="required" />
+        <input name="Labels" id="Labels" placeholder="Labels" class="form-control" autocomplete="off"
+               ng-change="getLabels()" ng-keydown="labelsKeyDown($event)" ng-model="issue.Labels" required="required" />
+        <div id="drop-down" class="absolute-position drop-down">
+            <ul class="drop-down-holder">
+                <li ng-class="{'selected-label':label.isSelected==true}" label-name="{{label.Name}}" ng-click="selectOption($event)" ng-repeat="label in labelsOptions | limitTo : 10">{{label.Name}}</li>
+            </ul>
+        </div>
         <span class="error" ng-if="!issueForm.Labels.$pristine && !issueForm.Labels.$valid">Issue labels are required.</span>
     </div>
     <div class="form-group">

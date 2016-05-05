@@ -122,7 +122,7 @@
 
             requests.getLabels = function getLabels(token, labelName) {
                 var header = loginHeader(token),
-                    query = labelName === null ? null : uriComponentEncode.encode('?filter={Label.Name=' + labelName + '}'),
+                    query = labelName === null ? null : '?filter=' + labelName, //'?filter=Name.StartsWith(' + labelName + ')',
                     promise = httpRequest(Urls.DefaultUrl + Urls.GetLabels + query, header, 'GET', null);
 
                 return promise;

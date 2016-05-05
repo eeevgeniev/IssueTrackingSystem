@@ -28,3 +28,37 @@ body {
 .bottom-margin {
     margin-bottom: 10px;
 }
+
+.absolute-position {
+    position: absolute;
+}
+
+.drop-down {
+    z-index: 100;
+    display: none;
+    background-color: #fff;
+    width: 100%;
+    border: 1px solid #eee;
+}
+
+.relative-position {
+    position: relative;
+}
+
+.drop-down-holder {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+.drop-down-holder li:hover {
+    background-color: #eee;
+}
+
+.drop-down-holder li {
+    display: block;
+}
+
+.selected-label {
+    background-color: #eee;
+}
