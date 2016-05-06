@@ -1,17 +1,20 @@
 ﻿<form name="issueForm">
     <div class="form-group">
         <label for="Title">Title:</label>
-        <input type="text" class="form-control" name="Title" id="Title" placeholder="Issue Title" ng-model="issue.Title" required="required">
+        <input type="text" class="form-control" name="Title" id="Title" placeholder="Issue Title" ng-model="issue.Title" 
+               required="required" autocomplete="off">
         <span class="error" ng-if="!issueForm.Title.$pristine && !issueForm.Title.$valid">Issue title is required.</span>
     </div>
     <div class="form-group">
         <label for="Assignee">Assignee:</label>
-        <select class="form-control" name="Assignee" id="Assignee" ng-model="issue.Assignee" ng-options="user.Username for user in users track by user.Id " required="required"></select>
+        <select class="form-control" name="Assignee" id="Assignee" ng-model="issue.Assignee" 
+                ng-options="user.Username for user in users track by user.Id " required="required"></select>
         <span class="error" ng-if="!issueForm.Assignee.$pristine && !issueForm.Assignee.$valid">Select Issue assignee.</span>
     </div>
     <div class="form-group">
         <label for="Project">Project:</label>
-        <select class="form-control" name="Project" id="Project" ng-model="issue.Project" ng-options="project.Name for project in projects track by project.Id" required="required" ng-change="changeProject()"></select>
+        <select class="form-control" name="Project" id="Project" ng-model="issue.Project" 
+                ng-options="project.Name for project in projects track by project.Id" required="required" ng-change="changeProject()"></select>
         <span class="error" ng-if="!issueForm.Project.$pristine && !issueForm.Project.$valid">Select Issue project.</span>
     </div>
     <div class="form-group">
@@ -21,14 +24,14 @@
     </div>
     <div class="form-group">
         <label for="DueDate">Due Date:</label>
-        <input type="text" class="form-control" name="DueDate" id="DueDate" ng-model="issue.DueDate" required="required" readonly="readonly">
+        <input type="text" class="form-control white" name="DueDate" id="DueDate" ng-model="issue.DueDate" required="required" readonly="readonly" autocomplete="off">
         <span class="error" ng-if="!issueForm.DueDate.$pristine && !issueForm.DueDate.$valid">Issue due date is required.</span>
     </div>
     <div class="form-group relative-position">
         <label for="Labels">Labels (comma separated):</label>
         <input name="Labels" id="Labels" placeholder="Labels" class="form-control" autocomplete="off"
-               ng-change="getLabels()" ng-keydown="labelsKeyDown($event)" ng-model="issue.Labels" required="required" />
-        <div id="drop-down" class="absolute-position drop-down">
+               ng-change="getLabels()" ng-keydown="labelsKeyDown($event)" ng-blur="labelsLostFocus()" ng-model="issue.Labels" required="required" />
+        <div id="drop-down" class="absolute-position drop-down" ng-mouseover="dropDownMouseOver()" ng-mouseleave="dropDownMouseLeave()" autocomplete="off">
             <ul class="drop-down-holder">
                 <li ng-class="{'selected-label':label.isSelected==true}" label-name="{{label.Name}}" ng-click="selectOption($event)" ng-repeat="label in labelsOptions | limitTo : 10">{{label.Name}}</li>
             </ul>

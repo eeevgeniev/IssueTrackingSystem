@@ -2,11 +2,11 @@
     var labelModule = angular.module('trackingManagerApp.services.commands.labelServices',
     ['trackingManagerApp.services.https.requestService', 'trackingManagerApp.services.commands.cookies.cookieService',
     'trackingManagerApp.routes.routeConfig', 'trackingManagerApp.services.commands.notifyServices',
-    'trackingManagerApp.services.commands.responseGetterServices']);
+    'trackingManagerApp.services.commands.responseGetterServices', 'trackingManagerApp.services.commands.helperServices']);
 
     labelModule.factory('labelServices', ['$q', 'requests', 'redirect', 'cookieManager',
-    'cookiesNames', 'notifyService', 'responseGetterServices',
-     function ($q, requests, redirect, cookieManager, cookiesNames, notifyService, responseGetterServices) {
+    'cookiesNames', 'notifyService', 'responseGetterServices', 'helperServices',
+     function ($q, requests, redirect, cookieManager, cookiesNames, notifyService, responseGetterServices, helperServices) {
          var commands = {};
 
          commands.getLabels = function getLabels(labelName) {
@@ -19,10 +19,9 @@
              promise.then(function (response) {
                  var labels = responseGetterServices.getArray(response.data, ['Name']);
                  response = null;
-
                  deffered.resolve(labels);
              }, function (response) {
-                 notifyService.generateErrorMessage(response);
+                 notifyService.generateResponseErrorMessage(response);
              })
 
              return deffered.promise;
@@ -30,8 +29,7 @@
 
          commands.labelsFromString = function labelsFromString(labelsAsString) {
              var labels = [];
-
-             var splittedLabels = labelsAsString.split(',');
+             var splittedLabels = helperServices.splitString(labelsAsString, ',');
 
              splittedLabels.forEach(function (currentLabel) {
                  labels.push({ Name: currentLabel.trim() });

@@ -12,7 +12,7 @@
             issuePromise = issueServices.getFilteredIssue(),
             issueAssignee = null,
             issueProject = null,
-            $scope.labels = [];
+            isOverDropDownFocus = false;
 
             issuePromise.then(function success(issue) {
                 $scope.issue = issue;
@@ -38,10 +38,6 @@
                 projectsPromise.then(function success(projects) {
                     $scope.projects = projects;
 
-                    $scope.projects.forEach(function (currentProject) {
-                        $scope.labels = issueServices.getAvailableLabels($scope.labels, currentProject.Labels);
-                    })
-
                     issueProject = $scope.projects.find(function (currentProject) {
                         return issueProject.Id === currentProject.Id;
                     });
@@ -64,17 +60,8 @@
             });
 
             $scope.addUpdateIssue = function addUpdateIssue() {
-                issue = issueServices.newIssue($scope.issue);
-
-                var updatedIssue = {};
-
-                for (var property in issue) {
-                    if (property !== 'ProjectId') {
-                        updatedIssue[property] = issue[property];
-                    }
-                }
-
-                issueServices.editIssue(updatedIssue);
+                var issue = issueServices.getEditedIssue($scope.issue);
+                issueServices.editIssue(issue);
             };
 
             $scope.changeStatus = function changeStatus(event) {
@@ -132,6 +119,25 @@
 
                     $scope.issue.Labels = result === '' ? $scope.issue.Labels : result;
                 }
+            }
+
+            $scope.labelsLostFocus = function labelsLostFocus() {
+
+                if (isOverDropDownFocus) {
+                    $('#Labels').focus();
+                    return;
+                }
+
+                isOverDropDownFocus = false;
+                $('#drop-down').css('display', 'none');
+            }
+
+            $scope.dropDownMouseOver = function dropDownMouseOver() {
+                isOverDropDownFocus = true;
+            }
+
+            $scope.dropDownMouseLeave = function dropDownMouseLeave() {
+                isOverDropDownFocus = false;
             }
         }]);
 })();

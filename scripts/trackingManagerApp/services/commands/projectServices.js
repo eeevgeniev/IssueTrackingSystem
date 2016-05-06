@@ -28,7 +28,7 @@
                 response = null;
                 deffered.resolve(project);
             }, function (response) {
-                notifyService.generateErrorMessage(response);
+                notifyService.generateResponseErrorMessage(response);
                 redirect.changeLocation('');
             });
 
@@ -46,7 +46,7 @@
 
                 deffered.resolve(result);
             }, function (response) {
-                notifyService.generateErrorMessage(response);
+                notifyService.generateResponseErrorMessage(response);
                 redirect.changeLocation('');
             })
 
@@ -59,13 +59,13 @@
 
             promise.then(function success(response) {
                 notifyService.generateInfoMessage('Project created.');
-                // to do
+                redirect.changeLocation('/projects/' + response.data.Id);
             }, function error(response) {
-                notifyService.generateErrorMessage(response);
+                notifyService.generateResponseErrorMessage(response);
             });
         }
 
-        commands.updateProject = function updateProjects(project) {
+        commands.updateProject = function updateProject(project) {
             var token = cookieManager.getCookie(cookiesNames.Bearer),
             id = getParameters.getValue('id'),
             promise = requests.editProject(token, id, project);
@@ -73,7 +73,7 @@
             promise.then(function success(response) {
                 notifyService.generateInfoMessage('Project updated.');
             }, function error(response) {
-                notifyService.generateErrorMessage(response);
+                notifyService.generateResponseErrorMessage(response);
             });
         }
 
@@ -103,14 +103,21 @@
                 response = null;
                 deffered.resolve(issues);
             }, function (response) {
-                notifyService.generateErrorMessage(response);
+                notifyService.generateResponseErrorMessage(response);
                 redirect.changeLocation('');
             });
 
             return deffered.promise;
         }
 
-        commands.newProject = function newProject(value) {
+        commands.getNewProject = function getNewProject(value) {
+            var project = commands.getEditedProject(value);
+            project.ProjectKey = value.ProjectKey;
+
+            return project;
+        }
+
+        commands.getEditedProject = function getEditedProject(value) {
             var project = {},
                 prioritiesAsString = typeof (value.Priorities) === 'undefined' ? [] : value.Priorities,
                 priorities = [];
@@ -127,11 +134,9 @@
 
             project.Name = value.Name;
             project.Description = value.Description;
-            project.ProjectKey = value.ProjectKey;
             project.Labels = value.Labels;
             project.Priorities = priorities;
             project.LeadId = value.Lead.Id;
-
             project.Labels = labelServices.labelsFromString(project.Labels);
 
             return project;

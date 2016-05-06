@@ -24,16 +24,10 @@
         });
 
         $scope.AddUpdateIssue = function AddUpdateIssue() {
-            issue = issueServices.newIssue($scope.issue);
+            issue = issueServices.getNewProject($scope.issue);
             var updatedIssue = {};
 
-            for (var property in issue) {
-                if (property !== 'ProjectId') {
-                    updatedIssue[property] = issue[property];
-                }
-            }
-
-            issueServices.editIssue(updatedIssue);
+            issueServices.createProject(updatedIssue);
             $('.ui-dialog').remove();
             $('#new-issue').addClass('hidden');
         }

@@ -6,27 +6,23 @@
 
         var notifies = {};
 
-        notifies.notify = function notify(notyType, notice) {
-            $('#notifications').noty({
-                layout: 'top',
-                type: notyType,
-                text: notice,
-                dismissQueue: true,
-                animation: {
-                    open: { height: 'toggle' },
-                    close: { height: 'toggle' },
-                    easing: 'swing',
-                    speed: 500
-                },
-                timeout: 3000
-            });
-        }
-
         notifies.generateInfoMessage = function generateInfoMessage(message) {
             notifies.notify('success', message);
         }
 
-        notifies.generateErrorMessage = function generateErrorMessage(response) {
+        notifies.generateErrorMessage = function generateErrorMessage(message) {
+            notifies.notify('error', message);
+        }
+
+        notifies.generateWarningMessage = function generateWarningMessage(message) {
+            notifies.notify('warning', message);
+        }
+
+        notifies.generateInfoMessage = function generateInfoMessage(message) {
+            notifies.notify('info', message);
+        }
+
+        notifies.generateResponseErrorMessage = function generateErrorMessage(response) {
             var message = '',
             openDiv = '<div>',
             closeDiv = '</div>'
@@ -50,6 +46,22 @@
             }
 
             notifies.notify('error', message);
+        }
+
+        notifies.notify = function notify(notyType, notice) {
+            $('#notifications').noty({
+                layout: 'top',
+                type: notyType,
+                text: notice,
+                dismissQueue: true,
+                animation: {
+                    open: { height: 'toggle' },
+                    close: { height: 'toggle' },
+                    easing: 'swing',
+                    speed: 500
+                },
+                timeout: 3000
+            });
         }
 
         return notifies;

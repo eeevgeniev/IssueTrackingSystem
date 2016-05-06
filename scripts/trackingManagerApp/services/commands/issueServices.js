@@ -2,12 +2,13 @@
     var issueCommands = angular.module('trackingManagerApp.services.commands.issueServices',
     ['trackingManagerApp.services.https.requestService', 'trackingManagerApp.services.commands.cookies.cookieService',
     'trackingManagerApp.routes.routeConfig', 'trackingManagerApp.services.commands.notifyServices',
-    'trackingManagerApp.services.commands.responseGetterServices', 'trackingManagerApp.services.commands.labelServices']);
+    'trackingManagerApp.services.commands.responseGetterServices', 'trackingManagerApp.services.commands.labelServices',
+    'trackingManagerApp.services.commands.helperServices']);
 
     issueCommands.factory('issueServices', ['$q', 'requests', 'redirect', 'getParameters', 'cookieManager',
-    'cookiesNames', 'notifyService', 'responseGetterServices', 'labelServices',
+    'cookiesNames', 'notifyService', 'responseGetterServices', 'labelServices', 'helperServices',
     function ($q, requests, redirect, getParameters, cookieManager, cookiesNames, notifyService,
-    responseGetterServices, labelServices) {
+    responseGetterServices, labelServices, helperServices) {
         var commands = {};
 
         commands.getIssue = function getIssue() {
@@ -23,7 +24,7 @@
                 deffered.resolve(issue);
             }, function (response) {
                 redirect.changeLocation('');
-                notifyService.generateErrorMessage(response);
+                notifyService.generateResponseErrorMessage(response);
             });
 
             return deffered.promise;
@@ -42,7 +43,7 @@
                 deffered.resolve(issue);
             }, function (response) {
                 redirect.changeLocation('');
-                notifyService.generateErrorMessage(response);
+                notifyService.generateResponseErrorMessage(response);
             });
 
             return deffered.promise;
@@ -54,11 +55,11 @@
                 promise = requests.changeIssueStatus(token, issueId, statusId);
 
             promise.then(function (response) {
-                notifyService.generateInfoMessage('Issue status succefully updated!');
+                notifyService.generateInfoMessage('Issue status updated!');
                 redirect.reloadPage();
             }, function (response) {
                 redirect.changeLocation('');
-                notifyService.generateErrorMessage(response);
+                notifyService.generateResponseErrorMessage(response);
             });
         }
 
@@ -67,12 +68,11 @@
                 promise = requests.addNewIssue(token, issue);
 
             promise.then(function success(response) {
-                // to do
-                redirect.changeLocation('');
+                redirect.changeLocation('/issues/' + response.data.Id);
+                notifyService.generateInfoMessage('Issue created!');
             }, function error(response) {
-                // to do
                 redirect.changeLocation('');
-                notifyService.generateErrorMessage(response);
+                notifyService.generateResponseErrorMessage(response);
             });
         };
 
@@ -84,26 +84,40 @@
             promise.then(function success(response) {
                 notifyService.generateInfoMessage('Issue updated.');
             }, function error(response) {
-                notifyService.generateErrorMessage(response);
+                redirect.changeLocation('');
+                notifyService.generateResponseErrorMessage(response);
             });
         };
 
         commands.newIssue = function newIssue(value) {
+            var issue = commands.getEditedIssue(value);
+            issue.ProjectId = value.Project.Id;
+
+            return issue;
+        }
+
+        commands.getEditedIssue = function getEditedIssue(value) {
             var issue = {};
             issue.Title = value.Title;
             issue.Description = value.Description;
-            issue.ProjectId = value.Project.Id;
             issue.AssigneeId = value.Assignee.Id;
             issue.PriorityId = value.Priority.Id;
             issue.Labels = value.Labels;
-            issue.DueDate = new Date();
 
-            if (typeof (value.DueDate) !== 'undefined') {
-                var datesParams = value.DueDate.split(/[\s\/:]/);
-                issue.DueDate = new Date(datesParams[2], datesParams[1] - 1, datesParams[0], datesParams[3], datesParams[4]);
+            if (typeof (value.DueDate) === 'undefined') {
+                redirect.changeLocation('');
+                notifyService.generateErrorMessage('Issue date cannot be empty.')
+                return;
             }
 
-            issue.Labels = labelServices.labelsFromString(issue.Labels);
+            if (typeof (issue.Labels) === 'undefined') {
+                redirect.changeLocation('');
+                notifyService.generateErrorMessage('Issues labels cannot be empty.')
+                return;
+            }
+
+            issue.DueDate = helperServices.createDate(value.DueDate, true);
+            issue.Labels = labelServices.labelsFromString(issue.Labels, ',');
 
             return issue;
         }
@@ -111,7 +125,7 @@
         commands.redirectToIssue = function redirectToIssue() {
             var issueId = getParameters.getValue('id');
             redirect.changeLocation('/issues/' + issueId);
-            notifyService.generateInfoMessage('You don\'t have permission to edit issue.');
+            notifyService.generateErrorMessage('You don\'t have permission to edit issue.');
         }
 
         commands.isUserIssueAssignee = function isUserIssueAssignee(issueAssigneeId) {
@@ -122,25 +136,6 @@
             }
 
             return user.Id === issueAssigneeId;
-        }
-
-        commands.getAvailableLabels = function getAvailableLabels(addedLabels, labels) {
-
-            for (var i = 0; i < labels.length; i++) {
-                var isAdded = false;
-                for (var c = 0; c < addedLabels.length; c++) {
-                    if (labels[i].Id === addedLabels[c].Id) {
-                        isAdded = true;
-                        break;
-                    }
-                }
-
-                if (!isAdded) {
-                    addedLabels.push(labels[i]);
-                }
-            }
-
-            return addedLabels;
         }
 
         return commands;

@@ -33,16 +33,8 @@
             }
 
             $scope.addUpdateProject = function addUpdateProject() {
-                var project = projectServices.newProject($scope.project),
-                    updatedProject = {};
-
-                for (var property in project) {
-                    if (property !== 'ProjectKey') {
-                        updatedProject[property] = project[property];
-                    }
-                }
-
-                projectServices.updateProject(updatedProject);
+                var project = projectServices.getEditedProject($scope.project);
+                projectServices.updateProject(project);
             }
         }]);
 })();

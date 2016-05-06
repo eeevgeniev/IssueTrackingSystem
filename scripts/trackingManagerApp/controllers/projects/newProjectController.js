@@ -19,7 +19,7 @@
             }
 
             $scope.addUpdateProject = function addUpdateProject() {
-                var project = projectServices.newProject($scope.project);
+                var project = projectServices.getNewProject($scope.project);
                 projectServices.createProject(project);
                 $('.ui-dialog').remove();
                 $('#new-project').addClass('hidden');

@@ -2,7 +2,7 @@
     <div class="form-group">
         <label for="Name">Name:</label>
         <input type="text" class="form-control" name="Name" id="Name" placeholder="Project name"
-               ng-change="createProjectKey()" ng-model="project.Name" required="required">
+               ng-change="createProjectKey()" ng-model="project.Name" required="required" autocomplete="off">
         <span class="error" ng-if="!projectForm.Name.$pristine && !projectForm.Name.$valid">Project name is required.</span>
     </div>
     <div class="form-group">
@@ -13,18 +13,19 @@
     </div>
     <div class="form-group">
         <label for="ProjectKey">Project Key:</label>
-        <input type="text" class="form-control" name="ProjectKey" id="ProjectKey" placeholder="Project Key" ng-model="project.ProjectKey" required="required" disabled>
+        <input type="text" class="form-control white" name="ProjectKey" id="ProjectKey" placeholder="Project Key" 
+               ng-model="project.ProjectKey" required="required" autocomplete="off" disabled>
         <span class="error" ng-if="!projectForm.ProjectKey.$pristine && !projectForm.ProjectKey.$valid">Project name is required.</span>
     </div>
     <div class="form-group">
         <label for="Priorities">Priorities (comma separated):</label>
         <input type="text" class="form-control" name="Priorities" id="Priorities"
-               placeholder="Available Priorities For The Issues" ng-model="project.Priorities" value="Low, Medium, Urgent" required="required">
+               placeholder="Available Priorities For The Issues" ng-model="project.Priorities" autocomplete="off" required="required">
         <span class="error" ng-if="!projectForm.Priorities.$pristine && !projectForm.Priorities.$valid">Enter some project priorities.</span>
     </div>
     <div class="form-group">
         <label for="Labels">Labels (comma separated):</label>
-        <input type="text" class="form-control" id="Labels" name="Labels" placeholder="Labels" ng-model="project.Labels" value="Soft">
+        <input type="text" class="form-control" id="Labels" name="Labels" placeholder="Labels" ng-model="project.Labels" autocomplete="off">
     </div>
     <div class="form-group">
         <label for="Description">Description:</label>

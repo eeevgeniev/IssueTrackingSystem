@@ -62,3 +62,7 @@ body {
 .selected-label {
     background-color: #eee;
 }
+
+.white {
+    background-color: #fff;
+}

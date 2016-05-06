@@ -7,7 +7,7 @@
     projectModule.controller('ViewProjectController', ['$scope', '$filter', 'projectServices', 'ProjectIssuesPerPage',
     function ($scope, $filter, projectServices, ProjectIssuesPerPage) {
 
-        $scope.title == 'View Project',
+        $scope.title = 'View Project',
         promiseProject = projectServices.getProject(),
         promiseProjectIssues = projectServices.getProjectIssues();
 

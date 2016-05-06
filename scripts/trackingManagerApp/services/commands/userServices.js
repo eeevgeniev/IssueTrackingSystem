@@ -20,7 +20,7 @@
                     $rootScope.$broadcast('userLoggedLogout');
                     redirect.reloadPage();
                 }, function error(response) {
-                    notifyService.generateErrorMessage(response);
+                    notifyService.generateResponseErrorMessage(response);
                     redirect.changeLocation('');
                 });
             }
@@ -35,7 +35,7 @@
                     cookieManager.setCookie(cookiesNames.Bearer, tokenObject[accessToken]);
                     commands.getUser();
                 }, function error(response) {
-                    notifyService.generateErrorMessage(response);
+                    notifyService.generateResponseErrorMessage(response);
                     redirect.changeLocation('');
                 })
             }
@@ -51,7 +51,7 @@
                     commands.loginUser(newUser);
                     notifyService.generateInfoMessage('Successfull registration. You will be redirect.');
                 }, function error(response) {
-                    notifyService.generateErrorMessage(response);
+                    notifyService.generateResponseErrorMessage(response);
                     redirect.changeLocation('');
                 })
             }
@@ -63,7 +63,7 @@
                 promise.then(function success(response) {
                     notifyService.generateInfoMessage('Password changed.');
                 }, function error(response) {
-                    notifyService.generateErrorMessage(response);
+                    notifyService.generateResponseErrorMessage(response);
                 });
             }
 
@@ -78,7 +78,7 @@
                     response = null;
                     deffered.resolve(result);
                 }, function error(response) {
-                    notifyService.generateErrorMessage(response);
+                    notifyService.generateResponseErrorMessage(response);
                     redirect.changeLocation('');
                 })
 
@@ -95,7 +95,7 @@
                     response = null;
                     deffered.resolve(result);
                 }, function error(response) {
-                    notifyService.generateErrorMessage(response);
+                    notifyService.generateResponseErrorMessage(response);
                     redirect.changeLocation('');
                 })
 
