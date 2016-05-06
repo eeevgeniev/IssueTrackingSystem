@@ -4,9 +4,9 @@
     'trackingManagerApp.controllers.projects.newProjectsController', 'trackingManagerApp.controllers.projects.viewProjectController',
     'trackingManagerApp.controllers.projects.editProjectController', 'trackingManagerApp.controllers.issues.newIssueController',
     'trackingManagerApp.controllers.issues.editIssueController', 'trackingManagerApp.controllers.issues.viewIssueController',
-    'trackingManagerApp.controllers.users.dashboardController', 'trackingManagerApp.controllers.users.editUserController',
-    'trackingManagerApp.controllers.users.changePasswordController', 'trackingManagerApp.controllers.users.logoutUserController',
-    'trackingManagerApp.services.commands.userServices', 'trackingManagerApp.controllers.projects.projectAddIssueController']);
+    'trackingManagerApp.controllers.users.dashboardController', 'trackingManagerApp.controllers.users.changePasswordController',
+    'trackingManagerApp.controllers.users.logoutUserController', 'trackingManagerApp.services.commands.userServices',
+    'trackingManagerApp.controllers.projects.projectAddIssueController']);
 
     routes.config(['$routeProvider', function ($routeProvider) {
         var defaultRoute = {
@@ -52,7 +52,7 @@
         });
 
         $routeProvider.when('/logout', {
-            templateUrl: '../templates/user/edit.html',
+            templateUrl: '../templates/user/logout.html',
             controller: 'LogoutUserController'
         });
 

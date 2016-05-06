@@ -49,7 +49,7 @@
                     newUser.password = user.password;
 
                     commands.loginUser(newUser);
-                    notifyService.generateInfoMessage('Successfull registration. You will be redirect.');
+                    notifyService.generateSuccessMessage('Successfull registration.');
                 }, function error(response) {
                     notifyService.generateResponseErrorMessage(response);
                     redirect.changeLocation('');

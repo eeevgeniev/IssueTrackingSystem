@@ -9,6 +9,7 @@
         function ($scope, $q, $filter, issueServices, userServices, projectServices, labelServices) {
             $scope.issue = {},
             $scope.title = 'Edit Issue',
+            $scope.buttonTitle = $scope.title,
             issuePromise = issueServices.getFilteredIssue(),
             issueAssignee = null,
             issueProject = null,
@@ -16,7 +17,7 @@
 
             issuePromise.then(function success(issue) {
                 $scope.issue = issue;
-                $scope.issue.DueDate = $filter('date')(issue.DueDate, 'dd/MM/yyyy hh:mm');
+                $scope.issue.DueDate = $filter('date')(issue.DueDate, 'dd/MM/yyyy HH:mm');
                 $scope.issue.Labels = $filter('getName')(issue.Labels);
                 issueAssignee = issue.Assignee;
                 issueProject = issue.Project;
@@ -94,28 +95,17 @@
                 labelsPromise = labelServices.getLabels(lastLabel);
 
                 labelsPromise.then(function success(labels) {
-                    if (labels.length > 0) {
-                        $scope.labelsOptions = [];
-
-                        for (var i = 0; i < labels.length && i < 10; i++) {
-                            labels[i].isSelected = false;
-                            $scope.labelsOptions.push(labels[i]);
-                        }
-                        $('#drop-down').css('display', 'block');
-                        $scope.labelsOptions[0].isSelected = true;
-                    } else {
-                        $('#drop-down').css('display', 'none');
-                    }
+                    $scope.labelsOptions = labelServices.showLabels(labels, '#drop-down');
                 });
             }
 
             $scope.selectOption = function selectOption(event) {
-                $scope.issue.Labels = labelServices.clickedLabel(event, $scope.issue.Labels);
+                $scope.issue.Labels = labelServices.clickedLabel(event, $scope.issue.Labels, '#drop-down');
             }
 
             $scope.labelsKeyDown = function labelsKeyDown(event) {
                 if (typeof ($scope.issue.Labels) !== 'undefined') {
-                    var result = labelServices.keyPressedLabel(event, $scope.labelsOptions, $scope.issue.Labels);
+                    var result = labelServices.keyPressedLabel(event, $scope.labelsOptions, $scope.issue.Labels, '#drop-down');
 
                     $scope.issue.Labels = result === '' ? $scope.issue.Labels : result;
                 }

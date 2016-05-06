@@ -6,7 +6,7 @@
 
         var notifies = {};
 
-        notifies.generateInfoMessage = function generateInfoMessage(message) {
+        notifies.generateSuccessMessage = function generateInfoMessage(message) {
             notifies.notify('success', message);
         }
 
@@ -19,13 +19,13 @@
         }
 
         notifies.generateInfoMessage = function generateInfoMessage(message) {
-            notifies.notify('info', message);
+            notifies.notify('information', message);
         }
 
         notifies.generateResponseErrorMessage = function generateErrorMessage(response) {
             var message = '',
-            openDiv = '<div>',
-            closeDiv = '</div>'
+                openDiv = '<div>',
+                closeDiv = '</div>';
 
             if (typeof (response.data.Message) !== 'undefined') {
                 message += openDiv + response.data.Message + closeDiv

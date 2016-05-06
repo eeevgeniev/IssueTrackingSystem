@@ -58,7 +58,7 @@
             promise = requests.newProject(token, project);
 
             promise.then(function success(response) {
-                notifyService.generateInfoMessage('Project created.');
+                notifyService.generateSuccessMessage('Project created.');
                 redirect.changeLocation('/projects/' + response.data.Id);
             }, function error(response) {
                 notifyService.generateResponseErrorMessage(response);
@@ -71,7 +71,7 @@
             promise = requests.editProject(token, id, project);
 
             promise.then(function success(response) {
-                notifyService.generateInfoMessage('Project updated.');
+                notifyService.generateSuccessMessage('Project updated.');
             }, function error(response) {
                 notifyService.generateResponseErrorMessage(response);
             });

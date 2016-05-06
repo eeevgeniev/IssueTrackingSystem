@@ -25,12 +25,18 @@
     </div>
     <div class="form-group">
         <label for="Labels">Labels (comma separated):</label>
-        <input type="text" class="form-control" id="Labels" name="Labels" placeholder="Labels" ng-model="project.Labels" autocomplete="off">
+        <input type="text" class="form-control" id="Labels" name="Labels" placeholder="Labels" ng-model="project.Labels" 
+               ng-change="getLabels()" ng-keydown="labelsKeyDown($event)" ng-blur="labelsLostFocus()" autocomplete="off">
+        <div id="drop-down-project" class="absolute-position drop-down" ng-mouseover="dropDownMouseOver()" ng-mouseleave="dropDownMouseLeave()" autocomplete="off">
+            <ul class="drop-down-holder">
+                <li ng-class="{'selected-label':label.isSelected==true}" label-name="{{label.Name}}" ng-click="selectOption($event)" ng-repeat="label in labelsOptions | limitTo : 10">{{label.Name}}</li>
+            </ul>
+        </div>
     </div>
     <div class="form-group">
         <label for="Description">Description:</label>
         <textarea class="form-control" name="Description" id="Description" placeholder="Description" ng-model="project.Description" required="required"></textarea>
         <span class="error" ng-if="!projectForm.Description.$pristine && !projectForm.Description.$valid">Project description is required.</span>
     </div>
-    <button type="submit" class="btn btn-success" ng-disabled="!projectForm.$valid" ng-click="addUpdateProject()">Send</button>
+    <button type="submit" class="btn btn-success" ng-disabled="!projectForm.$valid" ng-click="addUpdateProject()">{{buttonTitle}}</button>
 </form>

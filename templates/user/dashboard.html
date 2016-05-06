@@ -18,7 +18,7 @@
                 <tr ng-repeat="issue in issues">
                     <td><a href="#/issues/{{issue.Id}}">{{issue.Title}}</a></td>
                     <td><a href="#/projects/{{issue.Project.Id}}">{{issue.Project.Name}}</a></td>
-                    <td>{{issue.DueDate | date: 'hh:mm dd/MM/yyyy'}}</td>
+                    <td>{{issue.DueDate | date: 'dd/MM/yyyy HH:mm'}}</td>
                     <td>{{issue.Priority.Name}}</td>
                 </tr>
             </tbody>

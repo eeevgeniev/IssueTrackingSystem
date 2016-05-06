@@ -5,42 +5,42 @@
     <section class="col-md-8">
         <div class="form-group">
             <label>Title:</label>
-            <div class="form-control">{{issue.Title}}</div>
+            <div class="white break-words">{{issue.Title}}</div>
         </div>
         <div class="form-group">
             <label>Assignee:</label>
-            <div class="form-control" id="Assignee">{{issue.Assignee.Username}}</div>
+            <div class="white break-words" id="Assignee">{{issue.Assignee.Username}}</div>
         </div>
         <div class="form-group">
             <label>Project:</label>
-            <div class="form-control" id="Project">{{issue.Project.Name}}</div>
+            <div class="white break-words" id="Project">{{issue.Project.Name}}</div>
         </div>
         <div class="form-group">
             <label>Issue Key:</label>
-            <div class="form-control" id="IssueKey">{{issue.IssueKey}}</div>
+            <div class="white break-words" id="IssueKey">{{issue.IssueKey}}</div>
         </div>
         <div class="form-group">
             <label>Priority:</label>
-            <div class="form-control" id="Priority">{{issue.Priority.Name}}</div>
+            <div class="white break-words" id="Priority">{{issue.Priority.Name}}</div>
         </div>
         <div class="form-group">
             <label>Due Date:</label>
-            <div class="form-control" id="DueDate">{{issue.DueDate | date:'hh:mm dd/MM/yyyy'}}</div>
+            <div class="white break-words" id="DueDate">{{issue.DueDate | date:'dd/MM/yyyy HH:mm'}}</div>
         </div>
         <div class="form-group">
             <label>Labels:</label>
-            <div class="form-control" id="Labels">{{issue.Labels | getName}}</div>
+            <div class="white break-words" id="Labels">{{issue.Labels | getName}}</div>
         </div>
         <div class="form-group">
             <label>Description:</label>
-            <div class="form-control" id="Description">{{issue.Description}}</div>
+            <div class="white break-words" id="Description">{{issue.Description}}</div>
         </div>
         <a ng-if="isUserProjectLeader" class="btn btn-success" href="#/issues/{{issue.Id}}/edit">Edit</a>
     </section>
     <section class="col-md-4">
         <div class="form-group">
             <label>Current Status:</label>
-            <div class="form-control">{{issue.Status.Name}}</div>
+            <div class="white break-words">{{issue.Status.Name}}</div>
             <div ng-if="isUserAssignee">
                 <label>Change to status:</label>
                 <ul>

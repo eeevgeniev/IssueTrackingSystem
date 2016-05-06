@@ -38,9 +38,30 @@
              return labels;
          }
 
-         commands.clickedLabel = function clickedLabel(event, labelsAsText) {
+         commands.showLabels = function showLabels(labels, selector) {
+             var selectedLabels = [];
+
+             if (labels.length === 0) {
+                 $(selector).css('display', 'none');
+                 return selectedLabels;
+             }
+
+             var length = labels.length > 10 ? 10 : labels.length;
+
+             for (var i = 0; i < length; i++) {
+                 labels[i].isSelected = false;
+                 selectedLabels.push(labels[i]);
+             }
+
+             $(selector).css('display', 'block');
+             selectedLabels[0].isSelected = true;
+
+             return selectedLabels;
+         }
+
+         commands.clickedLabel = function clickedLabel(event, labelsAsText, selector) {
              if (typeof (labelsAsText) === 'undefined') {
-                 $('#drop-down').css('display', 'none');
+                 $(selector).css('display', 'none');
                  return '';
              }
 
@@ -48,18 +69,18 @@
                  length = labelsAsText.length,
                  addedLabels = labelsAsText.substr(0, quoteIndex + 1);
 
-             var statusId = $(event.target).attr('label-name');
-             $('#drop-down').css('display', 'none');
+             var newLabel = $(event.target).attr('label-name');
+             $(selector).css('display', 'none');
+             addedLabels = addedLabels.trim();
 
-             return labelsAsText = addedLabels + ' ' + statusId;
+             return labelsAsText = addedLabels === '' ? newLabel : addedLabels + ' ' + newLabel;
          }
 
-         commands.keyPressedLabel = function keyPressedLabel(event, labelsOptions, labelsAsText) {
+         commands.keyPressedLabel = function keyPressedLabel(event, labelsOptions, labelsAsText, selector) {
              var emptyResult = '';
-
              if (typeof (labelsOptions) !== 'undefined') {
                  if (event.keyCode === 27) {
-                     $('#drop-down').css('display', 'none');
+                     $(selector).css('display', 'none');
                      return emptyResult;
                  } else if (event.keyCode === 40 || event.keyCode === 38) {
                      var indexValue = event.keyCode === 40 ? 1 : -1;
@@ -88,11 +109,12 @@
                              var quoteIndex = labelsAsText.lastIndexOf(','),
                                  length = labelsAsText.length,
                                  addedLabels = labelsAsText.substr(0, quoteIndex + 1);
-                             $('#drop-down').css('display', 'none');
-                             return addedLabels + ' ' + labelsOptions[i].Name;
+                             $(selector).css('display', 'none');
+                             addedLabels = addedLabels.trim();
+                             return addedLabels === '' ? labelsOptions[i].Name : addedLabels + ' ' + labelsOptions[i].Name;
                          }
                      }
-                 }  
+                 }
              }
 
              return emptyResult;

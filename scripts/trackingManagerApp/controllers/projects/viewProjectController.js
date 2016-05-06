@@ -20,6 +20,12 @@
 
         promiseProjectIssues.then(function success(issues) {
 
+            issues.sort(function (first, second) {
+                return new Date(second.DueDate) - new Date(first.DueDate);
+            })
+
+            console.log(issues);
+
             $scope.issues = [];
             var issuesPagesCount = Math.ceil(issues.length / ProjectIssuesPerPage),
                 startPosition = Number(projectServices.getProjectIssuesPerPage('issues')),
@@ -51,7 +57,7 @@
                     $scope.toLast = issuesPagesCount;
                 }
 
-                for (var i = start; i < length && i < issues.length; i++) {
+                for (var i = start; i < end; i++) {
                     $scope.issues.push(issues[i]);
                 }
             }

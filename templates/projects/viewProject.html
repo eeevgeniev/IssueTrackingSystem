@@ -5,27 +5,27 @@
         </header>
         <div class="form-group">
             <label>Name:</label>
-            <div class="form-control" id="Name">{{project.Name}}</div>
+            <div class="white break-words" id="Name">{{project.Name}}</div>
         </div>
         <div class="form-group">
             <label>Leader:</label>
-            <div class="form-control" id="Leader">{{project.Lead.Username}}</div>
+            <div class="white break-words" id="Leader">{{project.Lead.Username}}</div>
         </div>
         <div class="form-group">
             <label>Project Key:</label>
-            <div class="form-control" id="ProjectKey">{{project.ProjectKey}}</div>
+            <div class="white break-words" id="ProjectKey">{{project.ProjectKey}}</div>
         </div>
         <div class="form-group">
             <label>Priorities (comma separated):</label>
-            <div class="form-control" id="Priorities">{{project.Priorities}}</div>
+            <div class="white break-words" id="Priorities">{{project.Priorities}}</div>
         </div>
         <div class="form-group">
             <label>Labels (comma separated):</label>
-            <div class="form-control" id="Labels">{{project.Labels}}</div>
+            <div class="white break-words" id="Labels">{{project.Labels}}</div>
         </div>
         <div class="form-group">
             <label>Description:</label>
-            <div class="form-control" id="Description">{{project.Description}}</div>
+            <div class="white break-words" id="Description">{{project.Description}}</div>
         </div>
         <div ng-if="isProjectLeader">
             <a class="btn btn-success" href="#/projects/{{project.Id}}/edit">Edit</a>
@@ -46,7 +46,7 @@
             <tbody>
                 <tr ng-repeat="issue in issues">
                     <td><a href="#/issues/{{issue.Id}}">{{issue.Title}}</a></td>
-                    <td>{{issue.DueDate | date: 'hh:mm dd/MM/yyyy'}}</td>
+                    <td>{{issue.DueDate | date: 'dd/MM/yyyy HH:mm'}}</td>
                 </tr>
             </tbody>
         </table>

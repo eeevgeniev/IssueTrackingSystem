@@ -55,7 +55,7 @@
                 promise = requests.changeIssueStatus(token, issueId, statusId);
 
             promise.then(function (response) {
-                notifyService.generateInfoMessage('Issue status updated!');
+                notifyService.generateSuccessMessage('Issue status updated!');
                 redirect.reloadPage();
             }, function (response) {
                 redirect.changeLocation('');
@@ -69,7 +69,7 @@
 
             promise.then(function success(response) {
                 redirect.changeLocation('/issues/' + response.data.Id);
-                notifyService.generateInfoMessage('Issue created!');
+                notifyService.generateSuccessMessage('Issue created!');
             }, function error(response) {
                 redirect.changeLocation('');
                 notifyService.generateResponseErrorMessage(response);
@@ -82,7 +82,7 @@
                 promise = requests.updateIssue(token, issueId, issue);
 
             promise.then(function success(response) {
-                notifyService.generateInfoMessage('Issue updated.');
+                notifyService.generateSuccessMessage('Issue updated.');
             }, function error(response) {
                 redirect.changeLocation('');
                 notifyService.generateResponseErrorMessage(response);
@@ -116,7 +116,7 @@
                 return;
             }
 
-            issue.DueDate = helperServices.createDate(value.DueDate, true);
+            issue.DueDate = helperServices.createDate(value.DueDate, false);
             issue.Labels = labelServices.labelsFromString(issue.Labels, ',');
 
             return issue;

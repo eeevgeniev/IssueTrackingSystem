@@ -64,5 +64,13 @@ body {
 }
 
 .white {
+    padding: 6px;
+    border: 1px solid #ddd;
     background-color: #fff;
+    border-radius: 5px;
+    width: 100%;
+}
+
+.break-words {
+    word-break: break-all;
 }

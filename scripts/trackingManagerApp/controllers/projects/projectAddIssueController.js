@@ -23,15 +23,6 @@
             modalServices.createModal('#new-issue', 800, 800);
         });
 
-        $scope.AddUpdateIssue = function AddUpdateIssue() {
-            issue = issueServices.getNewProject($scope.issue);
-            var updatedIssue = {};
-
-            issueServices.createProject(updatedIssue);
-            $('.ui-dialog').remove();
-            $('#new-issue').addClass('hidden');
-        }
-
         $scope.$on('$destroy', function () {
             $('.ui-dialog').remove();
         });

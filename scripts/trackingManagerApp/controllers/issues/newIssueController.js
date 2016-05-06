@@ -8,6 +8,7 @@
         function ($scope, $q, issueServices, userServices, projectServices, labelServices) {
             $scope.issue = {},
             $scope.title = 'New Issue',
+            $scope.buttonTitle = $scope.title,
             $scope.isButtonActive = true;
             userPromise = userServices.getUsers(),
             projectPromise = projectServices.getProjects(),
@@ -57,28 +58,17 @@
                 labelsPromise = labelServices.getLabels(lastLabel);
 
                 labelsPromise.then(function success(labels) {
-                    if (labels.length > 0) {
-                        $scope.labelsOptions = [];
-
-                        for (var i = 0; i < labels.length && i < 10; i++) {
-                            labels[i].isSelected = false;
-                            $scope.labelsOptions.push(labels[i]);
-                        }
-                        $('#drop-down').css('display', 'block');
-                        $scope.labelsOptions[0].isSelected = true;
-                    } else {
-                        $('#drop-down').css('display', 'none');
-                    }
+                    $scope.labelsOptions = labelServices.showLabels(labels, '#drop-down');
                 });
             }
 
             $scope.selectOption = function selectOption(event) {
-                $scope.issue.Labels = labelServices.clickedLabel(event, $scope.issue.Labels);
+                $scope.issue.Labels = labelServices.clickedLabel(event, $scope.issue.Labels, '#drop-down');
             }
 
             $scope.labelsKeyDown = function labelsKeyDown(event) {
                 if (typeof ($scope.issue.Labels) !== 'undefined') {
-                    var result = labelServices.keyPressedLabel(event, $scope.labelsOptions, $scope.issue.Labels);
+                    var result = labelServices.keyPressedLabel(event, $scope.labelsOptions, $scope.issue.Labels, '#drop-down');
 
                     $scope.issue.Labels = result === '' ? $scope.issue.Labels : result;
                 }

@@ -9,7 +9,6 @@
 
             promise.then(function success(issue) {
                 $scope.issue = issue;
-                $scope.issue.DueDate = $filter('date')(issue.DueDate, 'dd/MM/yyyy hh:mm');
 
                 $scope.isUserAssignee = issueServices.isUserIssueAssignee(issue.Assignee.Id);
 
