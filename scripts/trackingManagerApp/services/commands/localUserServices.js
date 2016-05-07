@@ -32,7 +32,7 @@
 
             commands.invalidCookies = function invalidCookies() {
                 commands.destroyUserCookies();
-                $rootScope.$broadcast('userLoggedLogout');
+                $rootScope.$broadcast(UserLoggedLogout);
                 notifyService.generateErrorMessage('Invalid user data.');
                 redirect.changeLocation('');
             }

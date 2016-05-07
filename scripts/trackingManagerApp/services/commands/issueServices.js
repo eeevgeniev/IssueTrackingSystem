@@ -161,8 +161,7 @@
         }
 
         commands.isUserAssigneeInIssue = function isUserAssigneeInIssue(issues) {
-            var user = cookieManager.getCookie(cookiesNames.User);
-            user = JSON.parse(user);
+            var user = cookieManager.getObjectCookie(cookiesNames.User);
             var userId = user.Id;
 
             for (var i = 0; i < issues.length; i++) {
