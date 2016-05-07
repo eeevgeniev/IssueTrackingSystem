@@ -24,6 +24,7 @@
 
             promiseProjectIssues.then(function success(issues) {
                 $scope.isLoading = false;
+
                 if (issues.length === 0) {
                     $scope.hasIssues = false;
                     return;
