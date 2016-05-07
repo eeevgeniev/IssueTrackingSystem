@@ -67,22 +67,30 @@
         </li>
     </ul>
     <div class="bottom-margin">
-    <a class="btn btn-info right-margin" ng-if="hasFirst" href="#/issues/{{issue.Id}}/{{toFirst}}">&lt;&lt;</a>
-    <a class="btn btn-info right-margin" ng-if="hasPrevious" href="#/issues/{{issue.Id}}/{{previous}}">{{previous}}</a>
-    <a class="btn btn-success right-margin" ng-if="hasCurrent" href="#/issues/{{issue.Id}}/{{current}}">{{current}}</a>
-    <a class="btn btn-info right-margin" ng-if="hasNext" href="#/issues/{{issue.Id}}/{{next}}">{{next}}</a>
-    <a class="btn btn-info right-margin" ng-if="hasLast" href="#/issues/{{issue.Id}}/{{toLast}}">&gt;&gt;</a>
+        <a class="btn btn-info right-margin" ng-if="hasFirst" href="#/issues/{{issue.Id}}/comments/{{toFirst}}">&lt;&lt;</a>
+        <a class="btn btn-info right-margin" ng-if="hasPrevious" href="#/issues/{{issue.Id}}/comments/{{previous}}">{{previous}}</a>
+        <a class="btn btn-success right-margin" ng-if="hasCurrent" href="#/issues/{{issue.Id}}/comments/{{current}}">{{current}}</a>
+        <a class="btn btn-info right-margin" ng-if="hasNext" href="#/issues/{{issue.Id}}/comments/{{next}}">{{next}}</a>
+        <a class="btn btn-info right-margin" ng-if="hasLast" href="#/issues/{{issue.Id}}/comments/{{toLast}}">&gt;&gt;</a>
+    </div>
+    <div ng-if="isLoading">
+        <p class="center-text">Loading issues comments...</p>
+    </div>
+    <div class="clear-float" ng-if="!hasComments && !isLoading">
+        <p class="center-text">No comments.</p>
     </div>
 </section>
-<form class="col-md-8 clear-float" name="commentForm" ng-if="isUserProjectLeader || hasIssueInThisProject">
+<section class="clear-float" ng-if="isUserProjectLeader || hasIssueInThisProject">
     <header>
         <h3>Add new comment</h3>
+    </header>
+    <form class="col-md-8" name="commentForm">
         <div class="form-group">
             <label for="Text">Text:</label>
-            <textarea id="Text" name="Text" ng-model="comment.Text" class="form-control" required="required"></textarea>
+            <textarea id="Text" name="Text" class="form-control" ng-model="comment.Text" required="required"></textarea>
             <span class="error" ng-if="!commentForm.Text.$pristine && !commentForm.Text.$valid">Comment text is required.</span>
         </div>
-        <input type="submit" ng-disabled="!commentForm.$valid" class="btn btn-success" 
+        <input type="submit" ng-disabled="!commentForm.$valid" class="btn btn-success"
                ng-click="addComment()" value="{{buttonTitle}}" />
-    </header>
-</form>
+    </form>
+</section>

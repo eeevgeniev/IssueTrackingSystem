@@ -9,6 +9,7 @@
         'ProjectIssuesPerPage', 'localUserServices', 'helperServices',
         function ($scope, $filter, projectServices, ProjectIssuesPerPage, localUserServices, helperServices) {
             $scope.title = 'View Project',
+            $scope.isLoading = true,
             promiseProject = projectServices.getProject(),
             promiseProjectIssues = projectServices.getProjectIssues();
             
@@ -22,6 +23,12 @@
             
 
             promiseProjectIssues.then(function success(issues) {
+                $scope.isLoading = false;
+                if (issues.length === 0) {
+                    $scope.hasIssues = false;
+                    return;
+                }
+
                 issues.sort(function (first, second) {
                     return new Date(second.DueDate) - new Date(first.DueDate);
                 });
@@ -60,6 +67,8 @@
                     for (var i = start; i < end; i++) {
                         $scope.issues.push(issues[i]);
                     }
+
+                    $scope.hasIssues = true;
                 }
 
                 issues = null;

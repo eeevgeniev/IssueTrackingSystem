@@ -9,6 +9,8 @@
         'projectServices', 'localUserServices', 'CommentsPerPage', 'helperServices',
         function ($scope, $q, $filter, issueServices, projectServices, localUserServices, CommentsPerPage, helperServices) {
             $scope.title = 'View Issue',
+            $scope.comment = {},
+            $scope.isLoading = true,
             $scope.buttonTitle = 'Add Comment',
             promise = issueServices.getFilteredIssue();
 
@@ -32,6 +34,13 @@
                 });
 
                 commentsPromise.then(function success(comments) {
+                    $scope.isLoading = false;
+
+                    if (comments.length === 0) {
+                        $scope.hasComments = false;
+                        return;
+                    }
+
                     comments.sort(function (first, second) {
                         return new Date(second.CreatedOn) - new Date(first.CreatedOn);
                     });
@@ -72,6 +81,8 @@
                         for (var i = start; i < end; i++) {
                             $scope.comments.push(comments[i]);
                         }
+
+                        $scope.hasComments = true;
                     }
 
                     comments = null;

@@ -41,7 +41,7 @@
             controller: 'ViewIssueController'
         });
 
-        $routeProvider.when('/issues/:id/:comments', {
+        $routeProvider.when('/issues/:id/comments/:comments', {
             templateUrl: 'scripts/trackingManagerApp/templates/issues/viewIssue.html',
             controller: 'ViewIssueController'
         });

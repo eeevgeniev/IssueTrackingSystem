@@ -8,7 +8,7 @@
 
         commands.createDate = function createDate(dateAsString) {
             var datesParams = dateAsString.split(/[\s\/:]/);
-            var date = new Date(datesParams[2], datesParams[1] - 1, datesParams[0], datesParams[3], datesParams[4]);
+            var date = new Date(Date.UTC(datesParams[2], datesParams[1] - 1, datesParams[0], datesParams[3], datesParams[4]));
 
             return date;
         }

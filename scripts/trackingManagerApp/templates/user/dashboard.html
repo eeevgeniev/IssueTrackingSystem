@@ -23,6 +23,12 @@
                 </tr>
             </tbody>
         </table>
+        <div ng-if="isLoading">
+            <p class="center-text">Loading issues...</p>
+        </div>
+        <div ng-if="!hasIssues && !isLoading">
+            <p class="center-text">No issues.</p>
+        </div>
         <div class="bottom-margin">
             <a class="btn btn-info right-margin" ng-if="hasFirst" href="#/dashboard/{{toFirst}}">&lt;&lt;</a>
             <a class="btn btn-info right-margin" ng-if="hasPrevious" href="#/dashboard/{{previous}}">{{previous}}</a>

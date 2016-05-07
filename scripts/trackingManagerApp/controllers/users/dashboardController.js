@@ -9,10 +9,17 @@
         'IssuesPerPage', 'localUserServices',
         function ($scope, $q, userServices, modalServices, IssuesPerPage, localUserServices) {
             $scope.isUserAdmin = localUserServices.isUserAdmin(),
+            $scope.isLoading = true,
             page = Number(userServices.getDashboardPage('page')),
             promise = userServices.getUserIssues(IssuesPerPage, page, 'DueDate desc');
 
             promise.then(function success(result) {
+                $scope.isLoading = false;
+
+                if (result.Issues.length === 0) {
+                    $scope.hasIssues = false;
+                    return;
+                }
 
                 if (page <= result.TotalPages) {
                     $scope.hasCurrent = true;
@@ -39,6 +46,7 @@
                     }
 
                     $scope.issues = result.Issues;
+                    $scope.hasIssues = true;
                 }
             });
 

@@ -107,3 +107,7 @@ body {
     background-color: #09f;
     color: #fff;
 }
+
+.center-text{
+    text-align: center;
+}
