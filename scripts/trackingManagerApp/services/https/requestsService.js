@@ -85,6 +85,20 @@
                 return promise;
             }
 
+            requests.getIssueComments = function getIssueComments(token, issueId) {
+                var header = loginHeader(token),
+                    promise = httpRequest(Urls.DefaultUrl + Urls.GetIssue + issueId + Urls.GetComments, header, 'GET', null);
+
+                return promise;
+            }
+
+            requests.addNewIssueComment = function addNewIssueComment(token, issueId, comment) {
+                var header = loginHeader(token),
+                    promise = httpRequest(Urls.DefaultUrl + Urls.GetIssue + issueId + Urls.PostComment, header, 'POST', comment);
+
+                return promise;
+            }
+
             requests.getProject = function getProject(token, id) {
                 var header = loginHeader(token),
                     promise = httpRequest(Urls.DefaultUrl + Urls.GetProject + id, header, 'GET', null);
@@ -122,7 +136,7 @@
 
             requests.getLabels = function getLabels(token, labelName) {
                 var header = loginHeader(token),
-                    query = labelName === null ? null : '?filter=' + labelName, //'?filter=Name.StartsWith(' + labelName + ')',
+                    query = labelName === null ? null : '?filter=' + labelName,
                     promise = httpRequest(Urls.DefaultUrl + Urls.GetLabels + query, header, 'GET', null);
 
                 return promise;

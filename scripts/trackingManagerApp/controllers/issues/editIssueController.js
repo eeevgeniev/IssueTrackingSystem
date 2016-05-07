@@ -2,11 +2,11 @@
     var issuesModule = angular.module('trackingManagerApp.controllers.issues.editIssueController',
     ['trackingManagerApp.services.commands.issueServices', 'trackingManagerApp.services.commands.userServices',
     'trackingManagerApp.services.commands.projectServices', 'trackingManagerApp.filters.getNamesFilter',
-    'trackingManagerApp.services.commands.labelServices']);
+    'trackingManagerApp.services.commands.labelServices', 'trackingManagerApp.services.commands.notifyServices']);
 
     issuesModule.controller('EditIssueController', ['$scope', '$q', '$filter', 'issueServices', 'userServices',
-    'projectServices', 'labelServices',
-        function ($scope, $q, $filter, issueServices, userServices, projectServices, labelServices) {
+    'projectServices', 'labelServices', 'localUserServices',
+        function ($scope, $q, $filter, issueServices, userServices, projectServices, labelServices, localUserServices) {
             $scope.issue = {},
             $scope.title = 'Edit Issue',
             $scope.buttonTitle = $scope.title,
@@ -48,8 +48,8 @@
                 });
 
                 projectPromise.then(function success(project) {
-                    $scope.isProjectLead = projectServices.isProjectLeader(project.Lead.Id);
-                    $scope.isAssignee = issueServices.isUserIssueAssignee($scope.issue.Assignee.Id);
+                    $scope.isProjectLead = localUserServices.isProjectLeader(project.Lead.Id);
+                    $scope.isAssignee = localUserServices.isUserIssueAssignee($scope.issue.Assignee.Id);
 
                     if (!$scope.isProjectLead && !$scope.isAssignee) {
                         issueServices.redirectToIssue();

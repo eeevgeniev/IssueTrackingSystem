@@ -102,55 +102,10 @@
                 return deffered.promise;
             }
 
-            commands.logoutUser = function logoutUser() {
-                cookieManager.remove(cookiesNames.Bearer);
-                redirect('');
-            }
-
             commands.getDashboardPage = function getDashboardPage(parameter) {
                 var page = typeof (getParameters.getValue(parameter)) === 'undefined' ? 1 : getParameters.getValue(parameter);
 
                 return page;
-            }
-
-            commands.isUserAdmin = function isUserAdmin() {
-                var user = cookieManager.getObjectCookie(cookiesNames.User);
-
-                if (typeof (user) === 'undefined') {
-                    return false;
-                }
-
-                return user.isAdmin;
-            }
-
-            commands.isUserRegistered = function isUserRegistered() {
-                var user = cookieManager.getObjectCookie(cookiesNames.User);
-                var token = cookieManager.getCookie(cookiesNames.Bearer);
-
-                if (typeof (user) === 'undefined' || typeof (token) === 'undefined') {
-                    return false;
-                }
-
-                return true;
-            }
-
-            commands.invalidCookies = function invalidCookies() {
-                commands.destroyUserCookies();
-                $rootScope.$broadcast('userLoggedLogout');
-                notifyService.generateErrorMessage('Invalid user data.');
-                redirect.changeLocation('');
-            }
-
-            commands.destroyUserCookies = function destroyUserCookies() {
-                cookieManager.deleteCookie(cookiesNames.Bearer);
-                cookieManager.deleteCookie(cookiesNames.User);
-                $rootScope.$broadcast('userLoggedLogout');
-            }
-
-            commands.logoutUser = function logoutUser() {
-                commands.destroyUserCookies();
-                notifyService.generateInfoMessage('Successfull logout.');
-                redirect.changeLocation('');
             }
 
             return commands;

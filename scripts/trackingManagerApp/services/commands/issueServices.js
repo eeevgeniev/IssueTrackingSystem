@@ -5,10 +5,10 @@
     'trackingManagerApp.services.commands.responseGetterServices', 'trackingManagerApp.services.commands.labelServices',
     'trackingManagerApp.services.commands.helperServices']);
 
-    issueCommands.factory('issueServices', ['$q', 'requests', 'redirect', 'getParameters', 'cookieManager',
-    'cookiesNames', 'notifyService', 'responseGetterServices', 'labelServices', 'helperServices',
-    function ($q, requests, redirect, getParameters, cookieManager, cookiesNames, notifyService,
-    responseGetterServices, labelServices, helperServices) {
+    issueCommands.factory('issueServices', ['$rootScope', '$q', 'requests', 'redirect', 'getParameters', 'cookieManager',
+    'cookiesNames', 'notifyService', 'responseGetterServices', 'labelServices', 'helperServices', 'IssueCreated',
+    function ($rootScope, $q, requests, redirect, getParameters, cookieManager, cookiesNames, notifyService,
+    responseGetterServices, labelServices, helperServices, IssueCreated) {
         var commands = {};
 
         commands.getIssue = function getIssue() {
@@ -37,7 +37,8 @@
                 promise = requests.getFilteredIssue(token, id);
 
             promise.then(function (response) {
-                var issue = responseGetterServices.dataGetter(response.data.Issues[0], ['Assignee', 'Author', 'AvailableStatuses', 'Description', 'DueDate',
+                var issue = responseGetterServices.dataGetter(response.data.Issues[0], ['Assignee', 'Author', 'AvailableStatuses',
+                    'Description', 'DueDate',
                     'Id', 'IssueKey', 'Labels', 'Priority', 'Project', 'Status', 'Title', 'AvailableStatuses']);
                 response = null;
                 deffered.resolve(issue);
@@ -58,7 +59,6 @@
                 notifyService.generateSuccessMessage('Issue status updated!');
                 redirect.reloadPage();
             }, function (response) {
-                redirect.changeLocation('');
                 notifyService.generateResponseErrorMessage(response);
             });
         }
@@ -70,6 +70,7 @@
             promise.then(function success(response) {
                 redirect.changeLocation('/issues/' + response.data.Id);
                 notifyService.generateSuccessMessage('Issue created!');
+                $rootScope.$broadcast(IssueCreated);
             }, function error(response) {
                 redirect.changeLocation('');
                 notifyService.generateResponseErrorMessage(response);
@@ -88,6 +89,39 @@
                 notifyService.generateResponseErrorMessage(response);
             });
         };
+
+        commands.getIssueComments = function getIssueComments() {
+            var token = cookieManager.getCookie(cookiesNames.Bearer),
+                issueId = getParameters.getValue('id'),
+                deffered = $q.defer(),
+                promise = requests.getIssueComments(token, issueId);
+
+            promise.then(function success(response) {
+                var comments = responseGetterServices.getArray(response.data, ['Text', 'CreatedOn', 'Author']);
+                response = null;
+                deffered.resolve(comments);
+            }, function error(response) {
+                notifyService.generateResponseErrorMessage(response);
+            });
+
+            return deffered.promise;
+        }
+
+        commands.addNewIssueComment = function addNewIssueComment(text) {
+            var comment = {};
+            comment.Text = text;
+
+            var token = cookieManager.getCookie(cookiesNames.Bearer),
+                issueId = getParameters.getValue('id'),
+                promise = requests.addNewIssueComment(token, issueId, comment);
+
+            promise.then(function success(response) {
+                notifyService.generateSuccessMessage('Comment created!');
+                redirect.reloadPage();
+            }, function error(response) {
+                notifyService.generateResponseErrorMessage(response);
+            });
+        }
 
         commands.newIssue = function newIssue(value) {
             var issue = commands.getEditedIssue(value);
@@ -116,7 +150,7 @@
                 return;
             }
 
-            issue.DueDate = helperServices.createDate(value.DueDate, false);
+            issue.DueDate = helperServices.createDate(value.DueDate);
             issue.Labels = labelServices.labelsFromString(issue.Labels, ',');
 
             return issue;
@@ -125,17 +159,19 @@
         commands.redirectToIssue = function redirectToIssue() {
             var issueId = getParameters.getValue('id');
             redirect.changeLocation('/issues/' + issueId);
-            notifyService.generateErrorMessage('You don\'t have permission to edit issue.');
+            notifyService.generateErrorMessage('You don\'t have permission to edit this issue.');
         }
 
-        commands.isUserIssueAssignee = function isUserIssueAssignee(issueAssigneeId) {
-            var user = cookieManager.getObjectCookie(cookiesNames.User);
+        commands.isUserAssigneeInIssue = function isUserAssigneeInIssue(issues) {
+            var user = cookieManager.getCookie(cookiesNames.User);
 
-            if (typeof (user) === 'undefined') {
-                return false;
-            }
+            var userId = user.Id;
 
-            return user.Id === issueAssigneeId;
+            var isUserAssignee = issues.find(function (issue) {
+                issue.Assignee.Id === userId;
+            });
+
+            return isUserAssignee = typeof (isUserAssignee) === 'undefined' ? false : true;
         }
 
         return commands;

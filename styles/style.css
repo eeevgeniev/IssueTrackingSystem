@@ -69,8 +69,41 @@ body {
     background-color: #fff;
     border-radius: 5px;
     width: 100%;
+    min-height: 35px;
 }
 
 .break-words {
     word-break: break-all;
+}
+
+.no-close .ui-dialog-titlebar-close {
+  display: none;
+}
+
+.clear-float{
+    clear: both;
+}
+
+.list-holder {
+    list-style-type: none;
+}
+
+.list-holder li {
+    margin: 0 0 5px 0;
+    padding: 0;
+    background-color: #fff;
+    border: 1px solid #aaa;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.list-holder li p{
+    margin: 0 10px;
+    padding: 0;
+    font-size: 1.2em;
+}
+
+.blue {
+    background-color: #09f;
+    color: #fff;
 }

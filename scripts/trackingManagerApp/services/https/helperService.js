@@ -19,7 +19,9 @@
         GetProjects: '/Projects',
         NewProject: '/Projects',
         UpdateProject: '/Projects/',
-        GetLabels: '/labels'
+        GetLabels: '/labels',
+        GetComments: '/comments',
+        PostComment: '/comments'
     });
 
     httpHelper.constant('headers', {

@@ -1,11 +1,12 @@
 ﻿(function () {
     var modalCommands = angular.module('trackingManagerApp.services.commands.modalServices', []);
 
-    modalCommands.factory('modalServices', [function () {
+    modalCommands.factory('modalServices', ['$rootScope', 'ModalFormClosed', function ($rootScope, ModalFormClosed) {
         var commands = {};
 
         commands.createModal = function createModal(elementId, modalHeight, modalWidth) {
             var projectDialog = $(elementId).dialog({
+                dialogClass: 'no-close',
                 autoOpen: false,
                 height: modalHeight,
                 width: modalWidth,
@@ -13,9 +14,12 @@
                 buttons: {
                     Cancel: function () {
                         projectDialog.dialog("close");
+                        $rootScope.$broadcast(ModalFormClosed);
+                    },
+                    Close: function () {
+                        projectDialog.dialog("close");
+                        $rootScope.$broadcast(ModalFormClosed);
                     }
-                }, Close: function () {
-                    form[0].reset();
                 }
             });
 

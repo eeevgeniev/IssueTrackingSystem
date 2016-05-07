@@ -5,75 +5,84 @@
     'trackingManagerApp.controllers.projects.editProjectController', 'trackingManagerApp.controllers.issues.newIssueController',
     'trackingManagerApp.controllers.issues.editIssueController', 'trackingManagerApp.controllers.issues.viewIssueController',
     'trackingManagerApp.controllers.users.dashboardController', 'trackingManagerApp.controllers.users.changePasswordController',
-    'trackingManagerApp.controllers.users.logoutUserController', 'trackingManagerApp.services.commands.userServices',
+    'trackingManagerApp.controllers.users.logoutUserController', 'trackingManagerApp.services.commands.localUserServices',
     'trackingManagerApp.controllers.projects.projectAddIssueController']);
 
     routes.config(['$routeProvider', function ($routeProvider) {
         var defaultRoute = {
-            templateUrl: '../templates/user/dashboard.html',
+            templateUrl: 'scripts/trackingManagerApp/templates/user/dashboard.html',
             controller: 'DashboardController'
         }
 
         $routeProvider.when('/dashboard/:page/', defaultRoute);
 
         $routeProvider.when('/projects/:id', {
-            templateUrl: '../templates/projects/viewProject.html',
+            templateUrl: 'scripts/trackingManagerApp/templates/projects/viewProject.html',
             controller: 'ViewProjectController'
         });
 
         $routeProvider.when('/projects/:id/issues/:issues', {
-            templateUrl: '../templates/projects/viewProject.html',
+            templateUrl: 'scripts/trackingManagerApp/templates/projects/viewProject.html',
             controller: 'ViewProjectController'
         });
 
         $routeProvider.when('/projects/:id/edit', {
-            templateUrl: '../templates/projects/updateProject.html',
+            templateUrl: 'scripts/trackingManagerApp/templates/projects/updateProject.html',
             controller: 'EditProjectController'
         });
 
         $routeProvider.when('/projects/:id/add-issue', {
-            templateUrl: '../templates/projects/projectAddNewIssue.html',
+            templateUrl: 'scripts/trackingManagerApp/templates/projects/projectAddNewIssue.html',
             controller: 'ProjectAddIssueController'
         });
 
         $routeProvider.when('/issues/:id', {
-            templateUrl: '../templates/issues/viewIssue.html',
+            templateUrl: 'scripts/trackingManagerApp/templates/issues/viewIssue.html',
+            controller: 'ViewIssueController'
+        });
+
+        $routeProvider.when('/issues/:id/:comments', {
+            templateUrl: 'scripts/trackingManagerApp/templates/issues/viewIssue.html',
             controller: 'ViewIssueController'
         });
 
         $routeProvider.when('/issues/:id/edit', {
-            templateUrl: '../templates/issues/updateIssue.html',
+            templateUrl: 'scripts/trackingManagerApp/templates/issues/updateIssue.html',
             controller: 'EditIssueController'
         });
 
         $routeProvider.when('/profile/password', {
-            templateUrl: '../templates/user/password.html',
+            templateUrl: 'scripts/trackingManagerApp/templates/user/password.html',
             controller: 'ChangePasswordController'
         });
 
         $routeProvider.when('/logout', {
-            templateUrl: '../templates/user/logout.html',
+            templateUrl: 'scripts/trackingManagerApp/templates/user/logout.html',
             controller: 'LogoutUserController'
         });
 
         $routeProvider.otherwise(defaultRoute);
     }]);
 
-    routes.run(['$rootScope', '$location', '$route', 'userServices', function ($rootScope, $location, $route, userServices) {
+    routes.run(['$rootScope', '$location', '$route', 'localUserServices', function ($rootScope, $location, $route, localUserServices) {
         $rootScope.$on('$routeChangeStart', function (event, next, current) {
-            if (!userServices.isUserRegistered()) {
-                next.templateUrl = '../templates/user/unknownuser.html';
+            if (!localUserServices.isUserRegistered()) {
+                next.templateUrl = 'scripts/trackingManagerApp/templates/user/unknownuser.html';
                 next.controller = 'ManageUserController';
                 $location.path('');
             }
         });
     }]);
 
-    routes.factory('redirect', ['$location', '$route', function ($location, $route) {
+    routes.factory('redirect', ['$location', '$route', '$window', function ($location, $route, $window) {
         var redirect = {};
 
         redirect.changeLocation = function changeLocation(newPath) {
             $location.path(newPath);
+        }
+
+        redirect.changeReloadLocation = function changeReloadLocation(newPath) {
+            $window.location.href = '#' + newPath;
         }
 
         redirect.reloadPage = function reloadPage() {

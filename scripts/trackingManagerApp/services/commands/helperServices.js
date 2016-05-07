@@ -1,19 +1,14 @@
 ﻿(function () {
 
-    var helperServices = angular.module('trackingManagerApp.services.commands.helperServices', []);
+    var helperServices = angular.module('trackingManagerApp.services.commands.helperServices',
+        ['trackingManagerApp.routes.routeConfig', 'trackingManagerApp.services.commands.cookies.cookieService']);
 
-    helperServices.factory('helperServices', [function () {
+    helperServices.factory('helperServices', ['getParameters', 'cookieManager', function (getParameters, cookieManager) {
         var commands = {};
 
-        commands.createDate = function createDate(dateAsString, removeTimezoneOffset) {
+        commands.createDate = function createDate(dateAsString) {
             var datesParams = dateAsString.split(/[\s\/:]/);
             var date = new Date(datesParams[2], datesParams[1] - 1, datesParams[0], datesParams[3], datesParams[4]);
-
-            if (removeTimezoneOffset) {
-                var newDate = new Date(date.getFullYear(), date.getMonth() - 1, date.getDay(),
-                    date.getHours(), date.getMinutes() - date.getTimezoneOffset());
-                date = newDate;
-            }
 
             return date;
         }
@@ -22,6 +17,12 @@
             var array = stringValue.split(separator);
 
             return array;
+        }
+
+        commands.getPageNumber = function getPageNumber(name) {
+            var result = typeof (getParameters.getValue(name)) === 'undefined' ? 1 : getParameters.getValue(name);
+
+            return result;
         }
 
         return commands;

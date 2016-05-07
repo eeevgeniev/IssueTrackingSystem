@@ -1,14 +1,17 @@
 ﻿(function () {
     var dashboardModule = angular.module('trackingManagerApp.controllers.users.dashboardController',
-    ['trackingManagerApp.services.commands.userServices', 'trackingManagerApp.services.commands.modalServices']);
+    ['trackingManagerApp.services.commands.userServices', 'trackingManagerApp.services.commands.modalServices',
+    'trackingManagerApp.services.commands.localUserServices']);
 
     dashboardModule.constant('IssuesPerPage', 5);
 
-    dashboardModule.controller('DashboardController', ['$scope', '$q', 'userServices', 'modalServices', 'IssuesPerPage',
-        function ($scope, $q, userServices, modalServices, IssuesPerPage) {
-            $scope.isUserAdmin = userServices.isUserAdmin(),
+    dashboardModule.controller('DashboardController', ['$scope', '$q', 'userServices', 'modalServices',
+        'IssuesPerPage', 'localUserServices',
+        function ($scope, $q, userServices, modalServices, IssuesPerPage, localUserServices) {
+            $scope.isUserAdmin = localUserServices.isUserAdmin(),
             page = Number(userServices.getDashboardPage('page')),
             promise = userServices.getUserIssues(IssuesPerPage, page, 'DueDate desc');
+
             promise.then(function success(result) {
 
                 if (page <= result.TotalPages) {

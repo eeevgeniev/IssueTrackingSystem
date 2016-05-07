@@ -1,11 +1,12 @@
 ﻿(function () {
     var projectModule = angular.module('trackingManagerApp.controllers.projects.editProjectController',
         ['trackingManagerApp.services.commands.projectServices', 'trackingManagerApp.services.commands.userServices',
-            'trackingManagerApp.filters.getNamesFilter', 'trackingManagerApp.services.commands.labelServices']);
+            'trackingManagerApp.filters.getNamesFilter', 'trackingManagerApp.services.commands.labelServices',
+        'trackingManagerApp.services.commands.localUserServices']);
 
     projectModule.controller('EditProjectController', ['$scope', '$q', '$filter', 'projectServices',
-        'userServices', 'labelServices',
-        function ($scope, $q, $filter, projectServices, userServices, labelServices) {
+        'userServices', 'labelServices', 'localUserServices',
+        function ($scope, $q, $filter, projectServices, userServices, labelServices, localUserServices) {
             $scope.project = {},
             $scope.title = 'Edit Project',
             $scope.buttonTitle = $scope.title,
@@ -16,8 +17,8 @@
             projectPromise.then(function success(project) {
                 $scope.project = project;
 
-                if (!projectServices.isProjectLeader(project.Lead.Id)) {
-                    projectServices.redirectToProject();
+                if (!localUserServices.isProjectLeader(project.Lead.Id)) {
+                    projectServices.redirectToProject('Only project leader can edit this project.');
                     return;
                 }
 

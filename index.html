@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en" ng-app="trackingManagerApp" ng-cloak>
+<html lang="en" ng-app="trackingManagerApp">
 <head>
     <meta charset="utf-8" />
     <link href="styles/bootstrap.min.css" type="text/css" rel="stylesheet">
@@ -40,13 +40,14 @@
     <script src="scripts/trackingManagerApp/services/commands/labelServices.js"></script>
     <script src="scripts/trackingManagerApp/services/commands/modalServices.js"></script>
     <script src="scripts/trackingManagerApp/services/commands/helperServices.js"></script>
+    <script src="scripts/trackingManagerApp/services/commands/localUserServices.js"></script>
     <script src="scripts/trackingManagerApp/filters/getNamesFilter.js"></script>
     <title>Tracking Manager Application</title>
 </head>
-<body>
+<body ng-cloak>
     <div id="notifications"></div>
     <div id="wrapper" class="centered top-distance">
-        <div ng-controller="MenuController" ng-include="'templates/menu/menu.html'"></div>
+        <div ng-controller="MenuController" ng-include="'scripts/trackingManagerApp/templates/menu/menu.html'"></div>
         <section class="jumbotron" ng-view></section>
     </div>
 </body>

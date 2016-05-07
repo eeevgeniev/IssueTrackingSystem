@@ -37,8 +37,8 @@
 
         commands.getProjects = function getProjects() {
             var token = cookieManager.getCookie(cookiesNames.Bearer),
-            deffered = $q.defer(),
-            promise = requests.getProjects(token);
+                deffered = $q.defer(),
+                promise = requests.getProjects(token);
 
             promise.then(function (response) {
                 var result = responseGetterServices.getArray(response.data, ['Id', 'Name', 'Priorities', 'Labels']);
@@ -62,6 +62,7 @@
                 redirect.changeLocation('/projects/' + response.data.Id);
             }, function error(response) {
                 notifyService.generateResponseErrorMessage(response);
+                redirect.changeLocation('');
             });
         }
 
@@ -74,6 +75,7 @@
                 notifyService.generateSuccessMessage('Project updated.');
             }, function error(response) {
                 notifyService.generateResponseErrorMessage(response);
+                redirect.changeLocation('');
             });
         }
 
@@ -84,7 +86,6 @@
                 var names = projectName.split(' ');
 
                 names.forEach(function (currentName) {
-
                     key += currentName.substr(0, 1).toUpperCase();
                 });
             }
@@ -93,13 +94,18 @@
         }
 
         commands.getProjectIssues = function getProjectIssues() {
+            var id = getParameters.getValue('id');
+
+            return commands.getProjectIssuesWithId(id);
+        }
+
+        commands.getProjectIssuesWithId = function getProjectIssuesWithId(projectId) {
             var token = cookieManager.getCookie(cookiesNames.Bearer),
-                id = getParameters.getValue('id'),
                 deffered = $q.defer(),
-                promise = requests.getProjectIssues(token, id);
+                promise = requests.getProjectIssues(token, projectId);
 
             promise.then(function (response) {
-                var issues = responseGetterServices.getArray(response.data, ['Id', 'Title', 'DueDate']);
+                var issues = responseGetterServices.getArray(response.data, ['Id', 'Title', 'DueDate', 'Assignee']);
                 response = null;
                 deffered.resolve(issues);
             }, function (response) {
@@ -142,26 +148,19 @@
             return project;
         }
 
-        commands.redirectToProject = function redirectToProject() {
+        commands.redirectToProject = function redirectToProject(info) {
             var projectId = getParameters.getValue('id');
-            redirect.changeLocation('/projects/' + projectId);
-            notifyService.generateInfoMessage('Only project leader can edit this project.');
-        }
 
-        commands.isProjectLeader = function isProjectLeader(leaderId) {
-            var user = cookieManager.getObjectCookie(cookiesNames.User);
-
-            if (typeof (user) === 'undefined') {
-                return false;
+            if (info !== null) {
+                notifyService.generateInfoMessage(info);
             }
 
-            return user.Id === leaderId;
-        }
+            if (projectId === 'undefined') {
+                redirect.changeLocation('');
+                return;
+            }
 
-        commands.getProjectIssuesPerPage = function getProjectIssuesPerPage(name) {
-            var result = typeof (getParameters.getValue(name)) === 'undefined' ? 1 : getParameters.getValue(name);
-
-            return result;
+            redirect.changeReloadLocation('/projects/' + projectId);
         }
 
         return commands;

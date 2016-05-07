@@ -41,12 +41,14 @@
                 <tr>
                     <th>Issue</th>
                     <th>Due Date</th>
+                    <th>Assignee</th>
                 </tr>
             </thead>
             <tbody>
                 <tr ng-repeat="issue in issues">
                     <td><a href="#/issues/{{issue.Id}}">{{issue.Title}}</a></td>
                     <td>{{issue.DueDate | date: 'dd/MM/yyyy HH:mm'}}</td>
+                    <td>{{issue.Assignee.Username}}</td>
                 </tr>
             </tbody>
         </table>

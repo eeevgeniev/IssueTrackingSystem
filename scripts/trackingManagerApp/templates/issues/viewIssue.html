@@ -52,3 +52,37 @@
         </div>
     </section>
 </section>
+<section class="col-md-8 clear-float">
+    <header>
+        <h3>Issue comments</h3>
+    </header>
+    <ul class="list-holder">
+        <li ng-repeat="comment in comments">
+            <section>
+                <header class="blue">
+                    <p>{{comment.Author.Username}} wrote on {{comment.CreatedOn | date: 'dd/MM/yyyy HH:mm'}}</p>
+                </header>
+                <p>{{comment.Text}}</p>
+            </section>
+        </li>
+    </ul>
+    <div class="bottom-margin">
+    <a class="btn btn-info right-margin" ng-if="hasFirst" href="#/issues/{{issue.Id}}/{{toFirst}}">&lt;&lt;</a>
+    <a class="btn btn-info right-margin" ng-if="hasPrevious" href="#/issues/{{issue.Id}}/{{previous}}">{{previous}}</a>
+    <a class="btn btn-success right-margin" ng-if="hasCurrent" href="#/issues/{{issue.Id}}/{{current}}">{{current}}</a>
+    <a class="btn btn-info right-margin" ng-if="hasNext" href="#/issues/{{issue.Id}}/{{next}}">{{next}}</a>
+    <a class="btn btn-info right-margin" ng-if="hasLast" href="#/issues/{{issue.Id}}/{{toLast}}">&gt;&gt;</a>
+    </div>
+</section>
+<form class="col-md-8 clear-float" name="commentForm" ng-if="isUserProjectLeader || hasIssueInThisProject">
+    <header>
+        <h3>Add new comment</h3>
+        <div class="form-group">
+            <label for="Text">Text:</label>
+            <textarea id="Text" name="Text" ng-model="comment.Text" class="form-control" required="required"></textarea>
+            <span class="error" ng-if="!commentForm.Text.$pristine && !commentForm.Text.$valid">Comment text is required.</span>
+        </div>
+        <input type="submit" ng-disabled="!commentForm.$valid" class="btn btn-success" 
+               ng-click="addComment()" value="{{buttonTitle}}" />
+    </header>
+</form>
