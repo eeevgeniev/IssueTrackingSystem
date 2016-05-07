@@ -32,6 +32,10 @@
                 });
 
                 commentsPromise.then(function success(comments) {
+                    comments.sort(function (first, second) {
+                        return new Date(second.CreatedOn) - new Date(first.CreatedOn);
+                    });
+
                     $scope.comments = comments;
 
                     $scope.comments = [];

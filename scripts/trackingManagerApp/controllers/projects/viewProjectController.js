@@ -24,7 +24,7 @@
             promiseProjectIssues.then(function success(issues) {
                 issues.sort(function (first, second) {
                     return new Date(second.DueDate) - new Date(first.DueDate);
-                })
+                });
 
                 $scope.issues = [];
                 var issuesPagesCount = Math.ceil(issues.length / ProjectIssuesPerPage),

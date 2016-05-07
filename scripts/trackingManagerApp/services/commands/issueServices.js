@@ -38,8 +38,7 @@
 
             promise.then(function (response) {
                 var issue = responseGetterServices.dataGetter(response.data.Issues[0], ['Assignee', 'Author', 'AvailableStatuses',
-                    'Description', 'DueDate',
-                    'Id', 'IssueKey', 'Labels', 'Priority', 'Project', 'Status', 'Title', 'AvailableStatuses']);
+                    'Description', 'DueDate', 'Id', 'IssueKey', 'Labels', 'Priority', 'Project', 'Status', 'Title', 'AvailableStatuses']);
                 response = null;
                 deffered.resolve(issue);
             }, function (response) {
@@ -68,7 +67,6 @@
                 promise = requests.addNewIssue(token, issue);
 
             promise.then(function success(response) {
-                redirect.changeLocation('/issues/' + response.data.Id);
                 notifyService.generateSuccessMessage('Issue created!');
                 $rootScope.$broadcast(IssueCreated);
             }, function error(response) {
@@ -164,14 +162,16 @@
 
         commands.isUserAssigneeInIssue = function isUserAssigneeInIssue(issues) {
             var user = cookieManager.getCookie(cookiesNames.User);
-
+            user = JSON.parse(user);
             var userId = user.Id;
 
-            var isUserAssignee = issues.find(function (issue) {
-                issue.Assignee.Id === userId;
-            });
+            for (var i = 0; i < issues.length; i++) {
+                if (issues[i].Assignee.Id === userId) {
+                    return true;
+                }
+            }
 
-            return isUserAssignee = typeof (isUserAssignee) === 'undefined' ? false : true;
+            return false;
         }
 
         return commands;
