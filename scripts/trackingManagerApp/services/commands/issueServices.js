@@ -154,10 +154,13 @@
             return issue;
         }
 
-        commands.redirectToIssue = function redirectToIssue() {
+        commands.redirectToIssue = function redirectToIssue(errorMessage) {
             var issueId = getParameters.getValue('id');
             redirect.changeLocation('/issues/' + issueId);
-            notifyService.generateErrorMessage('You don\'t have permission to edit this issue.');
+            
+            if (errorMessage !== null) {
+                notifyService.generateErrorMessage(errorMessage);
+            }
         }
 
         commands.isUserAssigneeInIssue = function isUserAssigneeInIssue(issues) {

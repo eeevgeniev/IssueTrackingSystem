@@ -52,7 +52,7 @@
                     $scope.isAssignee = localUserServices.isUserIssueAssignee($scope.issue.Assignee.Id);
 
                     if (!$scope.isProjectLead && !$scope.isAssignee) {
-                        issueServices.redirectToIssue();
+                        issueServices.redirectToIssue('You don\'t have permission to edit this issue.');
                         return;
                     }
 

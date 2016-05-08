@@ -3,7 +3,7 @@
     var helperServices = angular.module('trackingManagerApp.services.commands.helperServices',
         ['trackingManagerApp.routes.routeConfig', 'trackingManagerApp.services.commands.cookies.cookieService']);
 
-    helperServices.factory('helperServices', ['getParameters', 'cookieManager', function (getParameters, cookieManager) {
+    helperServices.factory('helperServices', ['getParameters', 'redirect', 'cookieManager', function (getParameters, redirect, cookieManager) {
         var commands = {};
 
         commands.createDate = function createDate(dateAsString) {
@@ -23,6 +23,10 @@
             var result = typeof (getParameters.getValue(name)) === 'undefined' ? 1 : getParameters.getValue(name);
 
             return result;
+        }
+
+        commands.reloadPage = function reloadPage() {
+            redirect.reloadPage();
         }
 
         return commands;

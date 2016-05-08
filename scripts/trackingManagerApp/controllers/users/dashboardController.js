@@ -1,13 +1,14 @@
 ﻿(function () {
     var dashboardModule = angular.module('trackingManagerApp.controllers.users.dashboardController',
     ['trackingManagerApp.services.commands.userServices', 'trackingManagerApp.services.commands.modalServices',
-    'trackingManagerApp.services.commands.localUserServices']);
+    'trackingManagerApp.services.commands.localUserServices', 'trackingManagerApp.services.commands.helperServices']);
 
     dashboardModule.constant('IssuesPerPage', 5);
 
-    dashboardModule.controller('DashboardController', ['$scope', '$q', 'userServices', 'modalServices',
-        'IssuesPerPage', 'localUserServices',
-        function ($scope, $q, userServices, modalServices, IssuesPerPage, localUserServices) {
+    dashboardModule.controller('DashboardController', ['$scope', '$q', '$timeout', 'userServices', 'modalServices',
+        'IssuesPerPage', 'localUserServices', 'helperServices', 'IssueCreated',
+        function ($scope, $q, $timeout, userServices, modalServices, IssuesPerPage,
+            localUserServices, helperServices, IssueCreated) {
             $scope.isUserAdmin = localUserServices.isUserAdmin(),
             $scope.isLoading = true,
             page = Number(userServices.getDashboardPage('page')),
@@ -57,6 +58,12 @@
             $scope.newIssue = function newIssue() {
                 modalServices.createModal('#new-issue', 800, 800);
             }
+
+            $scope.$on(IssueCreated, function () {
+                $timeout(function () {
+                    helperServices.reloadPage();
+                });
+            });
 
             $scope.$on('$destroy', function () {
                 $('.ui-dialog').remove();
